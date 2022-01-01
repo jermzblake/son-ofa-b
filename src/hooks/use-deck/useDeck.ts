@@ -12,8 +12,8 @@ export const useDeck = () => {
     {
       for(let x = 0; x < values.length; x++)
       {
-        let card = {value: values[x], suit: suits[i]};
-        deck.push(card);
+        let card = { value: values[x], suit: suits[i] }
+        deck.push(card)
       }
     }
   
