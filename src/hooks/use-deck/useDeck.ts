@@ -37,7 +37,9 @@ export const useDeck = () => {
   }
 
   return {
-    shuffle
+    shuffle,
+    deck,
+    setDeck
   } as const
 
 }
