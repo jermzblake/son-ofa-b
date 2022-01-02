@@ -6,12 +6,12 @@ export const theme = {
     third: '#00b4d8',
     background: '#003566',
     border: '#001D3D',
-    baseText: '#343D4B',
+    baseText: '#DADBDD',
     darkText: '#979797',
     lightText: '#343D4B',
   },
   fonts: {
-    primary: '',
+    primary: 'Monaco',
     secondary: 'serif'
   },
   vars: {},
