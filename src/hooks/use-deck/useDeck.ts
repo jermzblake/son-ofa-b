@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { playingCard } from '../../common/types/'
+import { playingCard } from 'common/types/'
 
 export const useDeck = () => {
   const suits = ["spades", "diamonds", "clubs", "hearts"]
