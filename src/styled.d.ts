@@ -7,6 +7,9 @@ interface ThemeColours {
   third: string
   border: string
   background: string
+  baseText: string
+  darkText: string
+  lightText: string
 }
 
 declare module 'styled-components' {
