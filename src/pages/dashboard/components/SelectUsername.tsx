@@ -4,7 +4,7 @@ import { TextField, Button } from '@material-ui/core'
 export interface SelectUsernameProps {
   usernameSelected: boolean
   setUsernameSelected: Function
-  submitUsername: () => void
+  submitUsername: (e: any) => void
   username: string
   setUsername: Function
 }
@@ -24,7 +24,7 @@ export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({ usernam
     <>
       <form autoComplete='off' onSubmit={submitUsername}>
         <TextField label='username' onChange={e => handleChange(e)} placeholder='Your username...' />
-        <Button type="submit" variant="contained" color="primary" disabled={!isValid()}>Submit</Button>
+        <Button onClick={e => submitUsername(e)} type="submit" variant="contained" color="primary" disabled={!isValid()}>Submit</Button>
       </form>
     </>
   )
