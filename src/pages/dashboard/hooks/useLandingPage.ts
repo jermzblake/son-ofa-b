@@ -1,17 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import socket from '../../../socket'
 
 export const useLandingPage = () => {
   const [usernameSelected, setUsernameSelected] = useState(false)
   const [username, setUsername] = useState<string>()
+  
+  useEffect(() => {
+    socket.on("connect_error", (err) => {
+      if (err.message === "invalid username") {
+        setUsernameSelected(false);
+      }
+    })
+    return () => {
+      socket.off("connect_error")
+    }
+  }, [])
 
-  const submitUsername = () => {
-    console.log('start')
+  const submitUsername = (e: any) => {
+    e.preventDefault()
     setUsernameSelected(true)
     socket.auth = { username }
-    console.log('here')
     socket.connect()
-    console.log('end')
   }
   
   return {
