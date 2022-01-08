@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { playingCard } from 'common/types/'
+import { PlayingCard } from 'common/types/'
 
 export const useDeck = () => {
   const suits = ["spades", "diamonds", "clubs", "hearts"]
   const values = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"]
   
   const getDeck = () => {
-    let deck: playingCard[] = []
+    let deck: PlayingCard[] = []
 
     for(let i = 0; i < suits.length; i++)
     {
@@ -22,7 +22,7 @@ export const useDeck = () => {
 
   const [deck, setDeck] = useState(getDeck())
 
-  const shuffle = (deck: playingCard[]) => {
+  const shuffle = (deck: PlayingCard[]) => {
     // for 1000 turns
     // switch the values of two random cards
     for (let i = 0; i < 1000; i++)
