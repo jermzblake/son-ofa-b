@@ -1,5 +1,12 @@
 export interface User {
+  userID: string
+  username: string
   connected: boolean
-  messages: string[]
+  messages: Message[]
   hasNewMessages: boolean
+}
+
+export interface Message {
+  content: any
+  fromSelf: boolean
 }
