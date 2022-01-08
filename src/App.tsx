@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components/macro'
 import { Route, Routes } from 'react-router-dom'
 import { theme, GlobalStyle } from 'styles/globalstyles'
 import Home from './pages/dashboard/Home'
+import Lobby from './pages/lobby/Lobby'
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/lobby" element={<Lobby />} />
       </Routes>
     </ThemeProvider>
   );
