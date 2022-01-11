@@ -33,13 +33,13 @@ export const useLobby = () => {
 
     socket.on("users", (users) => {
       users.forEach((user) => {
-        user = user.userID === socket.id
+        user.self = user.userID === socket.id
         initReactiveProperties(user)
       })
       // put the current user first, and sort by username
       users = users.sort((a, b) => {
-        if (a) return -1
-        if (b) return 1
+        if (a.self) return -1
+        if (b.self) return 1
         if (a.username < b.username) return -1
         return a.username > b.username ? 1 : 0
       })
