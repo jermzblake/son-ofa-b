@@ -43,6 +43,7 @@ export const useLobby = () => {
         if (a.username < b.username) return -1
         return a.username > b.username ? 1 : 0
       })
+      setUsers(users)
     })
 
     socket.on("user connected", (user: User) => {
@@ -105,6 +106,8 @@ export const useLobby = () => {
 
   return {
     sendMessage,
-    selectUser
+    selectUser,
+    users,
+    selectedUser
   } as const
 }
