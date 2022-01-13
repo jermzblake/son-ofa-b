@@ -6,7 +6,7 @@ import { useLandingPage } from './hooks/useLandingPage'
 
 
 const Home: FunctionComponent = () => {
-  const { usernameSelected, setUsernameSelected, submitUsername, username, setUsername } = useLandingPage()
+  const { usernameSelected, setUsernameSelected, submitUsername, username, setUsername, isValid } = useLandingPage()
   return (
     <MainContainer title="Welcome">
       <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
@@ -22,6 +22,7 @@ const Home: FunctionComponent = () => {
             submitUsername={submitUsername}
             username={username}
             setUsername={setUsername}
+            isValid={isValid}
           />
         </Box>
       </Box>
