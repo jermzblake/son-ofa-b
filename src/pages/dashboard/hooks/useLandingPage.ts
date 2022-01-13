@@ -19,8 +19,13 @@ export const useLandingPage = () => {
     }
   }, [])
 
+  const isValid = () => {
+    return username?.length > 2
+  }
+
   const submitUsername = (e: any) => {
     e.preventDefault()
+    if (!isValid()) return
     setUsernameSelected(true)
     socket.auth = { username }
     socket.connect()
@@ -32,6 +37,7 @@ export const useLandingPage = () => {
     setUsernameSelected,
     submitUsername,
     username,
-    setUsername
+    setUsername,
+    isValid
    } as const
 }
