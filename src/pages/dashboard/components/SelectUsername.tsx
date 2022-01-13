@@ -30,6 +30,7 @@ export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({ usernam
               submitUsername(e)
             }
           }}
+          inputRef={input => input && input.focus()}
         />
         <Button
           onClick={e => submitUsername(e)}
