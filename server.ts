@@ -26,7 +26,7 @@ io.on("connection", (socket) => {
       username: (socket as any).username,
     })
   }
-  socket.emit("users", users)
+  io.emit("users", users)
 
   // notify existing users
   socket.broadcast.emit("user connected", {
