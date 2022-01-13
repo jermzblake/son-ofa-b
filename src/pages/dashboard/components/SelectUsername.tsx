@@ -7,12 +7,10 @@ export interface SelectUsernameProps {
   submitUsername: (e: any) => void
   username: string
   setUsername: Function
+  isValid: Function
 }
 
-export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({ usernameSelected, setUsernameSelected, submitUsername, username, setUsername }) => {
-  const isValid = () => {
-    return username?.length > 2
-  }
+export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({ usernameSelected, setUsernameSelected, submitUsername, username, setUsername, isValid }) => {
 
   const handleChange = async(e) => {
     e.preventDefault()
@@ -22,9 +20,26 @@ export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({ usernam
 
   return (
     <>
-      <form autoComplete='off' onSubmit={submitUsername}>
-        <TextField label='username' onChange={e => handleChange(e)} placeholder='Your username...' />
-        <Button onClick={e => submitUsername(e)} type="submit" variant="contained" color="primary" disabled={!isValid()}>Submit</Button>
+      <form autoComplete="off" onSubmit={submitUsername}>
+        <TextField
+          label="username"
+          onChange={e => handleChange(e)}
+          placeholder="Your username..."
+          onKeyPress={e => {
+            if (e.key === 'Enter') {
+              submitUsername(e)
+            }
+          }}
+        />
+        <Button
+          onClick={e => submitUsername(e)}
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={!isValid()}
+        >
+          Submit
+        </Button>
       </form>
     </>
   )
