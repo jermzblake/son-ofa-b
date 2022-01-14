@@ -4,7 +4,7 @@ import { Box, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { useLobby } from './hooks/useLobby'
 import { PlayerList } from 'components/page/containers/players/PlayerList'
-import { User } from 'common/types'
+import { useTheme } from 'styled-components'
 
 const LeftPanel = styled(Box)`
   && {
@@ -13,18 +13,22 @@ const LeftPanel = styled(Box)`
   top: 0;
   bottom: 0;
   width: 260px;
+  align-self: flex-start;
   overflow-x: hidden;
-  background-color: #3f0e40;
+  background-color: ${props => props.theme.colors.third};
+  padding: 1em;
   }
 `
 
 
 const Lobby: FunctionComponent = () => {
   const { users, selectUser, sendMessage, selectedUser } = useLobby()
+  const theme = useTheme()
 
    return (
     <MainContainer title='Lobby'>
-      <Typography>Lobby</Typography>
+      <Box width='100%' display='flex' justifyContent='center' alignItems='center'>
+      <Typography variant='h3'>Lobby</Typography></Box>
       <LeftPanel>
       {users && (
         users?.map((user, index) => {
