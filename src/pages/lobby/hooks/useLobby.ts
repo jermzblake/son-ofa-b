@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import socket from '../../../socket'
 import { User } from 'common/types'
 import { useNavigate } from 'react-router-dom'
@@ -7,6 +7,9 @@ export const useLobby = () => {
   const navigate = useNavigate()
   const [users, setUsers] = useState<User[]>([])
   const [selectedUser, setSelectedUser] = useState<User>()
+  const [, updateState] = useState();
+  // @ts-ignore
+  const forceUpdate = useCallback(() => updateState({}), [])
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -49,6 +52,7 @@ export const useLobby = () => {
     socket.on("user connected", (user: User) => {
       initReactiveProperties(user)
       users.push(user)
+      setUsers(users)
     })
 
     socket.on("user disconnected", (id) => {
@@ -56,6 +60,7 @@ export const useLobby = () => {
         const user = users[i];
         if (user.userID === id) {
           user.connected = false;
+          forceUpdate()
           break;
         }
       }
@@ -85,7 +90,7 @@ export const useLobby = () => {
       socket.off("user disconnected")
       socket.off("private message")
     }
-  })
+  }, [users])
 
   const sendMessage = (content) => {
     if (selectedUser) {
