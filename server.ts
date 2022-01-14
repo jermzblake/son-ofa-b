@@ -44,7 +44,10 @@ io.on("connection", (socket) => {
 
   // notify users upon disconnection
   socket.on("disconnect", () => {
-    socket.broadcast.emit("user disconnected", socket.id);
+    setTimeout(() => {
+      socket.broadcast.emit("user disconnected", socket.id)
+    }, 1000) // TODO change this to 10000 in production
+    
   })
 })
 
