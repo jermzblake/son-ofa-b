@@ -3,7 +3,7 @@ import { MainContainer } from 'components/page/containers/MainContainer'
 import { Box, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { useLobby } from './hooks/useLobby'
-import { PlayerList } from 'components/page/containers/players/PlayerList'
+import { PlayerList } from 'components/page/players/PlayerList'
 import { useTheme } from 'styled-components'
 
 const LeftPanel = styled(Box)`
