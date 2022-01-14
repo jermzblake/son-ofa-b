@@ -9,14 +9,16 @@ import { useTheme } from 'styled-components'
 const LeftPanel = styled(Box)`
   && {
     position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 260px;
-  align-self: flex-start;
-  overflow-x: hidden;
-  background-color: ${props => props.theme.colors.third};
-  padding: 1em;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 20%;
+    max-width: 16.5em;
+    align-self: flex-start;
+    overflow-x: hidden;
+    background-color: ${props => props.theme.colors.third};
+    padding: 1em;
+    text-overflow: ellipsis;
   }
 `
 
