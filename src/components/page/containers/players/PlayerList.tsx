@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { User } from 'common/types'
 import { StatusIcon } from 'components/core/status-icon'
-import  { Box } from '@material-ui/core'
+import  { Box, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { useTheme } from 'styled-components'
 
@@ -28,9 +28,9 @@ export const PlayerList: FunctionComponent<PlayerListProps> = ({ connected, user
 
   return (
     <>
-      <Box>{user.username}</Box>
+      <Typography variant='h6'><Box fontWeight='bold'>{user.username}</Box></Typography>
       <Box display="flex">
-        <Box color={theme.colors.lightText}><StatusIcon connected={user.connected} />{user.connected ? "online" : "offline"}</Box>
+        <Box color={theme.colors.lightText}><StatusIcon connected={user.connected} /><Typography component='span' variant='body2'>{user.connected ? "online" : "offline"}</Typography></Box>
         {user.hasNewMessages && <NewMessages>!</NewMessages>}
       </Box>
     </>
