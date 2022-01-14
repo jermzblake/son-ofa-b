@@ -6,8 +6,7 @@ import { useTheme } from 'styled-components'
 const StyledWrapper = styled(Box)`
   && {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 1em;
   }
 `
 
