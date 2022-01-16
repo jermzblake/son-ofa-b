@@ -7,8 +7,8 @@ export const theme = {
     background: '#003566',
     border: '#001D3D',
     baseText: '#DADBDD',
-    darkText: '#979797',
-    lightText: '#343D4B',
+    darkText: '#343D4B',
+    lightText: '#979797',
   },
   fonts: {
     primary: 'Monaco',
