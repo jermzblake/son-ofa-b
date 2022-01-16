@@ -31,8 +31,8 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({ user }) => {
         <Typography variant='h4'>Messages</Typography>
       </Box>
       <Divider />
-      <Box display='flex'>
-        <Box>Sender's name will go here</Box>
+      <Box display='flex' flexDirection='column'>
+        <Box color={theme.colors.lightText} ><Typography variant='caption'>Sender's name will go here</Typography></Box>
         <Box>messages will go here with sender's name above</Box>
       </Box>
     </MessagesWrapper>
