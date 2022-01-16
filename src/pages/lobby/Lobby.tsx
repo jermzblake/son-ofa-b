@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useLobby } from './hooks/useLobby'
 import { PlayerList } from 'components/page/players/PlayerList'
 import { useTheme } from 'styled-components'
+import { MessagePane } from 'components/page/messages/MessagePane'
 
 const LeftPanel = styled(Box)`
   && {
@@ -30,16 +31,22 @@ const Lobby: FunctionComponent = () => {
    return (
     <MainContainer title='Lobby'>
       <Box width='100%' display='flex' justifyContent='center' alignItems='center'>
-      <Typography variant='h3'>Lobby</Typography></Box>
+        <Typography variant='h3'>Lobby</Typography>
+      </Box>
       <LeftPanel>
       {users && (
         users?.map((user, index) => {
           return (
+            <Box onClick={() => selectUser(user)} style={{ cursor: 'pointer'}}>
             <PlayerList user={user} selected={selectedUser} key={index + user.userID} />
+            </Box>
           )
         })
       )}
       </LeftPanel>
+      {selectedUser && (
+      <MessagePane user={selectedUser} sendMessage={sendMessage} />
+      )}
     </MainContainer>
   )
 }
