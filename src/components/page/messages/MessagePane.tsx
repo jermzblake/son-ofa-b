@@ -3,6 +3,7 @@ import { Box, Typography, Divider, TextField, Button } from '@material-ui/core'
 import styled from 'styled-components'
 import { User } from 'common/types'
 import { useTheme } from 'styled-components'
+import { StatusIcon } from 'components/core/status-icon'
 
 const MessagesWrapper = styled(Box)`
   && {
@@ -36,8 +37,8 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({ user, sendMe
 
   return (
     <MessagesWrapper>
-      <Box>
-        <Typography variant='h4'>{user.username} Messages</Typography>
+      <Box padding='0 2em 0'>
+        <Typography variant='h4'><StatusIcon connected={user.connected} />{user.username} Messages</Typography>
       </Box>
       <Divider />
       <Box display='flex' flexDirection='column'>
@@ -48,7 +49,7 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({ user, sendMe
       <Box>
         <form autoComplete='off' onSubmit={sendMessage}>
           <TextField label='Send message' onChange={e => handleChange(e)} placeholder='Type message...' />
-          <Button onClick={() => sendMessage(message)} type='submit' variant='contained' color="primary" disabled={!isValid()}>Send</Button>
+          <Button onClick={(e) => {sendMessage(e, message); setMessage('')}} type='submit' variant='contained' color="primary" disabled={!isValid()}>Send</Button>
         </form>
       </Box>
     </MessagesWrapper>
