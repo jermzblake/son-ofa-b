@@ -58,6 +58,7 @@ export const useLobby = () => {
     socket.on("user disconnected", (id) => {
       for (let i = 0; i < users.length; i++) {
         const user = users[i];
+
         if (user.userID === id) {
           user.connected = false;
           forceUpdate()
@@ -77,6 +78,8 @@ export const useLobby = () => {
           if (user !== selectedUser) {
             user.hasNewMessages = true
           }
+          // setUsers(users)
+          // forceUpdate()
           break
         }
       }
@@ -92,7 +95,8 @@ export const useLobby = () => {
     }
   }, [users])
 
-  const sendMessage = (content) => {
+  const sendMessage = (e, content) => {
+    e.preventDefault()
     if (selectedUser) {
       socket.emit("private message", {
         content,
@@ -105,6 +109,8 @@ export const useLobby = () => {
     }
   }
    const selectUser = (user: User) => {
+     //@ts-ignore
+     if (user.self) return
     setSelectedUser(user)
     user.hasNewMessages = false
   }
