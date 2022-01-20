@@ -108,6 +108,7 @@ export const useLobby = () => {
       })
     }
   }
+  
    const selectUser = (user: User) => {
      //@ts-ignore
      if (user.self) return
