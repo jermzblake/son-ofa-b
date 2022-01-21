@@ -18,21 +18,21 @@ const MessagesWrapper = styled(Box)`
 `
 
 interface MessagePanelProps {
-  user?: User
+  user: User
   sendMessage
 }
 
 export const MessagePane: FunctionComponent<MessagePanelProps> = ({ user, sendMessage }) => {
   const theme = useTheme()
-  const [message, setMessage] = useState<string>()
+  const [directMessage, setDirectMessage] = useState<string>()
 
   const handleChange = async (e) => {
     e.preventDefault()
-    setMessage(e.target.value)
+    setDirectMessage(e.target.value)
   }
 
   const isValid = () => {
-    return message?.length > 0
+    return directMessage?.length > 0
   }
 
   return (
@@ -42,14 +42,24 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({ user, sendMe
       </Box>
       <Divider />
       <Box display='flex' flexDirection='column'>
-        <Box color={theme.colors.lightText} ><Typography variant='caption'>Sender's name will go here</Typography></Box>
-        <Box>messages will go here with sender's name above</Box>
+        {user?.messages && (
+          user?.messages.map((message, i) => {
+            return (
+            <>
+              <Box color={theme.colors.lightText} key={i}>
+                <Typography variant='caption'>{message.fromSelf ? 'yourself' : user.username}</Typography>
+              </Box>
+              <Box><Typography>{message.content}</Typography></Box>
+            </>
+            )
+          })
+        )}
       </Box>
       <Divider />
       <Box>
         <form autoComplete='off' onSubmit={sendMessage}>
-          <TextField label='Send message' onChange={e => handleChange(e)} placeholder='Type message...' />
-          <Button onClick={(e) => {sendMessage(e, message); setMessage('')}} type='submit' variant='contained' color="primary" disabled={!isValid()}>Send</Button>
+          <textarea value={directMessage} onChange={e => handleChange(e)} placeholder='Type message...' />
+          <Button onClick={(e) => {sendMessage(e, directMessage); setDirectMessage('')}} type='submit' variant='contained' color="primary" disabled={!isValid()}>Send</Button>
         </form>
       </Box>
     </MessagesWrapper>
