@@ -78,8 +78,7 @@ export const useLobby = () => {
           if (user !== selectedUser) {
             user.hasNewMessages = true
           }
-          // setUsers(users)
-          // forceUpdate()
+          forceUpdate()
           break
         }
       }
@@ -93,7 +92,7 @@ export const useLobby = () => {
       socket.off("user disconnected")
       socket.off("private message")
     }
-  }, [users])
+  }, [users, selectedUser])
 
   const sendMessage = (e, content) => {
     e.preventDefault()
@@ -108,7 +107,7 @@ export const useLobby = () => {
       })
     }
   }
-  
+
    const selectUser = (user: User) => {
      //@ts-ignore
      if (user.self) return
