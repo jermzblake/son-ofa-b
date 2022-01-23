@@ -1,5 +1,7 @@
 import { createServer } from "http"
 import { Server } from "socket.io"
+import { v4 as uuidv4 } from 'uuid'
+import { ExtendedSocket } from './src/common/types'
 
 const httpServer = createServer()
 const io = new Server(httpServer, {
@@ -8,22 +10,40 @@ const io = new Server(httpServer, {
   },
 })
 
-io.use((socket, next) => {
-  const username = socket.handshake.auth.username;
-  if (!username) {
-    return next(new Error("invalid username"));
+io.use((socket: ExtendedSocket, next) => {
+  const sessionID = socket.handshake.auth.sessionID
+  if (sessionID) {
+    // find existing session
+    const session = sessionStorage.findSession(sessionID)
+    if (session) {
+      socket.sessionID = sessionID
+      socket.userID = session.userID
+      socket.username = session.username
+      return next();
+    }
   }
-  (socket as any).username = username;
+  const username = socket.handshake.auth.username
+  if (!username) {
+    return next(new Error("invalid username"))
+  }
+  // create new session
+  socket.sessionID = uuidv4();
+  socket.userID = uuidv4();
+  socket.username = username;
   next();
 })
 
-io.on("connection", (socket) => {
+io.on("connection", (socket: ExtendedSocket) => {
+  socket.emit("session", {
+    sessionID: socket.sessionID,
+    userID: socket.userID,
+  })
   // fetch existing users
   const users = [];
   for (let [id, socket] of io.of("/").sockets) {
     users.push({
       userID: id,
-      username: (socket as any).username,
+      username: (socket as ExtendedSocket).username,
     })
   }
   io.emit("users", users)
@@ -31,7 +51,7 @@ io.on("connection", (socket) => {
   // notify existing users
   socket.broadcast.emit("user connected", {
     userID: socket.id,
-    username: (socket as any).username,
+    username: socket.username,
   })
 
   // forward the private message to the right recipient
