@@ -11,13 +11,13 @@ const io = new Server(httpServer, {
 })
 
 io.use((socket: ExtendedSocket, next) => {
-  const sessionID = socket.handshake.auth.sessionID
-  if (sessionID) {
+  const sessionId = socket.handshake.auth.sessionId
+  if (sessionId) {
     // find existing session
-    const session = sessionStorage.findSession(sessionID)
+    const session = sessionStorage.findSession(sessionId)
     if (session) {
-      socket.sessionID = sessionID
-      socket.userID = session.userID
+      socket.sessionId = sessionId
+      socket.userId = session.userId
       socket.username = session.username
       return next();
     }
@@ -27,22 +27,22 @@ io.use((socket: ExtendedSocket, next) => {
     return next(new Error("invalid username"))
   }
   // create new session
-  socket.sessionID = uuidv4();
-  socket.userID = uuidv4();
+  socket.sessionId = uuidv4();
+  socket.userId = uuidv4();
   socket.username = username;
   next();
 })
 
 io.on("connection", (socket: ExtendedSocket) => {
   socket.emit("session", {
-    sessionID: socket.sessionID,
-    userID: socket.userID,
+    sessionId: socket.sessionId,
+    userId: socket.userId,
   })
   // fetch existing users
   const users = [];
   for (let [id, socket] of io.of("/").sockets) {
     users.push({
-      userID: id,
+      userId: id,
       username: (socket as ExtendedSocket).username,
     })
   }
@@ -50,7 +50,7 @@ io.on("connection", (socket: ExtendedSocket) => {
 
   // notify existing users
   socket.broadcast.emit("user connected", {
-    userID: socket.id,
+    userId: socket.id,
     username: socket.username,
   })
 

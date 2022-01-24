@@ -1,5 +1,5 @@
 export interface User {
-  userID: string
+  userId: string
   username: string
   connected: boolean
   messages: Message[]
