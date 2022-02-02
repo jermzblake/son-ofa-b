@@ -2,6 +2,10 @@ import { createServer } from "http"
 import { Server } from "socket.io"
 import { v4 as uuidv4 } from 'uuid'
 import { ExtendedSocket } from './src/common/types'
+import { useSessionStore } from './useSessionStore'
+
+const { InMemorySessionStore } = useSessionStore()
+const sessionStore = new InMemorySessionStore()
 
 const httpServer = createServer()
 const io = new Server(httpServer, {
@@ -14,7 +18,7 @@ io.use((socket: ExtendedSocket, next) => {
   const sessionId = socket.handshake.auth.sessionId
   if (sessionId) {
     // find existing session
-    const session = sessionStorage.findSession(sessionId)
+    const session = sessionStore.findSession(sessionId)
     if (session) {
       socket.sessionId = sessionId
       socket.userId = session.userId
@@ -34,40 +38,67 @@ io.use((socket: ExtendedSocket, next) => {
 })
 
 io.on("connection", (socket: ExtendedSocket) => {
+  // persist session
+  sessionStore.saveSession(socket.sessionId, {
+    userId: socket.userId,
+    username: socket.username,
+    connected: true,
+  })
+
+  // emit session details
+  socket.emit("session", {
+    sessionId: socket.sessionId,
+    userId: socket.userId,
+  })
+
+  // join the "userID" room
+  socket.join(socket.userId)
+
   socket.emit("session", {
     sessionId: socket.sessionId,
     userId: socket.userId,
   })
   // fetch existing users
   const users = [];
-  for (let [id, socket] of io.of("/").sockets) {
+  sessionStore.findAllSessions().forEach((session) => {
     users.push({
-      userId: id,
-      username: (socket as ExtendedSocket).username,
-    })
-  }
+      userId: session.userId,
+      username: session.username,
+      connected: session.connected,
+    });
+  })
   io.emit("users", users)
 
   // notify existing users
   socket.broadcast.emit("user connected", {
-    userId: socket.id,
+    userId: socket.userId,
     username: socket.username,
+    connected: true
   })
 
   // forward the private message to the right recipient
   socket.on("private message", ({ content, to }) => {
-    socket.to(to).emit("private message", {
+    socket.to(to).to(socket.userId).emit("private message", {
       content,
-      from: socket.id,
+      from: socket.userId,
+      to,
     })
   })
 
   // notify users upon disconnection
-  socket.on("disconnect", () => {
-    setTimeout(() => {
-      socket.broadcast.emit("user disconnected", socket.id)
-    }, 1000) // TODO change this to 10000 in production
-    
+  socket.on("disconnect", async () => {
+    const matchingSockets = await io.in(socket.userId).allSockets()
+    const isDisconnected = matchingSockets.size === 0
+    if (isDisconnected) {
+      // notify other users
+      socket.broadcast.emit("user disconnected", socket.userId);
+      // update the connection status of the session
+      sessionStore.saveSession(socket.sessionId, {
+        userId: socket.userId,
+        username: socket.username,
+        connected: false,
+      });
+    }
   })
 })
 
