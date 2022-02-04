@@ -54,10 +54,6 @@ io.on("connection", (socket: ExtendedSocket) => {
   // join the "userID" room
   socket.join(socket.userId)
 
-  socket.emit("session", {
-    sessionId: socket.sessionId,
-    userId: socket.userId,
-  })
   // fetch existing users
   const users = [];
   sessionStore.findAllSessions().forEach((session) => {
