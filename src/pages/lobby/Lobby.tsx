@@ -37,7 +37,7 @@ const Lobby: FunctionComponent = () => {
       {users && (
         users?.map((user, index) => {
           return (
-            <Box onClick={() => selectUser(user)} style={{ cursor: 'pointer'}} key={index + user.userID} >
+            <Box onClick={() => selectUser(user)} style={{ cursor: 'pointer'}} key={index + user.userId} >
             <PlayerList user={user} selected={selectedUser} />
             </Box>
           )
