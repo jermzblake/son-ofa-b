@@ -49,6 +49,7 @@ io.on("connection", (socket: ExtendedSocket) => {
   socket.emit("session", {
     sessionId: socket.sessionId,
     userId: socket.userId,
+    username: socket.username
   })
 
   // join the "userID" room
