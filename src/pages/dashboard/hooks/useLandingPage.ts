@@ -11,20 +11,30 @@ export const useLandingPage = () => {
   
   useEffect(() => {
     const sessionId = getItem("sessionId")
+    const sessionUsername = getItem("username")
 
     if (sessionId) {
-      setUsernameSelected(true)
+      if (username) {
+        socket.auth = { sessionUsername }
+        setUsernameSelected(true)
+      }
       socket.auth = { sessionId }
       socket.connect()
+      navigate('/lobby')
     }
 
-    socket.on("session", ({ sessionId, userId }) => {
+
+    socket.on("session", ({ sessionId, userId, username }) => {
       // attach the session ID to the next reconnection attempts
       socket.auth = { sessionId }
       // store it in the localStorage
       setItem("sessionId", sessionId);
       // save the ID of the user
       (socket as any).userId = userId
+      // store username in local storage
+      setItem("username", username);
+      //save the username  to the user
+      (socket as any).username = username
     })
 
     socket.on("connect_error", (err) => {
