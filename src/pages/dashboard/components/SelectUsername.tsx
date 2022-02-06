@@ -37,7 +37,7 @@ export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({ usernam
           onClick={e => submitUsername(e)}
           type="submit"
           variant="contained"
-          color="primary"
+          color="secondary"
           disabled={!isValid()}
         >
           Submit
