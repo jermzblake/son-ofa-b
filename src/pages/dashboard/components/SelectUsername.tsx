@@ -31,6 +31,7 @@ export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({ usernam
             }
           }}
           inputRef={input => input && input.focus()}
+          InputProps={{disableUnderline: true}}
         />
         <Button
           onClick={e => submitUsername(e)}
