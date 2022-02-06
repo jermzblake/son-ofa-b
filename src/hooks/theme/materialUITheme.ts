@@ -3,40 +3,40 @@ import { ThemeOptions } from '@material-ui/core/styles/createTheme'
 import { theme } from './useStyledComponentsTheme'
 
 export const materialUiTheme = () => {
-
-  const result = useMemo(() => (): ThemeOptions => {
-    return {
-      palette: {
-        primary: {
-          main: theme.colors.primary,// '#000814'
+  const result = useMemo(
+    () => (): ThemeOptions => {
+      return {
+        palette: {
+          primary: {
+            main: theme.colors.primary // '#000814'
+          },
+          secondary: {
+            main: theme.colors.secondary // '#FFC300'
+          }
         },
-        secondary: {
-            main: theme.colors.secondary,// '#FFC300'
+        // setting the font across all components
+        typography: {
+          fontFamily: theme.fonts.primary //'Monaco'
         },
-      },
-      // setting the font across all components
-      typography: {
-        fontFamily: theme.fonts.primary, //'Monaco'
-      },
-      // this section is where we get to the bare metal of customization of material-ui
-      overrides: {
-        MuiDialog: {
+        // this section is where we get to the bare metal of customization of material-ui
+        overrides: {
+          MuiDialog: {
             paper: {
-                overflowY: 'hidden',
-                zoom: '80%'
+              overflowY: 'hidden',
+              zoom: '80%'
             }
-        },
-        MuiInputBase: {
+          },
+          MuiInputBase: {
             root: {
-                borderColor: theme.colors.lightPrimary,
-                color: theme.colors.lightPrimary,
-                border: `1px solid ${theme.colors.lightPrimary}`,
-                borderRadius: '15px'
+              borderColor: theme.colors.lightPrimary,
+              color: theme.colors.lightPrimary,
+              border: `1px solid ${theme.colors.lightPrimary}`,
+              borderRadius: '15px'
             }
-        },
-        MuiButton: {
-          // Medium
-          root: {
+          },
+          MuiButton: {
+            // Medium
+            root: {
               textTransform: 'none',
               borderRadius: '1em',
               padding: '11px 16px',
@@ -45,53 +45,55 @@ export const materialUiTheme = () => {
               fontStyle: 'normal',
               fontWeight: 500,
               lineHeight: '16px'
-          },
-          text: {
+            },
+            text: {
               padding: '11px 16px'
-          },
-          outlined: {
+            },
+            outlined: {
               padding: '10px 15px'
-          },
-          outlinedPrimary: {
-              border: '2px solid',
-          },
-          outlinedSecondary: {
-              border: '2px solid',
-          },
-          // Large
-          containedSizeLarge: {
+            },
+            outlinedPrimary: {
+              border: '2px solid'
+            },
+            outlinedSecondary: {
+              border: '2px solid'
+            },
+            // Large
+            containedSizeLarge: {
               padding: '12px 21px'
-          },
-          outlinedSizeLarge: {
+            },
+            outlinedSizeLarge: {
               padding: '11px 20px'
-          },
-          textSizeLarge: {
+            },
+            textSizeLarge: {
               padding: '12px 21px'
-          },
-          // Small
-          outlinedSizeSmall: {
+            },
+            // Small
+            outlinedSizeSmall: {
               padding: '3px 9px'
-          },
-          textSizeSmall: {
+            },
+            textSizeSmall: {
               padding: '4px 10px'
-          },
+            },
 
-          contained: {
+            contained: {
               boxShadow: 'none'
-          },
-          containedSecondary: {
+            },
+            containedSecondary: {
               color: theme.colors.secondary,
               backgroundColor: theme.colors.darkText,
               border: `1px solid ${theme.colors.border}`
-          },
-          containedPrimary: {
+            },
+            containedPrimary: {
               color: theme.colors.darkText,
-              backgroundColor: theme.colors.primary,
-          },
-      },
+              backgroundColor: theme.colors.primary
+            }
+          }
+        }
       }
-    }
-  }, [theme])
+    },
+    [theme]
+  )
   return {
     result
   }

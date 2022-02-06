@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { ThemeProvider } from 'styled-components/macro'
 import { Route, Routes } from 'react-router-dom'
 import { theme, GlobalStyle } from 'styles/globalstyles'
@@ -11,13 +11,13 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <ThemeManager>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/lobby" element={<Lobby />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/lobby" element={<Lobby />} />
+        </Routes>
       </ThemeManager>
     </ThemeProvider>
-  );
+  )
 }
 
-export default App;
+export default App
