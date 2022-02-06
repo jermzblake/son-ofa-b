@@ -31,7 +31,7 @@ export const materialUiTheme = () => {
               borderColor: theme.colors.lightPrimary,
               color: theme.colors.lightPrimary,
               border: `1px solid ${theme.colors.lightPrimary}`,
-              borderRadius: '15px'
+              borderRadius: '6px'
             }
           },
           MuiButton: {
