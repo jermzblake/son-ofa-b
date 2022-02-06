@@ -7,11 +7,12 @@ import { StatusIcon } from 'components/core/status-icon'
 
 const MessagesWrapper = styled(Box)`
   && {
-    /* position: fixed;
-    bottom: 0; */
+    position: fixed;
+    bottom: 0;
+    right: 1.5em;
     color: ${props => props.theme.colors.primary};
     background-color: white;
-    /* width: 60%; */
+    width: 24em;
     border-radius: 5px;
     margin-top: 1em;
   }
@@ -37,29 +38,46 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({ user, sendMe
 
   return (
     <MessagesWrapper>
-      <Box padding='0 2em 0'>
-        <Typography variant='h4'><StatusIcon connected={user.connected} />{user.username} Messages</Typography>
+      <Box padding="0 2em 0">
+        <Typography variant="h4">
+          <StatusIcon connected={user.connected} />
+          {user.username} Messages
+        </Typography>
       </Box>
       <Divider />
-      <Box display='flex' flexDirection='column'>
-        {user?.messages && (
+      <Box display="flex" flexDirection="column">
+        {user?.messages &&
           user?.messages.map((message, i) => {
             return (
-            <>
-              <Box color={theme.colors.lightText} key={i}>
-                <Typography variant='caption'>{message.fromSelf ? 'yourself' : user.username}</Typography>
-              </Box>
-              <Box><Typography>{message.content}</Typography></Box>
-            </>
+              <>
+                <Box color={theme.colors.lightText} key={i}>
+                  <Typography variant="caption">{message.fromSelf ? 'yourself' : user.username}</Typography>
+                </Box>
+                <Box>
+                  <Typography>{message.content}</Typography>
+                </Box>
+              </>
             )
-          })
-        )}
+          })}
       </Box>
       <Divider />
-      <Box>
-        <form autoComplete='off' onSubmit={sendMessage}>
-          <textarea value={directMessage} onChange={e => handleChange(e)} placeholder='Type message...' />
-          <Button onClick={(e) => {sendMessage(e, directMessage); setDirectMessage('')}} type='submit' variant='contained' color="primary" disabled={!isValid()}>Send</Button>
+      <Box border="1px solid red">
+        <form autoComplete="off" onSubmit={sendMessage}>
+          <Box display="flex" flexDirection="column">
+            <textarea value={directMessage} onChange={e => handleChange(e)} placeholder="Type message..." />
+            <Button
+              onClick={e => {
+                sendMessage(e, directMessage)
+                setDirectMessage('')
+              }}
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={!isValid()}
+            >
+              Send
+            </Button>
+          </Box>
         </form>
       </Box>
     </MessagesWrapper>
