@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Dialog, Box, Typography, DialogTitle } from '@material-ui/core'
+import { Dialog, Box, Typography } from '@material-ui/core'
 import { useTheme } from 'styled-components'
 import styled from 'styled-components/macro'
 import ClearIcon from '@material-ui/icons/Clear'
@@ -27,7 +27,7 @@ const TitleBox = styled(Box)`
     display: flex;
     margin: 0.5em 0.5em;
     padding-bottom: 0.8em;
-    border-bottom: 1px solid ${props => props.theme.colors.border}
+    border-bottom: 1px solid ${props => props.theme.colors.border};
   }
 `
 
@@ -46,25 +46,14 @@ interface ModalProps {
   dialogWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false
 }
 
-export const Modal: FunctionComponent<ModalProps> = ({
-  show,
-  onClose,
-  title,
-  showCancel,
-  dialogWidth,
-  children
-}) => {
+export const Modal: FunctionComponent<ModalProps> = ({ show, onClose, title, showCancel, dialogWidth, children }) => {
   const theme = useTheme()
-  
+
   return (
-    <StyledDialog
-      open={show}
-      onClose={() => onClose()}
-      maxWidth={dialogWidth}
-    >
+    <StyledDialog open={show} onClose={() => onClose()} maxWidth={dialogWidth}>
       <Box bgcolor={theme.colors.backgroundComplement} color={theme.colors.darkText}>
         <TitleBox>
-        <Box display="flex" marginLeft="auto">
+          <Box display="flex" marginLeft="auto">
             <Typography component="span" variant="h6">
               <Box color={theme.colors.lightPrimary} fontWeight="bold">
                 {title}

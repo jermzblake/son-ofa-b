@@ -14,7 +14,7 @@ interface CreateGameModalProps {
   setShowCreateGame: Function
 }
 
-export const CreateGameModal: FunctionComponent<CreateGameModalProps> =({ showCreateGame, setShowCreateGame}) => {
+export const CreateGameModal: FunctionComponent<CreateGameModalProps> = ({ showCreateGame, setShowCreateGame }) => {
   const [confirmDiscard, setConfirmDiscard] = useState(false)
 
   return (
@@ -25,11 +25,9 @@ export const CreateGameModal: FunctionComponent<CreateGameModalProps> =({ showCr
       title="Create Game"
       dialogWidth="lg"
     >
-      <Box>
-        Create Game Form
-      </Box>
-      <ConfirmModal 
-        title='DISCARD'
+      <Box>Create Game Form</Box>
+      <ConfirmModal
+        title="DISCARD"
         open={confirmDiscard}
         onClose={() => setConfirmDiscard(false)}
         onConfirm={() => {
