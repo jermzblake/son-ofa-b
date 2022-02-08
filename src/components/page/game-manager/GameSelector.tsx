@@ -12,9 +12,10 @@ const GameList = styled(Box)`
 
 export interface GameSelectorProps {
   currentGames: Game[]
+  setShowCreateGame: Function
 }
 
-export const GameSelector: FunctionComponent<GameSelectorProps> = ({ currentGames }) => {
+export const GameSelector: FunctionComponent<GameSelectorProps> = ({ currentGames, setShowCreateGame }) => {
   
   
   return (
@@ -33,7 +34,7 @@ export const GameSelector: FunctionComponent<GameSelectorProps> = ({ currentGame
           })}
         </GameList>
       )}
-      <Button>Create Game</Button>
+      <Button onClick={() => setShowCreateGame(true)}>Create Game</Button>
     </Box>
   )
 }
