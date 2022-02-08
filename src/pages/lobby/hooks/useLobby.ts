@@ -14,6 +14,7 @@ export const useLobby = () => {
   const forceUpdate = useCallback(() => updateState({}), [])
   const { getItem, setItem } = useLocalStorage()
   const [currentGames, setCurrentGames] = useState<Game[]>([])
+  const [showCreateGame, setShowCreateGame] = useState<boolean>(false)
 
   useEffect(() => {
     const sessionId = getItem("sessionId")
@@ -142,6 +143,8 @@ export const useLobby = () => {
     users,
     selectedUser,
     currentGames,
-    setCurrentGames
+    setCurrentGames,
+    showCreateGame,
+    setShowCreateGame
   } as const
 }
