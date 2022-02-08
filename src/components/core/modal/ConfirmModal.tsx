@@ -34,7 +34,7 @@ const StyledDialog = styled(Dialog)`
 
 interface ConfirmModalProps extends DialogProps {
   title: string
-  message?: string
+  message: string
   open: boolean
   onClose: () => void
   onConfirm: () => void
