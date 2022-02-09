@@ -3,6 +3,8 @@ import { Modal, ConfirmModal } from 'components/core/modal'
 import { Box } from '@material-ui/core'
 import styled from 'styled-components/macro'
 import WarningIcon from '@material-ui/icons/Warning'
+import { CreateGame } from './CreateGame'
+import { useCreateGame } from './hooks/useCreateGame'
 
 const YellowWarning = styled(WarningIcon)`
   color: orange;
@@ -16,6 +18,7 @@ interface CreateGameModalProps {
 
 export const CreateGameModal: FunctionComponent<CreateGameModalProps> = ({ showCreateGame, setShowCreateGame }) => {
   const [confirmDiscard, setConfirmDiscard] = useState(false)
+  const { newGame, setNewGame, createNewGame, handleSelect } = useCreateGame()
 
   return (
     <Modal
@@ -25,7 +28,14 @@ export const CreateGameModal: FunctionComponent<CreateGameModalProps> = ({ showC
       title="Create Game"
       dialogWidth="lg"
     >
-      <Box>Create Game Form</Box>
+      <Box>
+        <CreateGame
+          newGame={newGame}
+          setNewGame={setNewGame}
+          handleSelect={handleSelect}
+          onSubmit={() => createNewGame()}
+        />
+      </Box>
       <ConfirmModal
         title="DISCARD"
         open={confirmDiscard}
