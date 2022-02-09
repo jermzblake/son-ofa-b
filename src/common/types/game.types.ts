@@ -2,7 +2,9 @@ import { User } from './user.types'
 
 export interface Game {
   id?: string
-  players: User[]
+  players?: User[]
+  playerCount: number
   rounds: number
-  currentRound: number
+  currentRound?: number
+  creator?: string
 }
