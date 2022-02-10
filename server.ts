@@ -3,6 +3,7 @@ import { Server } from "socket.io"
 import { v4 as uuidv4 } from 'uuid'
 import { ExtendedSocket } from './src/common/types'
 import { useSessionStore } from './useSessionStore'
+import { Game } from './src/common/types'
 
 const { InMemorySessionStore } = useSessionStore()
 const sessionStore = new InMemorySessionStore()
@@ -80,6 +81,16 @@ io.on("connection", (socket: ExtendedSocket) => {
       from: socket.userId,
       to,
     })
+  })
+
+  socket.on("create new game", ({ newGame }) => {
+    newGame.id = uuidv4()
+    newGame.players = ( socket.userId)
+    newGame.creator = (socket.userId)
+    socket.emit("new game created", {
+      newGame
+    })
+    socket.join(newGame.id)
   })
 
   // notify users upon disconnection

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import socket from '../../../socket'
-import { User } from 'common/types'
+import { User, Game } from 'common/types'
 import { useNavigate } from 'react-router-dom'
 import { useLocalStorage } from 'hooks/use-local-storage/useLocalStorage'
 import { ExtendedSocket } from 'common/types/socket.types'
@@ -13,6 +13,8 @@ export const useLobby = () => {
   // @ts-ignore
   const forceUpdate = useCallback(() => updateState({}), [])
   const { getItem, setItem } = useLocalStorage()
+  const [currentGames, setCurrentGames] = useState<Game[]>([])
+  const [showCreateGame, setShowCreateGame] = useState<boolean>(false)
 
   useEffect(() => {
     const sessionId = getItem("sessionId")
@@ -139,6 +141,10 @@ export const useLobby = () => {
     sendMessage,
     selectUser,
     users,
-    selectedUser
+    selectedUser,
+    currentGames,
+    setCurrentGames,
+    showCreateGame,
+    setShowCreateGame
   } as const
 }

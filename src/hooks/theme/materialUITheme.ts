@@ -88,6 +88,45 @@ export const materialUiTheme = () => {
               color: theme.colors.darkText,
               backgroundColor: theme.colors.primary
             }
+          },
+          MuiMenu: {
+            paper: {
+              borderRadius: '8px',
+              width: '50%',
+              backgroundColor: theme.colors.backgroundComplement,
+              color: theme.colors.lightPrimary
+            }
+          },
+          MuiCard: {
+            root: {
+              backgroundColor: theme.colors.backgroundComplement,
+              color: 'white',
+              marginTop: '1em',
+              borderRadius: '0.7em',
+              padding: '0.5em',
+              // boxShadow: can create a Card shadow here
+            }
+          },
+          MuiPaper: {
+            root: {
+              backgroundColor: 'inherit'
+            }
+          },
+          MuiCardContent: {
+            root: {
+              color: theme.colors.lightPrimary
+            }
+          },
+          MuiMenuItem: {
+            root: {
+              fontSize: '.85rem',
+              paddingTop: '10px',
+              paddingBottom: '10px'
+            },
+            gutters: {
+              paddingLeft: '18px',
+              paddingRight: '18px'
+            }
           }
         }
       }

@@ -7,6 +7,7 @@ interface ThemeColours {
   third: string
   border: string
   background: string
+  backgroundComplement: string
   baseText: string
   darkText: string
   lightText: string
