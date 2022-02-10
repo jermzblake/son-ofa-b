@@ -57,6 +57,18 @@ export const useLobby = () => {
 
     socket.on("users", (users) => {
       users.forEach((user) => {
+        user.messages.forEach((message) => {
+          // @ts-ignore
+          message.fromSelf = message.from === socket.userId;
+        })
+        for (let i = 0; i < users.length; i++) {
+          const existingUser = users[i];
+          if (existingUser.userID === user.userId) {
+            existingUser.connected = user.connected
+            existingUser.messages = user.messages
+            return;
+          }
+        }
         // @ts-ignore
         user.self = user.userId === socket.userId
         initReactiveProperties(user)
@@ -89,13 +101,15 @@ export const useLobby = () => {
       }
     })
 
-    socket.on("private message", ({ content, from }) => {
+    socket.on("private message", ({ content, from, to }) => {
       for (let i = 0; i < users.length; i++) {
         const user: User = users[i]
-        if (user.userId === from) {
+        // @ts-ignore
+        const fromSelf = socket.userId === from
+        if (user.userId === (fromSelf ? to : from)) {
           user.messages.push({
             content,
-            fromSelf: false,
+            fromSelf,
           });
           if (user !== selectedUser) {
             user.hasNewMessages = true

@@ -61,7 +61,7 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({ user, sendMe
           })}
       </Box>
       <Divider />
-      <Box border="1px solid red">
+      <Box>
         <form autoComplete="off" onSubmit={sendMessage}>
           <Box display="flex" flexDirection="column">
             <textarea value={directMessage} onChange={e => handleChange(e)} placeholder="Type message..." />
