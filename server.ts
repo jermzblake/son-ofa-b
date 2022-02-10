@@ -3,10 +3,14 @@ import { Server } from "socket.io"
 import { v4 as uuidv4 } from 'uuid'
 import { ExtendedSocket } from './src/common/types'
 import { useSessionStore } from './utils/useSessionStore'
+import { useMessageStore } from  './utils/useMessageStore'
 import { Game } from './src/common/types'
 
 const { InMemorySessionStore } = useSessionStore()
 const sessionStore = new InMemorySessionStore()
+
+const { InMemoryMessageStore } = useMessageStore()
+const messageStore = new InMemoryMessageStore()
 
 const httpServer = createServer()
 const io = new Server(httpServer, {
@@ -57,12 +61,23 @@ io.on("connection", (socket: ExtendedSocket) => {
   socket.join(socket.userId)
 
   // fetch existing users
-  const users = [];
+  const users = []
+  const messagesPerUser = new Map();
+  messageStore.findMessagesForUser(socket.userId).forEach((message) => {
+    const { from, to } = message;
+    const otherUser = socket.userId === from ? to : from
+    if (messagesPerUser.has(otherUser)) {
+      messagesPerUser.get(otherUser).push(message)
+    } else {
+      messagesPerUser.set(otherUser, [message])
+    }
+  })
   sessionStore.findAllSessions().forEach((session) => {
     users.push({
       userId: session.userId,
       username: session.username,
       connected: session.connected,
+      messages: messagesPerUser.get(session.userId) || [],
     });
   })
   io.emit("users", users)
@@ -71,16 +86,19 @@ io.on("connection", (socket: ExtendedSocket) => {
   socket.broadcast.emit("user connected", {
     userId: socket.userId,
     username: socket.username,
-    connected: true
+    connected: true,
+    messages: []
   })
 
   // forward the private message to the right recipient
   socket.on("private message", ({ content, to }) => {
-    socket.to(to).to(socket.userId).emit("private message", {
+    const message = {
       content,
       from: socket.userId,
       to,
-    })
+    }
+    socket.to(to).to(socket.userId).emit("private message", message)
+    messageStore.saveMessage(message)
   })
 
   socket.on("create new game", ({ newGame }) => {
