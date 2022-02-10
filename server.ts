@@ -2,7 +2,7 @@ import { createServer } from "http"
 import { Server } from "socket.io"
 import { v4 as uuidv4 } from 'uuid'
 import { ExtendedSocket } from './src/common/types'
-import { useSessionStore } from './useSessionStore'
+import { useSessionStore } from './utils/useSessionStore'
 import { Game } from './src/common/types'
 
 const { InMemorySessionStore } = useSessionStore()
