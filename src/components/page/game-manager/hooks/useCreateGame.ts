@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Game, User} from 'common/types'
+import socket from 'socket'
 
 const newDefaultGame: Game = {
   playerCount: 3,
@@ -9,8 +10,14 @@ const newDefaultGame: Game = {
 export const useCreateGame = () => {
   const [newGame, setNewGame] = useState<Game>(newDefaultGame)
 
-  const createNewGame = () => {
+  useEffect(() => {
+  }, [])
+
+  const createNewGame = async () => {
     // handle creating new game
+    socket.emit("create new game", {
+      newGame,
+    })
     // add creating user to game? game owner?
     // push player to new game room/page
     setNewGame(newDefaultGame)
