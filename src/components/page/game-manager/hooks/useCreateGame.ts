@@ -9,6 +9,7 @@ const newDefaultGame: Game = {
 
 export const useCreateGame = () => {
   const [newGame, setNewGame] = useState<Game>(newDefaultGame)
+  const [showCreateGame, setShowCreateGame] = useState<boolean>(false)
 
   useEffect(() => {
   }, [])
@@ -35,6 +36,8 @@ export const useCreateGame = () => {
     newGame,
     setNewGame,
     createNewGame,
-    handleSelect
+    handleSelect,
+    showCreateGame,
+    setShowCreateGame
   } as const
 }
