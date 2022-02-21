@@ -105,6 +105,7 @@ io.on("connection", (socket: ExtendedSocket) => {
     newGame.id = uuidv4()
     newGame.players = [socket.userId]
     newGame.creator = (socket.userId)
+    newGame.name = socket.username + "'s"
     io.emit("new game created", {
       ...newGame
     })
