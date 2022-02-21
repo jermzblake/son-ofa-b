@@ -33,7 +33,7 @@ export const CreateGameModal: FunctionComponent<CreateGameModalProps> = ({ showC
           newGame={newGame}
           setNewGame={setNewGame}
           handleSelect={handleSelect}
-          onSubmit={() => createNewGame()}
+          onSubmit={() => {createNewGame(); setShowCreateGame(false)}}
         />
       </Box>
       <ConfirmModal

@@ -120,6 +120,10 @@ export const useLobby = () => {
       }
     })
 
+    socket.on("new game created", (newlyCreatedGame: Game) => {
+      setCurrentGames(currentGames => [...currentGames, newlyCreatedGame])
+    })
+
     return () => {
       socket.off("connect")
       socket.off("disconnect")
@@ -127,6 +131,7 @@ export const useLobby = () => {
       socket.off("user connected")
       socket.off("user disconnected")
       socket.off("private message")
+      socket.off("new game created")
     }
   }, [users, selectedUser])
 

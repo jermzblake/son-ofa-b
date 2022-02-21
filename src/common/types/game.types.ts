@@ -7,4 +7,5 @@ export interface Game {
   rounds: number
   currentRound?: number
   creator?: string
+  name?: string
 }

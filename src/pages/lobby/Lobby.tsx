@@ -8,6 +8,7 @@ import { useTheme } from 'styled-components'
 import { MessagePane } from 'components/page/messages/MessagePane'
 import { GameSelector} from 'components/page/game-manager/GameSelector'
 import { CreateGameModal } from 'components/page/game-manager/CreateGameModal'
+import { useCreateGame } from 'components/page/game-manager/hooks/useCreateGame'
 
 const LeftPanel = styled(Box)`
   && {
@@ -27,7 +28,8 @@ const LeftPanel = styled(Box)`
 
 
 const Lobby: FunctionComponent = () => {
-  const { users, selectUser, sendMessage, selectedUser, currentGames, setCurrentGames, showCreateGame, setShowCreateGame } = useLobby()
+  const { users, selectUser, sendMessage, selectedUser, currentGames, setCurrentGames,  } = useLobby()
+  const { showCreateGame, setShowCreateGame } = useCreateGame()
   const theme = useTheme()
 
    return (
