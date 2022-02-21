@@ -27,7 +27,7 @@ export const GameSelector: FunctionComponent<GameSelectorProps> = ({ currentGame
           {currentGames.map((game, index) => {
             return (
               <Box key={game.id + index} onClick={() => ''}>
-                <Typography><Box>{game.name} - {game.playerCount}</Box></Typography>
+                <Typography component='span'><Box>{game.name} - {game.playerCount}</Box></Typography>
                 <Button>Join Game</Button>
               </Box>
             )
