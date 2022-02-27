@@ -4,7 +4,34 @@ import { v4 as uuidv4 } from 'uuid'
 import { ExtendedSocket } from './src/common/types'
 import { useSessionStore } from './utils/useSessionStore'
 import { useMessageStore } from  './utils/useMessageStore'
-import { Game } from './src/common/types'
+import express, { Application, Request, Response } from "express"
+import logger from 'morgan'
+import path from 'path'
+import favicon from 'serve-favicon'
+
+const app: Application = express()
+
+app.use(logger('dev'))
+// Body parsing Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Configure both serve-favicon & static middlewares
+// to serve from the production 'build' folder but for now serving out of public
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Put API routes here, before the "catch all" route
+
+
+// Mount custom auth middleware to protect auth API routes below it
+
+
+// The following "catch all" route (note the *)is necessary
+// for a SPA's client-side routing to properly work
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 const { InMemorySessionStore } = useSessionStore()
 const sessionStore = new InMemorySessionStore()
@@ -12,7 +39,7 @@ const sessionStore = new InMemorySessionStore()
 const { InMemoryMessageStore } = useMessageStore()
 const messageStore = new InMemoryMessageStore()
 
-const httpServer = createServer()
+const httpServer = createServer(app)
 const io = new Server(httpServer, {
   cors: {
     origin: "http://localhost:3000",
@@ -129,8 +156,10 @@ io.on("connection", (socket: ExtendedSocket) => {
   })
 })
 
+// Configure to use port 3001 instead of 3000 during
+// development to avoid collision with React's dev server
 const PORT = process.env.PORT || 3001;
 
 httpServer.listen(PORT, () =>
-  console.log(`server listening at http://localhost:${PORT}`)
+  console.log(`Express app listening at http://localhost:${PORT}`)
 )
