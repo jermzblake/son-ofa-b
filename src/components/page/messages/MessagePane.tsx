@@ -49,14 +49,14 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({ user, sendMe
         {user?.messages &&
           user?.messages.map((message, i) => {
             return (
-              <>
-                <Box color={theme.colors.lightText} key={i}>
+              <Box  key={`${i}-${Math.floor(Math.random() * 10000000)}`}>
+                <Box color={theme.colors.lightText}>
                   <Typography variant="caption">{message.fromSelf ? 'yourself' : user.username}</Typography>
                 </Box>
                 <Box>
                   <Typography>{message.content}</Typography>
                 </Box>
-              </>
+              </Box>
             )
           })}
       </Box>
