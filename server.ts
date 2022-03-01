@@ -5,11 +5,15 @@ import { ExtendedSocket } from './src/common/types'
 import { useSessionStore } from './utils/useSessionStore'
 import { useMessageStore } from  './utils/useMessageStore'
 import express, { Application, Request, Response } from "express"
+import 'dotenv/config'
 import logger from 'morgan'
 import path from 'path'
 import favicon from 'serve-favicon'
+import gameRouter from './routes/api/games'
 
 const app: Application = express()
+
+import './config/database'
 
 app.use(logger('dev'))
 // Body parsing Middleware
@@ -19,13 +23,13 @@ app.use(express.urlencoded({ extended: true }));
 // Configure both serve-favicon & static middlewares
 // to serve from the production 'build' folder but for now serving out of public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Put API routes here, before the "catch all" route
 
 
 // Mount custom auth middleware to protect auth API routes below it
-
+app.use('/api/games', gameRouter)
 
 // The following "catch all" route (note the *)is necessary
 // for a SPA's client-side routing to properly work
@@ -128,15 +132,14 @@ io.on("connection", (socket: ExtendedSocket) => {
     messageStore.saveMessage(message)
   })
 
-  socket.on("create new game", ({ newGame }) => {
-    newGame.id = uuidv4()
-    newGame.players = [socket.userId]
-    newGame.creator = (socket.userId)
-    newGame.name = socket.username + "'s"
+  socket.on("create new game", ({ db_response }) => {
+    db_response.players = [socket.userId]
+    db_response.creator = (socket.userId)
+    db_response.name = socket.username + "'s"
     io.emit("new game created", {
-      ...newGame
+      ...db_response
     })
-    socket.join(newGame.id)
+    socket.join(db_response.id)
   })
 
   // notify users upon disconnection
