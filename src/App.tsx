@@ -5,6 +5,7 @@ import { theme, GlobalStyle } from 'styles/globalstyles'
 import { ThemeManager } from 'hooks/theme'
 import Home from './pages/dashboard/Home'
 import Lobby from './pages/lobby/Lobby'
+import GameRoom from './pages/game-room/GameRoom'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/lobby" element={<Lobby />} />
+          <Route path="/game/:gameId" element={<GameRoom />} />
         </Routes>
       </ThemeManager>
     </ThemeProvider>
