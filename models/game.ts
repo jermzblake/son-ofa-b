@@ -9,6 +9,7 @@ export const gameSchema = new Schema<Game>({
   currentRound: Number,
   creator: String,
   name: String,
+  dateCreated: { type: Date, default: Date.now }
 })
 
 export const GameModel = model<Game>('Game', gameSchema)
