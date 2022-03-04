@@ -16,12 +16,18 @@ export const gameService = () => {
     const data = await api.post('/', newGame).then(res => {
       return res.data
     })
-    data.id = data._id
-    delete data._id
+    return data
+  }
+
+  const getGame = async (gameId: string) => {
+    const data = await api.get(`/${gameId}`).then(res => {
+      return res.data
+    })
     return data
   }
 
   return {
-    createGame
+    createGame,
+    getGame
   } as const
 }

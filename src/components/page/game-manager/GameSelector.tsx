@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react'
 import  { Box, Button, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { Game } from 'common/types'
+import { useNavigate } from 'react-router-dom'
 
 const GameList = styled(Box)`
   && {
@@ -16,7 +17,7 @@ export interface GameSelectorProps {
 }
 
 export const GameSelector: FunctionComponent<GameSelectorProps> = ({ currentGames, setShowCreateGame }) => {
-  
+  const navigate = useNavigate()
   
   return (
     <Box>
@@ -28,7 +29,7 @@ export const GameSelector: FunctionComponent<GameSelectorProps> = ({ currentGame
             return (
               <Box key={game.id + index} onClick={() => ''}>
                 <Typography component='span'><Box>{game.name} - {game.playerCount}</Box></Typography>
-                <Button>Join Game</Button>
+                <Button color="secondary" onClick={() => navigate(`/game/${game.id}`)}>Join Game</Button>
               </Box>
             )
           })}

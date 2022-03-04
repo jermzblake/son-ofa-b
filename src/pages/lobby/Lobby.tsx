@@ -4,7 +4,6 @@ import { Box, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { useLobby } from './hooks/useLobby'
 import { PlayerList } from 'components/page/players/PlayerList'
-import { useTheme } from 'styled-components'
 import { MessagePane } from 'components/page/messages/MessagePane'
 import { GameSelector} from 'components/page/game-manager/GameSelector'
 import { CreateGameModal } from 'components/page/game-manager/CreateGameModal'
@@ -30,7 +29,6 @@ const LeftPanel = styled(Box)`
 const Lobby: FunctionComponent = () => {
   const { users, selectUser, sendMessage, selectedUser, currentGames, setCurrentGames,  } = useLobby()
   const { showCreateGame, setShowCreateGame } = useCreateGame()
-  const theme = useTheme()
 
    return (
     <MainContainer title='Lobby'>

@@ -8,4 +8,10 @@ export interface Game {
   currentRound?: number
   creator?: string
   name?: string
+  dateCreated?: Date
+}
+
+export interface MessageBoard {
+  content: string
+  sender: string
 }
