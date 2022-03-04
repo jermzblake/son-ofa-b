@@ -8,18 +8,23 @@ export const create = async (req, res) => {
       console.log(err)
       return res.json(err)
     }
+    game.id = game._id
+    delete game._id
     return res.json(game)
   })
 }
 
 export const show = async (req, res) => {
   try {
+    // Parameter is checked for valid ObjectId before
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).json({ msg: 'Game not found' })
 
     const game = await GameModel.findById(req.params.id).exec() // find one with matching gameId, otherwise 'null'
     if (!game) {
       return res.status(400).json({ msg: 'Game not found' })
     }
+    game.id = game._id
+    delete game._id
     return res.json(game)
   } catch (err) {
     console.error(err.message)
