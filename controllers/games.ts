@@ -37,3 +37,19 @@ export const index = async (req, res) => {
   // I need to map through games and change _id to id
   return res.json(games)
 }
+
+export const update = async (req, res) => {
+  try {
+   // Parameter is checked for valid ObjectId before
+   if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).json({ msg: 'Game not found' })
+   
+  const game = await GameModel.findByIdAndUpdate(req.params.id, req.body, {new: true})
+  if (!game) {
+    return res.status(400).json({ msg: 'Game not found' })
+  }
+  return res.json(game)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+}

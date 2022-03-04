@@ -5,5 +5,6 @@ import * as gameCtrl from '../../controllers/games'
 router.get('/', gameCtrl.index)
 router.get('/:id', gameCtrl.show)
 router.post('/', gameCtrl.create)
+router.put('/:id', gameCtrl.update)
 
 export default router
