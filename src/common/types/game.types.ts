@@ -10,3 +10,8 @@ export interface Game {
   name?: string
   dateCreated?: Date
 }
+
+export interface MessageBoard {
+  content: string
+  sender: string
+}
