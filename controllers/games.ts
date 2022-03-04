@@ -34,5 +34,6 @@ export const show = async (req, res) => {
 
 export const index = async (req, res) => {
   const games = await GameModel.find()
+  // I need to map through games and change _id to id
   return res.json(games)
 }

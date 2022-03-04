@@ -9,7 +9,6 @@ export const useGame = () => {
   const { getGame } = gameService()
   const { gameId } = useParams<{ gameId: string }>()
   const { getItem, setItem } = useLocalStorage()
-  const { pathname } = useLocation()
   const [currentGame, setCurrentGame] = useState<Game>(undefined)
   const [users, setUsers] = useState<User[]>([])
   const [messages, setMessages] = useState<MessageBoard[]>([])
