@@ -9,7 +9,7 @@ import 'dotenv/config'
 import logger from 'morgan'
 import path from 'path'
 import favicon from 'serve-favicon'
-import gameRouter from './routes/api/games'
+import gameRouter from './routes/api/games.routes'
 
 const app: Application = express()
 
