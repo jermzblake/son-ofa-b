@@ -34,7 +34,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "dev": "nodemon --watch server --watch controllers --watch models -e ts --exec 'ts-node' server.ts",
+    "dev": "nodemon --watch server.ts --watch controllers --watch models -e ts --exec 'ts-node' server.ts",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
