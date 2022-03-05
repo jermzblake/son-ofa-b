@@ -1,6 +1,6 @@
 import express from 'express'
 const router = express.Router()
-import * as gameCtrl from '../../controllers/games'
+import * as gameCtrl from '../../controllers/games.controller'
 
 router.get('/', gameCtrl.index)
 router.get('/:id', gameCtrl.show)

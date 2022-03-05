@@ -1,4 +1,4 @@
-import { GameModel } from '../models/game'
+import { GameModel } from '../models/game.model'
 import mongoose from 'mongoose'
 
 export const create = async (req, res) => {
