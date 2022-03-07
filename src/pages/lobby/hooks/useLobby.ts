@@ -15,6 +15,12 @@ export const useLobby = () => {
   const { getItem, setItem } = useLocalStorage()
   const [currentGames, setCurrentGames] = useState<Game[]>([])
   const [showCreateGame, setShowCreateGame] = useState<boolean>(false)
+  const [backendUser, setBackendUser] = useState<User>()
+
+  const getUser = () => {
+    socket.emit("get user")
+  }
+
 
   useEffect(() => {
     const sessionId = getItem("sessionId")
@@ -48,6 +54,8 @@ export const useLobby = () => {
         }
       })
     })
+
+    getUser()
 
     const initReactiveProperties = (user: User) => {
       user.connected = true;
@@ -87,6 +95,10 @@ export const useLobby = () => {
       initReactiveProperties(user)
       users.push(user)
       setUsers(users)
+    })
+
+    socket.on('user', (user) => {
+      setBackendUser(user)
     })
 
     socket.on("user disconnected", (id) => {
@@ -132,6 +144,7 @@ export const useLobby = () => {
       socket.off("user disconnected")
       socket.off("private message")
       socket.off("new game created")
+      socket.off("user")
     }
   }, [users, selectedUser])
 
@@ -164,6 +177,7 @@ export const useLobby = () => {
     currentGames,
     setCurrentGames,
     showCreateGame,
-    setShowCreateGame
+    setShowCreateGame,
+    backendUser
   } as const
 }
