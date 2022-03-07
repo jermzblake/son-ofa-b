@@ -5,6 +5,7 @@ import styled from 'styled-components/macro'
 import WarningIcon from '@material-ui/icons/Warning'
 import { CreateGame } from './CreateGame'
 import { useCreateGame } from './hooks/useCreateGame'
+import { User } from 'common/types'
 
 const YellowWarning = styled(WarningIcon)`
   color: orange;
@@ -14,9 +15,10 @@ const YellowWarning = styled(WarningIcon)`
 interface CreateGameModalProps {
   showCreateGame: boolean
   setShowCreateGame: Function
+  backendUser: User
 }
 
-export const CreateGameModal: FunctionComponent<CreateGameModalProps> = ({ showCreateGame, setShowCreateGame }) => {
+export const CreateGameModal: FunctionComponent<CreateGameModalProps> = ({ showCreateGame, setShowCreateGame, backendUser }) => {
   const [confirmDiscard, setConfirmDiscard] = useState(false)
   const { newGame, setNewGame, createNewGame, handleSelect } = useCreateGame()
 
@@ -33,7 +35,7 @@ export const CreateGameModal: FunctionComponent<CreateGameModalProps> = ({ showC
           newGame={newGame}
           setNewGame={setNewGame}
           handleSelect={handleSelect}
-          onSubmit={() => {createNewGame(); setShowCreateGame(false)}}
+          onSubmit={() => {createNewGame(backendUser); setShowCreateGame(false)}}
         />
       </Box>
       <ConfirmModal
