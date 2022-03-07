@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Game, User} from 'common/types'
 import socket from 'socket'
 import { gameService } from 'utils/gameService'
@@ -13,11 +13,10 @@ export const useCreateGame = () => {
   const [showCreateGame, setShowCreateGame] = useState<boolean>(false)
   const { createGame } = gameService()
 
-  useEffect(() => {
-  }, [])
-
-  const createNewGame = async () => {
+  const createNewGame = async (currentUser) => {
     // handle creating new game
+    newGame.creator = (currentUser?.userId)
+    newGame.name = currentUser?.username + "'s"
     const db_response: Game = await createGame(newGame)
     // emit newly created game
     if (db_response) {
