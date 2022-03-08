@@ -9,7 +9,7 @@ import 'dotenv/config'
 import logger from 'morgan'
 import path from 'path'
 import favicon from 'serve-favicon'
-import gameRouter from './routes/api/games'
+import gameRouter from './routes/api/games.routes'
 
 const app: Application = express()
 
@@ -132,14 +132,34 @@ io.on("connection", (socket: ExtendedSocket) => {
     messageStore.saveMessage(message)
   })
 
-  socket.on("create new game", ({ db_response }) => {
-    db_response.players = [socket.userId]
-    db_response.creator = (socket.userId)
-    db_response.name = socket.username + "'s"
+  socket.on("create new game", async ({ db_response }) => {
     io.emit("new game created", {
       ...db_response
     })
     socket.join(db_response.id)
+
+  })
+
+  socket.on("get user", () => {
+    io.to(socket.userId).emit("user", {
+      userId: socket.userId,
+      username: socket.username,
+      connected: true,
+      messages: []
+    })
+  })
+
+  socket.on("player connected", ({ game }) => {
+    io
+        .to(game?.id)
+        .emit(
+            'player ready',
+           {game, user: {
+            userId: socket.userId,
+            username: socket.username,
+            connected: true,
+           }}
+        );
   })
 
   // notify users upon disconnection
@@ -154,6 +174,7 @@ io.on("connection", (socket: ExtendedSocket) => {
         userId: socket.userId,
         username: socket.username,
         connected: false,
+        messages: []
       });
     }
   })

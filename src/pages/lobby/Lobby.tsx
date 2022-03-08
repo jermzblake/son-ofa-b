@@ -27,7 +27,7 @@ const LeftPanel = styled(Box)`
 
 
 const Lobby: FunctionComponent = () => {
-  const { users, selectUser, sendMessage, selectedUser, currentGames, setCurrentGames,  } = useLobby()
+  const { users, selectUser, sendMessage, selectedUser, currentGames, setCurrentGames, backendUser  } = useLobby()
   const { showCreateGame, setShowCreateGame } = useCreateGame()
 
    return (
@@ -50,7 +50,7 @@ const Lobby: FunctionComponent = () => {
       {selectedUser && (
       <MessagePane user={selectedUser} sendMessage={sendMessage} />
       )}
-      <CreateGameModal showCreateGame={showCreateGame} setShowCreateGame={setShowCreateGame} />
+      <CreateGameModal showCreateGame={showCreateGame} setShowCreateGame={setShowCreateGame} backendUser={backendUser} />
     </MainContainer>
   )
 }

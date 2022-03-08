@@ -6,24 +6,25 @@ import { useLocation, useParams } from 'react-router-dom'
 import { useLocalStorage } from 'hooks/use-local-storage/useLocalStorage'
 
 export const useGame = () => {
-  const { getGame } = gameService()
+  const { getGame, updateGame, addPlayerToGame } = gameService()
   const { gameId } = useParams<{ gameId: string }>()
   const { getItem, setItem } = useLocalStorage()
   const [currentGame, setCurrentGame] = useState<Game>(undefined)
   const [users, setUsers] = useState<User[]>([])
   const [messages, setMessages] = useState<MessageBoard[]>([])
     // @ts-ignore
-    const forceUpdate = useCallback(() => updateState({}), [])
+  const forceUpdate = useCallback(() => updateState({}), [])
+  const [backendUser, setBackendUser] = useState<User>()
 
   const getData = async() => {
-    const response = await getGame(gameId)
-    if (response) {
-      setCurrentGame(response)
+    const game: Game = await getGame(gameId)
+    if (game) {
+      setCurrentGame(game)
+      socket.emit('player connected', {game})
     }
   }
 
   useEffect(() => {
-    getData() 
     const sessionId = getItem("sessionId")
 
     if (sessionId) {
@@ -67,6 +68,14 @@ export const useGame = () => {
       users.push(user)
       setUsers(users)
     })
+
+    socket.on("player ready", async (game) => {
+      const updatedGame = await addPlayerToGame(game.game.id, game.user.userId)
+      if (updatedGame) {
+        setCurrentGame(updatedGame)
+        setBackendUser(game.user.userId)
+      }
+    })
   
     socket.on("user disconnected", (id) => {
       for (let i = 0; i < users.length; i++) {
@@ -79,6 +88,7 @@ export const useGame = () => {
         }
       }
     })
+    getData() 
 
     return () => {
       socket.off("connect")
@@ -87,7 +97,7 @@ export const useGame = () => {
       socket.off("user connected")
       socket.off("user disconnected")
       socket.off("private message")
-      socket.off("new game created")
+      socket.off("player ready")
     }
   }, [])
 
@@ -96,7 +106,6 @@ export const useGame = () => {
     socket.emit('group message', {content, sender: 'need the current user id'})
     setMessages([...messages, {content, sender: 'need the current user id'}])
   }
-  
 
   return { currentGame, setCurrentGame, users, messages } as const
 }
