@@ -33,8 +33,17 @@ export const gameService = () => {
     return data
   }
 
+  const addPlayerToGame = async (gameId: string, userId: string) => {
+    const data = await api.put(`/${gameId}/user/${userId}`).then(res => {
+      return res.data
+    })
+    return data
+  }
+
   return {
     createGame,
-    getGame
+    getGame,
+    updateGame,
+    addPlayerToGame
   } as const
 }
