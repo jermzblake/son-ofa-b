@@ -22,7 +22,7 @@ db.once('open', () => {
           currentRound: change.fullDocument?.currentRound,
           creator: change.fullDocument?.creator,
           name: change.fullDocument?.name,
-          dateCreated: change.fullDocument?.change
+          dateCreated: change.fullDocument?.dateCreated
         }
         if (game.id) {
         io.to(game.id).emit("game updated", game)
