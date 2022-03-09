@@ -12,6 +12,7 @@ export const useGame = () => {
   const [currentGame, setCurrentGame] = useState<Game>(undefined)
   const [users, setUsers] = useState<User[]>([])
   const [messages, setMessages] = useState<MessageBoard[]>([])
+  const [, updateState] = useState()
     // @ts-ignore
   const forceUpdate = useCallback(() => updateState({}), [])
   const [backendUser, setBackendUser] = useState<User>()
@@ -75,6 +76,11 @@ export const useGame = () => {
         setCurrentGame(updatedGame)
         setBackendUser(game.user.userId)
       }
+    })
+
+    socket.on("game updated", (game) => {
+      setCurrentGame(game)
+      forceUpdate()
     })
   
     socket.on("user disconnected", (id) => {
