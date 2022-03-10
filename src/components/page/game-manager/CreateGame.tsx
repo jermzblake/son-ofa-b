@@ -12,8 +12,11 @@ interface CreateGameProps {
 
 const useStyles = makeStyles(() => ({
   select: {
-    "width": "300px",
-    "minWidth": "0px !important"
+    width: '300px',
+    minWidth: '0px !important',
+    top: '45% !important',
+    left: '60% !important',
+    right: '0 !important'
   }
 }))
 
