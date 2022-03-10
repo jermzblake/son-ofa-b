@@ -12,8 +12,11 @@ interface CreateGameProps {
 
 const useStyles = makeStyles(() => ({
   select: {
-    "width": "300px",
-    "minWidth": "0px !important"
+    width: '300px',
+    minWidth: '0px !important',
+    top: '45% !important',
+    left: '60% !important',
+    right: '0 !important'
   }
 }))
 
@@ -77,17 +80,11 @@ export const CreateGame: FunctionComponent<CreateGameProps> = ({ onSubmit, newGa
               }}
             >
               <MenuItem value={8}>8</MenuItem>
-              <MenuItem value={9}>9</MenuItem>
               <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={11}>11</MenuItem>
               <MenuItem value={12}>12</MenuItem>
-              <MenuItem value={13}>13</MenuItem>
               <MenuItem value={14}>14</MenuItem>
-              <MenuItem value={15}>15</MenuItem>
               <MenuItem value={16}>16</MenuItem>
-              <MenuItem value={17}>17</MenuItem>
               <MenuItem value={18}>18</MenuItem>
-              <MenuItem value={19}>19</MenuItem>
               <MenuItem value={20}>20</MenuItem>
             </Select>
             <FormHelperText>Select number of rounds</FormHelperText>

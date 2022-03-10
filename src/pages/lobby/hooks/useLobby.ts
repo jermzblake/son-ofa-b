@@ -21,7 +21,6 @@ export const useLobby = () => {
     socket.emit("get user")
   }
 
-
   useEffect(() => {
     const sessionId = getItem("sessionId")
 
@@ -55,7 +54,7 @@ export const useLobby = () => {
       })
     })
 
-    getUser()
+    if (!backendUser) getUser()
 
     const initReactiveProperties = (user: User) => {
       user.connected = true;
