@@ -66,7 +66,7 @@ export const addPlayerToGame = async (req, res) => {
     if (game.players?.length >= game.playerCount) {
       throw new Error(`Game is full`)
     }
-    game.players.push(req.params.userId)
+    game.players.push(req.body)
     const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
     updatedGame.id = updatedGame._id
     delete updatedGame._id
