@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import socket from '../../../socket'
-import { User, Game, MessageBoard } from 'common/types'
+import { User, Game, MessageBoard, Player } from 'common/types'
 import { gameService } from 'utils/gameService'
 import { useLocation, useParams } from 'react-router-dom'
 import { useLocalStorage } from 'hooks/use-local-storage/useLocalStorage'
@@ -15,7 +15,7 @@ export const useGame = () => {
   const [, updateState] = useState()
     // @ts-ignore
   const forceUpdate = useCallback(() => updateState({}), [])
-  const [backendUser, setBackendUser] = useState<User>()
+  const [backendPlayer, setBackendPlayer] = useState<Player>()
 
   const getData = async() => {
     const game: Game = await getGame(gameId)
@@ -71,10 +71,24 @@ export const useGame = () => {
     })
 
     socket.on("player ready", async (game) => {
-      const updatedGame = await addPlayerToGame(game.game.id, game.user.userId)
+      const updatedGame = await addPlayerToGame(game.game.id,{
+        id: game.user.userId,
+        gamertag: game.user.username,
+        hand: [],
+        bid: null,
+        tricks: 0,
+        totalPoints: 0
+      })
       if (updatedGame) {
         setCurrentGame(updatedGame)
-        setBackendUser(game.user.userId)
+        setBackendPlayer({
+          id: game.user.userId,
+          gamertag: game.user.username,
+          hand: [],
+          bid: null,
+          tricks: 0,
+          totalPoints: 0
+        })
       }
     })
 
