@@ -3,7 +3,7 @@ import { Game } from '../src/common/types'
 
 export const gameSchema = new Schema<Game>({
   id: String,
-  players: [String],
+  players: [Object],
   playerCount: Number,
   rounds: Number,
   currentRound: Number,
