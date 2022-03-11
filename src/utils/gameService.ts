@@ -1,4 +1,4 @@
-import { Game } from 'common/types'
+import { Game, Player } from 'common/types'
 import axios from 'axios'
 
 const { REACT_APP_API_URL } = process.env
@@ -33,8 +33,8 @@ export const gameService = () => {
     return data
   }
 
-  const addPlayerToGame = async (gameId: string, userId: string) => {
-    const data = await api.put(`/${gameId}/user/${userId}`).then(res => {
+  const addPlayerToGame = async (gameId: string, player: Player) => {
+    const data = await api.put(`/${gameId}/user/${player.id}`, player).then(res => {
       return res.data
     })
     return data

@@ -159,7 +159,8 @@ io.on("connection", (socket: ExtendedSocket) => {
             username: socket.username,
             connected: true,
            }}
-        );
+        )
+        socket.join(game?.id)
   })
 
   // notify users upon disconnection
