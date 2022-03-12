@@ -22,24 +22,27 @@ export const useDeck = () => {
 
   const [deck, setDeck] = useState(getDeck())
 
-  const shuffle = (deck: PlayingCard[]) => {
-    // for 1000 turns
-    // switch the values of two random cards
-    for (let i = 0; i < 1000; i++)
-    {
-      let location1 = Math.floor((Math.random() * deck.length));
-      let location2 = Math.floor((Math.random() * deck.length));
-      let tmp = deck[location1];
+  const shuffleDeck = (deck: PlayingCard[]) => {
+    let m = deck.length, i;
 
-      deck[location1] = deck[location2];
-      deck[location2] = tmp;
+    while(m){
+      i = Math.floor(Math.random() * m--);
+
+      [deck[m], deck[i]] = [deck[i], deck[m]];
     }
+
+    return this;
+  }
+
+  const deal = (deck: PlayingCard[]) =>{
+    return deck.pop();
   }
 
   return {
-    shuffle,
+    shuffle: shuffleDeck,
     deck,
-    setDeck
+    setDeck,
+    deal
   } as const
 
 }
