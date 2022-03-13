@@ -23,19 +23,19 @@ export const useDeck = () => {
   const [deck, setDeck] = useState(getDeck())
 
   const shuffleDeck = (deck: PlayingCard[]) => {
-    let m = deck.length, i;
+    let m = deck.length, i
 
-    while(m){
+    while (m) {
       i = Math.floor(Math.random() * m--);
 
       [deck[m], deck[i]] = [deck[i], deck[m]];
     }
 
-    return this;
+    return deck
   }
 
   const deal = (deck: PlayingCard[]) =>{
-    return deck.pop();
+    return deck.pop()
   }
 
   return {
