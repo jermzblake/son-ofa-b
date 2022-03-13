@@ -1,4 +1,4 @@
-import { User } from './user.types'
+import { User, PlayingCard } from '../types'
 
 export interface Game {
   id?: string
@@ -6,9 +6,14 @@ export interface Game {
   playerCount: number
   rounds: number
   currentRound?: number
-  creator?: string
+  creator: string
   name?: string
   dateCreated?: Date
+  gameCard?: PlayingCard
+  deck?: PlayingCard[]
+  leader?: string
+  pile: PlayingCard[]
+  winner: string
 }
 
 export interface MessageBoard {
@@ -19,8 +24,12 @@ export interface MessageBoard {
 export interface Player {
   id: string
   gamertag: string
-  hand: any[]
+  hand: PlayingCard[]
   bid: number
   tricks: number
   totalPoints: number
+  ready: boolean
+  dealer: boolean
+  turn: boolean
+  playedCard?: PlayingCard | undefined
 }
