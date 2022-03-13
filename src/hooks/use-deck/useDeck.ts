@@ -20,8 +20,6 @@ export const useDeck = () => {
     return deck;
   }
 
-  const [deck, setDeck] = useState(getDeck())
-
   const shuffleDeck = (deck: PlayingCard[]) => {
     let m = deck.length, i
 
@@ -40,9 +38,8 @@ export const useDeck = () => {
 
   return {
     shuffle: shuffleDeck,
-    deck,
-    setDeck,
-    deal
+    deal,
+    getDeck
   } as const
 
 }
