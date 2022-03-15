@@ -6,14 +6,15 @@ export interface Game {
   playerCount: number
   rounds: number
   currentRound?: number
-  creator: string
+  creator?: string
   name?: string
   dateCreated?: Date
   gameCard?: PlayingCard
   deck?: PlayingCard[]
   leader?: string
-  pile: PlayingCard[]
-  winner: string
+  pile?: PlayingCard[]
+  winner?: string
+  enabled?: boolean
 }
 
 export interface MessageBoard {
@@ -32,4 +33,10 @@ export interface Player {
   dealer: boolean
   turn: boolean
   playedCard?: PlayingCard | undefined
+}
+
+export interface StarterPack {
+  players: Player[]
+  deck: PlayingCard[]
+  gameCard: PlayingCard
 }
