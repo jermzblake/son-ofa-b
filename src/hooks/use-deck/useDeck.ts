@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PlayingCard } from 'common/types/'
+import { PlayingCard, Player, StarterPack } from 'common/types/'
 
 export const useDeck = () => {
   const suits = ["spades", "diamonds", "clubs", "hearts"]
@@ -20,26 +20,44 @@ export const useDeck = () => {
     return deck;
   }
 
-  const [deck, setDeck] = useState(getDeck())
+  const shuffleDeck = (deck: PlayingCard[]) => {
+    let m = deck.length, i
 
-  const shuffle = (deck: PlayingCard[]) => {
-    // for 1000 turns
-    // switch the values of two random cards
-    for (let i = 0; i < 1000; i++)
-    {
-      let location1 = Math.floor((Math.random() * deck.length));
-      let location2 = Math.floor((Math.random() * deck.length));
-      let tmp = deck[location1];
+    while (m) {
+      i = Math.floor(Math.random() * m--);
 
-      deck[location1] = deck[location2];
-      deck[location2] = tmp;
+      [deck[m], deck[i]] = [deck[i], deck[m]];
     }
+
+    return deck
+  }
+
+  const deal = (deck: PlayingCard[], cardsPerHand: number, players: Player[], dealer?: number): StarterPack => {
+    // make dealer an optional parameter that is passed when advancing rounds of a game
+    const randomDealerNumber: number = dealer ? undefined : Math.floor(Math.random() * (players.length - 1))   
+    const currentDeck = deck
+    const dealtPlayers = players.map((player, idx) => {
+      player.hand = currentDeck.splice(0, cardsPerHand)
+      if (idx === dealer || idx === randomDealerNumber) {
+        player.dealer = true
+      } else if (idx === (dealer + 1) || idx === (randomDealerNumber + 1)) {
+        player.turn = true
+      }
+
+      return player
+    })
+    const gameCard = dealOne(currentDeck)
+    return {players: dealtPlayers, deck: currentDeck, gameCard}
+  }
+
+  const dealOne = (deck: PlayingCard[]) =>{
+    return deck.pop()
   }
 
   return {
-    shuffle,
-    deck,
-    setDeck
+    shuffle: shuffleDeck,
+    deal,
+    getDeck
   } as const
 
 }

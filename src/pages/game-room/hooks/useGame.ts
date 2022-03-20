@@ -4,9 +4,10 @@ import { User, Game, MessageBoard, Player } from 'common/types'
 import { gameService } from 'utils/gameService'
 import { useLocation, useParams } from 'react-router-dom'
 import { useLocalStorage } from 'hooks/use-local-storage/useLocalStorage'
+import { useDeck } from 'hooks/use-deck/useDeck'
 
 export const useGame = () => {
-  const { getGame, updateGame, addPlayerToGame } = gameService()
+  const { getGame, updateGame, addPlayerToGame, startBackendGame, readyPlayer } = gameService()
   const { gameId } = useParams<{ gameId: string }>()
   const { getItem, setItem } = useLocalStorage()
   const [currentGame, setCurrentGame] = useState<Game>(undefined)
@@ -16,6 +17,8 @@ export const useGame = () => {
     // @ts-ignore
   const forceUpdate = useCallback(() => updateState({}), [])
   const [backendPlayer, setBackendPlayer] = useState<Player>()
+  const { shuffle, getDeck } = useDeck()
+  const [showPreGame, setShowPreGame] = useState<boolean>(true)
 
   const getData = async() => {
     const game: Game = await getGame(gameId)
@@ -70,15 +73,18 @@ export const useGame = () => {
       setUsers(users)
     })
 
-    socket.on("player ready", async (game) => {
+    socket.on("player joined", async (game) => {
       const updatedGame = await addPlayerToGame(game.game.id,{
         id: game.user.userId,
         gamertag: game.user.username,
         hand: [],
         bid: null,
         tricks: 0,
-        totalPoints: 0
-      })
+        totalPoints: 0,
+        ready: false,
+        dealer: false,
+        turn: false
+      }) //this player object seems to work  but not below??
       if (updatedGame) {
         setCurrentGame(updatedGame)
         setBackendPlayer({
@@ -87,12 +93,21 @@ export const useGame = () => {
           hand: [],
           bid: null,
           tricks: 0,
-          totalPoints: 0
+          totalPoints: 0,
+          ready: false,
+          dealer: false,
+          turn: false
         })
       }
     })
 
     socket.on("game updated", (game) => {
+      if (game.winner){
+        // do winner work
+      }
+      if (game.enabled) {
+        setShowPreGame(false)
+      }
       setCurrentGame(game)
       forceUpdate()
     })
@@ -117,9 +132,28 @@ export const useGame = () => {
       socket.off("user connected")
       socket.off("user disconnected")
       socket.off("private message")
-      socket.off("player ready")
+      socket.off("player joined")
+      socket.off("game updated")
     }
   }, [])
+
+  const startGame = async () => {
+    //creator will be able to start game when all players are ready
+    const newDeck = (shuffle(getDeck()))
+    await startBackendGame(currentGame?.id, {...currentGame, deck: newDeck, enabled: true})
+  }
+
+  const readyUp = async () => {
+    const response = await readyPlayer(currentGame?.id, {...backendPlayer, ready: true})
+  }
+
+  const checkPlayersAreReady = () => {
+    let howManyReady = 0
+    currentGame?.players?.forEach(player => {
+      if (player.ready) howManyReady++ 
+    })
+    return howManyReady === currentGame?.playerCount
+  }
 
   const sendMessage = (e, content) => {
     e.preventDefault()
@@ -127,5 +161,5 @@ export const useGame = () => {
     setMessages([...messages, {content, sender: 'need the current user id'}])
   }
 
-  return { currentGame, setCurrentGame, users, messages } as const
+  return { currentGame, setCurrentGame, backendPlayer, messages, readyUp, showPreGame, setShowPreGame, startGame, checkPlayersAreReady } as const
 }

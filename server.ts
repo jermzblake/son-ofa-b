@@ -151,9 +151,9 @@ io.on("connection", (socket: ExtendedSocket) => {
 
   socket.on("player connected", ({ game }) => {
     io
-        .to(game?.id)
+        .to(socket.userId)
         .emit(
-            'player ready',
+            'player joined',
            {game, user: {
             userId: socket.userId,
             username: socket.username,
