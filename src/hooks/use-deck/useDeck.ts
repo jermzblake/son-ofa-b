@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PlayingCard } from 'common/types/'
+import { PlayingCard, Player, StarterPack } from 'common/types/'
 
 export const useDeck = () => {
   const suits = ["spades", "diamonds", "clubs", "hearts"]
@@ -32,7 +32,25 @@ export const useDeck = () => {
     return deck
   }
 
-  const deal = (deck: PlayingCard[]) =>{
+  const deal = (deck: PlayingCard[], cardsPerHand: number, players: Player[], dealer?: number): StarterPack => {
+    // make dealer an optional parameter that is passed when advancing rounds of a game
+    const randomDealerNumber: number = dealer ? undefined : Math.floor(Math.random() * (players.length - 1))   
+    const currentDeck = deck
+    const dealtPlayers = players.map((player, idx) => {
+      player.hand = currentDeck.splice(0, cardsPerHand)
+      if (idx === dealer || idx === randomDealerNumber) {
+        player.dealer = true
+      } else if (idx === (dealer + 1) || idx === (randomDealerNumber + 1)) {
+        player.turn = true
+      }
+
+      return player
+    })
+    const gameCard = dealOne(currentDeck)
+    return {players: dealtPlayers, deck: currentDeck, gameCard}
+  }
+
+  const dealOne = (deck: PlayingCard[]) =>{
     return deck.pop()
   }
 
