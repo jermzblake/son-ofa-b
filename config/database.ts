@@ -22,7 +22,13 @@ db.once('open', () => {
           currentRound: change.fullDocument?.currentRound,
           creator: change.fullDocument?.creator,
           name: change.fullDocument?.name,
-          dateCreated: change.fullDocument?.dateCreated
+          dateCreated: change.fullDocument?.dateCreated,
+          gameCard: change.fullDocument?.gameCard,
+          deck: change.fullDocument?.deck,
+          leader: change.fullDocument?.leader,
+          pile: change.fullDocument?.pile,
+          winner: change.fullDocument?.winner,
+          enabled: change.fullDocument?.enabled
         }
         if (game.id) {
         io.to(game.id).emit("game updated", game)
