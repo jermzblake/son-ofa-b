@@ -107,6 +107,9 @@ export const useGame = () => {
       }
       if (game.enabled) {
         setShowPreGame(false)
+        // @ts-ignore
+        const playerIndex = game.players.findIndex(player => player.id === socket.userId)
+        setBackendPlayer(game.players[playerIndex])
       }
       setCurrentGame(game)
       forceUpdate()
