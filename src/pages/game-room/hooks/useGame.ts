@@ -19,6 +19,7 @@ export const useGame = () => {
   const [backendPlayer, setBackendPlayer] = useState<Player>()
   const { shuffle, getDeck } = useDeck()
   const [showPreGame, setShowPreGame] = useState<boolean>(true)
+  const [bidsIn, setBidsIn] = useState<boolean>(false)
 
   const getData = async() => {
     const game: Game = await getGame(gameId)
@@ -110,6 +111,9 @@ export const useGame = () => {
         // @ts-ignore
         const playerIndex = game.players.findIndex(player => player.id === socket.userId)
         setBackendPlayer(game.players[playerIndex])
+        if (game.players.findIndex(player => player.bid !== true) < 0) {
+          setBidsIn(true)
+        }
       }
       setCurrentGame(game)
       forceUpdate()
@@ -164,5 +168,5 @@ export const useGame = () => {
     setMessages([...messages, {content, sender: 'need the current user id'}])
   }
 
-  return { currentGame, setCurrentGame, backendPlayer, messages, readyUp, showPreGame, setShowPreGame, startGame, checkPlayersAreReady } as const
+  return { currentGame, setCurrentGame, backendPlayer, messages, readyUp, showPreGame, setShowPreGame, startGame, checkPlayersAreReady, bidsIn } as const
 }
