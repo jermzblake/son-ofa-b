@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { MainContainer } from 'components/page/containers/MainContainer'
 import { useGame } from './hooks/useGame'
 import { PreGameModal } from './components/PreGameModal'
+import { GameBoard } from './components/GameBoard'
 
 const GameRoom: FunctionComponent = () => {
   const {
@@ -15,7 +16,8 @@ const GameRoom: FunctionComponent = () => {
     showPreGame,
     setShowPreGame,
     startGame,
-    checkPlayersAreReady
+    checkPlayersAreReady,
+    bidsIn
   } = useGame()
 
   return (
@@ -23,6 +25,8 @@ const GameRoom: FunctionComponent = () => {
       <Box>
         <Typography variant="h1">GAME ROOM</Typography>
       </Box>
+
+      <GameBoard game={currentGame} backendPlayer={backendPlayer} bidsIn={bidsIn} />
 
       <PreGameModal
         readyPlayer={readyUp}
