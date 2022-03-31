@@ -9,6 +9,7 @@ interface GameBoardProps {
   game: Game
   backendPlayer: Player
   bidsIn: boolean
+  submitPlayerBid: Function
 }
 
 const StyledGameCardWrapper = styled(Box)`
@@ -16,7 +17,7 @@ const StyledGameCardWrapper = styled(Box)`
   border: 1px solid yellow;
 `
 
-export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlayer, bidsIn }) => {
+export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlayer, bidsIn, submitPlayerBid }) => {
 
   return (
     <Box  >
@@ -29,7 +30,7 @@ export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlay
       )}
       </Box>
       <Box>
-      <PlayerHUD player={backendPlayer} game={game} bidsIn={bidsIn} />
+      <PlayerHUD player={backendPlayer} game={game} bidsIn={bidsIn} submitPlayerBid={submitPlayerBid} />
       </Box>
 
     </Box>

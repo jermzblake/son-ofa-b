@@ -7,7 +7,7 @@ import { useLocalStorage } from 'hooks/use-local-storage/useLocalStorage'
 import { useDeck } from 'hooks/use-deck/useDeck'
 
 export const useGame = () => {
-  const { getGame, updateGame, addPlayerToGame, startBackendGame, readyPlayer } = gameService()
+  const { getGame, updateGame, addPlayerToGame, startBackendGame, readyPlayer, submitBid } = gameService()
   const { gameId } = useParams<{ gameId: string }>()
   const { getItem, setItem } = useLocalStorage()
   const [currentGame, setCurrentGame] = useState<Game>(undefined)
@@ -85,7 +85,7 @@ export const useGame = () => {
         ready: false,
         dealer: false,
         turn: false
-      }) //this player object seems to work  but not below??
+      })
       if (updatedGame) {
         setCurrentGame(updatedGame)
         setBackendPlayer({
@@ -111,7 +111,7 @@ export const useGame = () => {
         // @ts-ignore
         const playerIndex = game.players.findIndex(player => player.id === socket.userId)
         setBackendPlayer(game.players[playerIndex])
-        if (game.players.findIndex(player => player.bid !== true) < 0) {
+        if (game.players.findIndex(player => player.bid === null || undefined) < 0) {
           setBidsIn(true)
         }
       }
@@ -145,7 +145,6 @@ export const useGame = () => {
   }, [])
 
   const startGame = async () => {
-    //creator will be able to start game when all players are ready
     const newDeck = (shuffle(getDeck()))
     await startBackendGame(currentGame?.id, {...currentGame, deck: newDeck, enabled: true})
   }
@@ -162,11 +161,27 @@ export const useGame = () => {
     return howManyReady === currentGame?.playerCount
   }
 
+  const submitPlayerBid = async (bid: number) => {
+    const response = await submitBid(currentGame?.id, {...backendPlayer, bid: bid})
+  }
+
   const sendMessage = (e, content) => {
     e.preventDefault()
     socket.emit('group message', {content, sender: 'need the current user id'})
     setMessages([...messages, {content, sender: 'need the current user id'}])
   }
 
-  return { currentGame, setCurrentGame, backendPlayer, messages, readyUp, showPreGame, setShowPreGame, startGame, checkPlayersAreReady, bidsIn } as const
+  return {
+    currentGame,
+    setCurrentGame,
+    backendPlayer,
+    messages,
+    readyUp,
+    showPreGame,
+    setShowPreGame,
+    startGame,
+    checkPlayersAreReady,
+    bidsIn,
+    submitPlayerBid
+  } as const
 }
