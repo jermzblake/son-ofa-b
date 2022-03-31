@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react'
-import { Box, Button, MenuItem, Select, makeStyles } from '@material-ui/core'
+import React, { FunctionComponent, useState } from 'react'
+import { Box, Button, MenuItem, Select, makeStyles, Typography } from '@material-ui/core'
 import { Game, Player } from 'common/types'
 import { GameCard } from './GameCard'
 import { useTheme } from 'styled-components'
@@ -8,14 +8,8 @@ interface PlayerHUDProps {
   player: Player
   game: Game
   bidsIn: boolean
+  submitPlayerBid: Function
 }
-
-/**
- * * create  bid selector as part of the PlayerHUD. give it absolute position on the condition of player doesn't have a bid value and turn is true
- * will need a handle bid method that makes check on bid (ex. dealer restrictions)
- * bid array is not the same for everyone. Dealer has restrictions
- * * I need to make the bid selector dependent on state. so create new state in useGame that checks if all users have made a bid
- */
 
  const useStyles = makeStyles(() => ({
   select: {
@@ -27,9 +21,10 @@ interface PlayerHUDProps {
   }
 }))
 
-export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bidsIn }) => {
+export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bidsIn, submitPlayerBid }) => {
   const theme = useTheme()
   const classes = useStyles()
+  const [playerBid, setPlayerBid] = useState<number>()
 
   const possibleBids = (): number[] => {
     let bidArray = [...Array(player?.hand?.length).keys()]
@@ -45,6 +40,11 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
     return bidArray
   }
 
+  const handleBidSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setPlayerBid(event.target.value as number)
+  }
+
+
   return (
     <>
       <Box >
@@ -52,6 +52,7 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
           {/* bid selector here */}
           {player && !bidsIn && game?.enabled &&
             <Box bgcolor={theme.colors.darkText} width='20em'>
+              <Typography>Round Bids</Typography>
               {game?.players?.map((gamer, idx) => {
                 return (
                   <Box display='flex' justifyContent='space-between' padding='1em' key={idx}>
@@ -64,6 +65,8 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
                   <Box>
                     <Box>
                       <Select
+                        value={playerBid ?? ""}
+                        onChange={e => handleBidSelect(e)}
                         MenuProps={{
                           classes: { paper: classes.select}
                         }}
@@ -75,7 +78,9 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
                         })}
                       </Select>
                     </Box>
-                  <Box><Button>Submit</Button></Box>
+                  <Box>
+                    <Button variant="outlined" onClick={() => submitPlayerBid(playerBid)} disabled={!player.turn}>Submit Bid</Button>
+                  </Box>
                   </Box>
                   }              
             </Box>
