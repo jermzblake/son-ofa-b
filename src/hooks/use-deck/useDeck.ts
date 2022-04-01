@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { PlayingCard, Player, StarterPack } from 'common/types/'
 
 export const useDeck = () => {
-  const suits = ["spades", "diamonds", "clubs", "hearts"]
-  const values = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"]
+  const suits = ["S", "D", "C", "H"]
+  const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
   
   const getDeck = () => {
     let deck: PlayingCard[] = []

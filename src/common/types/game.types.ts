@@ -26,7 +26,7 @@ export interface Player {
   id: string
   gamertag: string
   hand: PlayingCard[]
-  bid: number
+  bid: number | null
   tricks: number
   totalPoints: number
   ready: boolean

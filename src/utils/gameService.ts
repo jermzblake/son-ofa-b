@@ -50,12 +50,18 @@ export const gameService = () => {
     return data
   }
 
+  const submitBid = async (gameId: string, player: Player) => {
+    const data = api.put(`/${gameId}/player/bid`, player).then(res => res.data)
+    return data
+  }
+
   return {
     createGame,
     getGame,
     updateGame,
     addPlayerToGame,
     startBackendGame, 
-    readyPlayer
+    readyPlayer,
+    submitBid
   } as const
 }
