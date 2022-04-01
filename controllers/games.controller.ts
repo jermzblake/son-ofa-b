@@ -104,7 +104,7 @@ export const startGame =  async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).json({ msg: 'Game not found' })
     const starterDeckAndPlayers: StarterPack = useDeck().deal(req.body.deck, (req.body.rounds / 2), req.body.players)
-    let game: Game = {...req.body, players: starterDeckAndPlayers.players, deck: starterDeckAndPlayers.deck, gameCard: starterDeckAndPlayers.gameCard, currentRound: 1, enabled: true} 
+    let game: Game = {...req.body, players: starterDeckAndPlayers.players, deck: starterDeckAndPlayers.deck, trumpSuit: starterDeckAndPlayers.trumpSuit, currentRound: 1, enabled: true} 
     const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true }).exec()
     if (!updatedGame) {
       return res.status(400).json({ msg: 'Game not found' })

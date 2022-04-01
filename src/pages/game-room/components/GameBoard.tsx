@@ -21,11 +21,11 @@ export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlay
 
   return (
     <Box  >
-      {/* give gameCard a border or some sort of highlight */}
+      {/* give trumpSuit a border or some sort of highlight */}
       <Box>
-      {game?.gameCard && (
+      {game?.trumpSuit && (
         <StyledGameCardWrapper>
-          <GameCard playingCard={game?.gameCard} />
+          <GameCard playingCard={game?.trumpSuit} />
         </StyledGameCardWrapper>
       )}
       </Box>

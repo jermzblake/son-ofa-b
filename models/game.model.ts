@@ -9,7 +9,7 @@ export const gameSchema = new Schema<Game>({
   currentRound: Number,
   creator: String,
   name: String,
-  gameCard: Object,
+  trumpSuit: Object,
   deck: [Object],
   leader: String,
   pile: [Object],
