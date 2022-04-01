@@ -134,7 +134,6 @@ export const submitPlayerBid = async (req, res) => {
     } else {
       game.players[playerIndex + 1] = {...game.players[playerIndex + 1], turn: true}
     }
-
     const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
     updatedGame.id = updatedGame._id
     delete updatedGame._id
