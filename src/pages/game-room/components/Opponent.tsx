@@ -25,14 +25,14 @@ export const Opponent: FunctionComponent<OpponentProps> = ({ player, leader }) =
         <Typography variant="body1">{player.gamertag}</Typography>
       </Box>
       <Box>
+        <Box>
+          <Typography variant="body2">{player.bid}</Typography>
+        </Box>
         {player.dealer && (
           <Box fontWeight="bold" color={theme.colors.third}>
             <Typography>D</Typography>
           </Box>
         )}
-        <Box>
-          <Typography variant="body2">{player.bid}</Typography>
-        </Box>
         {leader && <StarsIcon />}
       </Box>
     </Box>
