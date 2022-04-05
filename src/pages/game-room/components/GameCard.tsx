@@ -9,13 +9,14 @@ interface PlayingCardProps {
   playingCard: PlayingCard
   handleSelect?: Function
   selectable? : boolean
+  trump?: boolean
 }
 
-export const GameCard: FunctionComponent<PlayingCardProps> = ({ playingCard, handleSelect, selectable }) => {
+export const GameCard: FunctionComponent<PlayingCardProps> = ({ playingCard, handleSelect, selectable, trump }) => {
 
   return (
     <Box onClick={() => {selectable ? handleSelect() : ""}} style={{ cursor: `{selectable ? 'grab' : "auto"}`}}>
-      <img src={`/assets/cards-4colour/${playingCard?.value}${playingCard?.suit}.svg`} alt="playing card" style={{ width: '8em'}}/>
+      <img src={`/assets/cards-4colour/${playingCard?.value}${playingCard?.suit}.svg`} alt="playing card" style={{ width: trump ? '5em' :'8em'}}/>
     </Box>
   )
 }
