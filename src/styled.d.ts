@@ -8,9 +8,11 @@ interface ThemeColours {
   border: string
   background: string
   backgroundComplement: string
+  backgroundComplementII: string
   baseText: string
   darkText: string
   lightText: string
+  base: string
 }
 
 declare module 'styled-components' {
