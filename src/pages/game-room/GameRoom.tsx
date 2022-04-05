@@ -23,10 +23,6 @@ const GameRoom: FunctionComponent = () => {
 
   return (
     <MainContainer title="Game Room">
-      <Box>
-        <Typography variant="h1">GAME ROOM</Typography>
-      </Box>
-
       <GameBoard game={currentGame} backendPlayer={backendPlayer} bidsIn={bidsIn} submitPlayerBid={submitPlayerBid} />
 
       <PreGameModal
