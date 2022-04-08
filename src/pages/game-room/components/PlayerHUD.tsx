@@ -85,6 +85,12 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
                   }              
             </Box>
           }
+          {/* selected bid here */}
+          {player && player.bid && bidsIn &&
+            <Box display='flex' bgcolor={theme.colors.backgroundComplement} width='8em' color={theme.colors.base} pl='0.5em'>
+              <Typography component="span">My Bid: {player.bid}</Typography>
+            </Box>
+          }
         </Box>
         <Box display='flex' width='min-content' border={player?.turn ? `2px solid ${theme.colors.secondary}` : 'unset'}>
           {player &&
