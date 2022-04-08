@@ -9,7 +9,7 @@ export interface Game {
   creator?: string
   name?: string
   dateCreated?: Date
-  gameCard?: PlayingCard
+  trumpSuit?: PlayingCard
   deck?: PlayingCard[]
   leader?: string
   pile?: PlayingCard[]
@@ -38,5 +38,5 @@ export interface Player {
 export interface StarterPack {
   players: Player[]
   deck: PlayingCard[]
-  gameCard: PlayingCard
+  trumpSuit: PlayingCard
 }

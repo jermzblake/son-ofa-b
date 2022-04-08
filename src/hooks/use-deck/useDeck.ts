@@ -46,8 +46,8 @@ export const useDeck = () => {
 
       return player
     })
-    const gameCard = dealOne(currentDeck)
-    return {players: dealtPlayers, deck: currentDeck, gameCard}
+    const trumpSuit = dealOne(currentDeck)
+    return {players: dealtPlayers, deck: currentDeck, trumpSuit}
   }
 
   const dealOne = (deck: PlayingCard[]) =>{

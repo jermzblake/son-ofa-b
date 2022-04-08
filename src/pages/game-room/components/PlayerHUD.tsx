@@ -47,7 +47,7 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
 
   return (
     <>
-      <Box >
+      <Box maxWidth='100%' >
         <Box>
           {/* bid selector here */}
           {player && !bidsIn && game?.enabled &&
@@ -85,13 +85,19 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
                   }              
             </Box>
           }
+          {/* selected bid here */}
+          {player && player.bid && bidsIn &&
+            <Box display='flex' bgcolor={theme.colors.backgroundComplement} width='8em' color={theme.colors.base} pl='0.5em'>
+              <Typography component="span">My Bid: {player.bid}</Typography>
+            </Box>
+          }
         </Box>
-        <Box display='flex'>
+        <Box display='flex' width='min-content' border={player?.turn ? `2px solid ${theme.colors.secondary}` : 'unset'}>
           {player &&
             player.hand?.map((card, idx) => {
               return (
                 <Box key={idx}>
-                  <GameCard playingCard={card} />
+                  <GameCard playingCard={card} selectable={player?.turn} />
                 </Box>
               )
             })}

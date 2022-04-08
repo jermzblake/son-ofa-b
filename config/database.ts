@@ -23,7 +23,7 @@ db.once('open', () => {
           creator: change.fullDocument?.creator,
           name: change.fullDocument?.name,
           dateCreated: change.fullDocument?.dateCreated,
-          gameCard: change.fullDocument?.gameCard,
+          trumpSuit: change.fullDocument?.trumpSuit,
           deck: change.fullDocument?.deck,
           leader: change.fullDocument?.leader,
           pile: change.fullDocument?.pile,
