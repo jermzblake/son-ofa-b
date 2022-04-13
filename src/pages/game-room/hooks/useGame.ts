@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import socket from '../../../socket'
-import { User, Game, MessageBoard, Player } from 'common/types'
+import { User, Game, MessageBoard, Player, PlayingCard } from 'common/types'
 import { gameService } from 'utils/gameService'
 import { useLocation, useParams } from 'react-router-dom'
 import { useLocalStorage } from 'hooks/use-local-storage/useLocalStorage'
 import { useDeck } from 'hooks/use-deck/useDeck'
+import { useTurn } from 'hooks/use-turn/useTurn'
 
 export const useGame = () => {
-  const { getGame, updateGame, addPlayerToGame, startBackendGame, readyPlayer, submitBid } = gameService()
+  const { getGame, addPlayerToGame, startBackendGame, readyPlayer, submitBid, takeTurn } = gameService()
   const { gameId } = useParams<{ gameId: string }>()
   const { getItem, setItem } = useLocalStorage()
   const [currentGame, setCurrentGame] = useState<Game>(undefined)
@@ -20,6 +21,8 @@ export const useGame = () => {
   const { shuffle, getDeck } = useDeck()
   const [showPreGame, setShowPreGame] = useState<boolean>(true)
   const [bidsIn, setBidsIn] = useState<boolean>(false)
+  const [selectedCard, setSelectedCard] = useState<PlayingCard>()
+  const { checkCardIsPlayable } = useTurn()
 
   const getData = async() => {
     const game: Game = await getGame(gameId)
@@ -165,6 +168,25 @@ export const useGame = () => {
     const response = await submitBid(currentGame?.id, {...backendPlayer, bid: bid})
   }
 
+  const handleCardSelect = async (card: PlayingCard) => {
+      //check that this card can be played (suit match player has card with trump suit)
+      // send notification if card is wrong suit
+    if (currentGame?.pile?.length > 0 && !checkCardIsPlayable(backendPlayer?.hand, card, currentGame.leader.card)) {
+      setSelectedCard(null)
+      return alert('Player must play card with suit matching leading suit')
+    }
+    if (card.suit === selectedCard?.suit && card.value === selectedCard?.value){
+      const removedCardHand = backendPlayer?.hand.filter(playerCard => playerCard.suit !== card.suit ||  playerCard.value !== card.value)
+      const response = await takeTurn(currentGame?.id, {...backendPlayer, hand: removedCardHand}, selectedCard)
+      if (response) {
+        setSelectedCard(null)
+      }
+    } else {
+      setSelectedCard(card)
+    }
+
+  }
+
   const sendMessage = (e, content) => {
     e.preventDefault()
     socket.emit('group message', {content, sender: 'need the current user id'})
@@ -182,6 +204,8 @@ export const useGame = () => {
     startGame,
     checkPlayersAreReady,
     bidsIn,
-    submitPlayerBid
+    submitPlayerBid,
+    selectedCard,
+    handleCardSelect
   } as const
 }

@@ -18,12 +18,14 @@ const GameRoom: FunctionComponent = () => {
     startGame,
     checkPlayersAreReady,
     bidsIn,
-    submitPlayerBid
+    submitPlayerBid,
+    selectedCard,
+    handleCardSelect
   } = useGame()
 
   return (
     <MainContainer title="Game Room">
-      <GameBoard game={currentGame} backendPlayer={backendPlayer} bidsIn={bidsIn} submitPlayerBid={submitPlayerBid} />
+      <GameBoard game={currentGame} backendPlayer={backendPlayer} bidsIn={bidsIn} submitPlayerBid={submitPlayerBid} handleCardSelect={handleCardSelect} selectedCard={selectedCard} />
 
       <PreGameModal
         readyPlayer={readyUp}

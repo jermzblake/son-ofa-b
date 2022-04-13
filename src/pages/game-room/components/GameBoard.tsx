@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { Box, Button, Typography } from '@material-ui/core'
 import styled from 'styled-components'
-import { Game, Player } from 'common/types'
+import { Game, Player, PlayingCard } from 'common/types'
 import { GameCard } from './GameCard'
 import { PlayerHUD } from './PlayerHUD'
 import { Opponent } from './Opponent'
@@ -11,6 +11,8 @@ interface GameBoardProps {
   backendPlayer: Player
   bidsIn: boolean
   submitPlayerBid: Function
+  handleCardSelect: Function
+  selectedCard: PlayingCard
 }
 
 const StyledGameCardWrapper = styled(Box)`
@@ -19,7 +21,7 @@ const StyledGameCardWrapper = styled(Box)`
   background-color: ${props => props.theme.colors.third};
 `
 
-export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlayer, bidsIn, submitPlayerBid }) => {
+export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlayer, bidsIn, submitPlayerBid, handleCardSelect, selectedCard }) => {
 
   return (
     <Box  width="100%">
@@ -47,7 +49,7 @@ export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlay
              * ? how can i tie this to the player that played the card?
              * */ 
             return (
-              <GameCard playingCard={card} />
+              <GameCard playingCard={card} key={idx} />
             )
           })
         )}
@@ -62,7 +64,7 @@ export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlay
       )}
       </Box>
       <Box>
-      <PlayerHUD player={backendPlayer} game={game} bidsIn={bidsIn} submitPlayerBid={submitPlayerBid} />
+      <PlayerHUD player={backendPlayer} game={game} bidsIn={bidsIn} submitPlayerBid={submitPlayerBid} selectedCard={selectedCard} handleCardSelect={handleCardSelect} />
       </Box>
 
     </Box>

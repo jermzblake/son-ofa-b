@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react'
 import { Box, Button, MenuItem, Select, makeStyles, Typography } from '@material-ui/core'
-import { Game, Player } from 'common/types'
+import { Game, Player, PlayingCard } from 'common/types'
 import { GameCard } from './GameCard'
 import { useTheme } from 'styled-components'
 
@@ -9,6 +9,8 @@ interface PlayerHUDProps {
   game: Game
   bidsIn: boolean
   submitPlayerBid: Function
+  handleCardSelect: Function
+  selectedCard: PlayingCard
 }
 
  const useStyles = makeStyles(() => ({
@@ -21,7 +23,7 @@ interface PlayerHUDProps {
   }
 }))
 
-export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bidsIn, submitPlayerBid }) => {
+export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bidsIn, submitPlayerBid, selectedCard, handleCardSelect }) => {
   const theme = useTheme()
   const classes = useStyles()
   const [playerBid, setPlayerBid] = useState<number>()
@@ -97,7 +99,7 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
             player.hand?.map((card, idx) => {
               return (
                 <Box key={idx}>
-                  <GameCard playingCard={card} selectable={player?.turn} />
+                  <GameCard playingCard={card} selectable={player?.turn} handleSelect={handleCardSelect} selectedCard={card.suit == selectedCard?.suit && card.value == selectedCard?.value} />
                 </Box>
               )
             })}
