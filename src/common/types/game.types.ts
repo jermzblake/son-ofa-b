@@ -11,7 +11,7 @@ export interface Game {
   dateCreated?: Date
   trumpSuit?: PlayingCard
   deck?: PlayingCard[]
-  leader?: string
+  leader?: Leader
   pile?: PlayingCard[]
   winner?: string
   enabled?: boolean
@@ -39,4 +39,9 @@ export interface StarterPack {
   players: Player[]
   deck: PlayingCard[]
   trumpSuit: PlayingCard
+}
+
+export interface Leader {
+  player: string
+  card: PlayingCard
 }
