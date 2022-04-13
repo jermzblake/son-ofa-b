@@ -10,5 +10,6 @@ router.put('/:id/user/:userId', gameCtrl.addPlayerToGame)
 router.put('/:id/start', gameCtrl.startGame)
 router.put('/:id/player/ready', gameCtrl.readyPlayer)
 router.put('/:id/player/bid', gameCtrl.submitPlayerBid)
+router.put('/:id/player/turn', gameCtrl.takePlayerTurn)
 
 export default router
