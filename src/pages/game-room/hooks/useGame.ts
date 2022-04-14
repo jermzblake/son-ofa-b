@@ -171,7 +171,7 @@ export const useGame = () => {
   const handleCardSelect = async (card: PlayingCard) => {
       //check that this card can be played (suit match player has card with trump suit)
       // send notification if card is wrong suit
-    if (currentGame?.pile?.length > 0 && !checkCardIsPlayable(backendPlayer?.hand, card, currentGame.leader.card)) {
+    if (currentGame?.pile?.length > 0 && !checkCardIsPlayable(backendPlayer?.hand, card, currentGame?.leadSuit)) {
       setSelectedCard(null)
       return alert('Player must play card with suit matching leading suit')
     }

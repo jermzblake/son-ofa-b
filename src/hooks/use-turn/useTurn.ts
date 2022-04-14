@@ -17,13 +17,13 @@ export const useTurn = () => {
     A: 14
   }
 
-  const checkCardIsPlayable = (hand: PlayingCard[], selectedCard: PlayingCard, trumpSuit: PlayingCard) => {
-    const suitMatch = selectedCard.suit === trumpSuit.suit
+  const checkCardIsPlayable = (hand: PlayingCard[], selectedCard: PlayingCard, leadSuit: PlayingCard) => {
+    const suitMatch = selectedCard.suit === leadSuit.suit
     if (suitMatch) {
       return true
     }
 
-    const hasSuit = hand.some(card => card.suit === trumpSuit.suit)
+    const hasSuit = hand.some(card => card.suit === leadSuit.suit)
     if (hasSuit) {
       return false
     } else {
@@ -65,6 +65,7 @@ export const useTurn = () => {
         const roundScore = Math.abs(player.bid - player.tricks) * -5
         player.totalPoints = player.totalPoints + roundScore
       }
+      player.tricks = null
     })
     return players
   }

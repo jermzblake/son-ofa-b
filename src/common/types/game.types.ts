@@ -15,6 +15,7 @@ export interface Game {
   pile?: PlayingCard[]
   winner?: string
   enabled?: boolean
+  leadSuit?: PlayingCard
 }
 
 export interface MessageBoard {

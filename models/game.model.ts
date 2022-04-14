@@ -15,6 +15,7 @@ export const gameSchema = new Schema<Game>({
   pile: [Object],
   winner: String,
   enabled: Boolean,
+  leadSuit: Object,
   dateCreated: { type: Date, default: Date.now },
 })
 

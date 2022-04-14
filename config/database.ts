@@ -28,7 +28,8 @@ db.once('open', () => {
           leader: change.fullDocument?.leader,
           pile: change.fullDocument?.pile,
           winner: change.fullDocument?.winner,
-          enabled: change.fullDocument?.enabled
+          enabled: change.fullDocument?.enabled,
+          leadSuit: change.fullDocument?.leadSuit
         }
         if (game.id) {
         io.to(game.id).emit("game updated", game)
