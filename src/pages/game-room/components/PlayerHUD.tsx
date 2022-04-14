@@ -90,7 +90,7 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
           {/* selected bid here */}
           {player && player.bid && bidsIn &&
             <Box display='flex' bgcolor={theme.colors.backgroundComplement} width='8em' color={theme.colors.base} pl='0.5em'>
-              <Typography component="span">My Bid: {player.bid}</Typography>
+              <Typography component="span"><Box>My Bid: {player.bid} &nbsp; My Tricks: {player?.tricks ?? 0}</Box></Typography>
             </Box>
           }
         </Box>
