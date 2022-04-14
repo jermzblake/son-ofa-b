@@ -116,6 +116,8 @@ export const useGame = () => {
         setBackendPlayer(game.players[playerIndex])
         if (game.players.findIndex(player => player.bid === null || undefined) < 0) {
           setBidsIn(true)
+        } else {
+          setBidsIn(false)
         }
       }
       setCurrentGame(game)
