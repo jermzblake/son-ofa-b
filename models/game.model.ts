@@ -16,6 +16,7 @@ export const gameSchema = new Schema<Game>({
   winner: String,
   enabled: Boolean,
   leadSuit: Object,
+  cardsPerHand: Number,
   dateCreated: { type: Date, default: Date.now },
 })
 

@@ -16,6 +16,7 @@ export interface Game {
   winner?: string
   enabled?: boolean
   leadSuit?: PlayingCard
+  cardsPerHand?: number
 }
 
 export interface MessageBoard {
