@@ -65,7 +65,7 @@ export const useTurn = () => {
         const roundScore = Math.abs(player.bid - player.tricks) * -5
         player.totalPoints = player.totalPoints + roundScore
       }
-      player.tricks = null
+      player.tricks = 0
     })
     return players
   }
