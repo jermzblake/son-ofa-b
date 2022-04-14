@@ -163,10 +163,12 @@ export const takePlayerTurn = async (req, res) => {
       }
     } else {
       game.leader = {player: game.players[playerIndex].id, card: req.body.card}
+      game.leadSuit = req.body.card
     } 
     if (game.players[playerIndex].dealer) {
        game.players[playerIndex].dealer = false
        game.players = useTurn().tallyTrick(game.players, game.leader.player)
+       game.leadSuit = null
       // handle end of round 
       if (game.players[playerIndex].hand.length < 1) {
         game.players = useTurn().tallyPoints(game.players)
