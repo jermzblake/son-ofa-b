@@ -57,7 +57,9 @@ export const useDeck = () => {
   const getCardsPerHand = (currentRound: number, totalRounds: number, currentHandSize: number): number => {
     if (totalRounds / currentRound == 2) {
       return 1
-    } else if (totalRounds / currentRound < 2) {
+    } else if (totalRounds / (currentRound - 1) == 2) {
+      return 1
+    }  else if (totalRounds / currentRound < 2) {
       return currentHandSize + 1
     } else {
       return currentHandSize - 1
