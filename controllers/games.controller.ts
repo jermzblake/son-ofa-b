@@ -106,7 +106,7 @@ export const startGame =  async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).json({ msg: 'Game not found' })
     const starterDeckAndPlayers: StarterPack = useDeck().deal(req.body.deck, (req.body.rounds / 2), req.body.players)
-    let game: Game = {...req.body, players: starterDeckAndPlayers.players, deck: starterDeckAndPlayers.deck, trumpSuit: starterDeckAndPlayers.trumpSuit, currentRound: 1, enabled: true} 
+    let game: Game = {...req.body, players: starterDeckAndPlayers.players, deck: starterDeckAndPlayers.deck, trumpSuit: starterDeckAndPlayers.trumpSuit, currentRound: 1, enabled: true, cardsPerHand: req.body.rounds / 2} 
     const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true }).exec()
     if (!updatedGame) {
       return res.status(400).json({ msg: 'Game not found' })
@@ -172,6 +172,15 @@ export const takePlayerTurn = async (req, res) => {
       // handle end of round 
       if (game.players[playerIndex].hand.length < 1) {
         game.players = useTurn().tallyPoints(game.players)
+        if (game.currentRound > game.rounds) {
+          /**
+           * this means that game is over
+           * 
+           * ? do i make a winner here ?
+           * ? end game from here ?
+           * add winner to game.winner by getting max value from player.totalPoints
+           */
+        }
         game.leader = null
         game.pile = []
         const lastPlace = useTurn().whoIsLast(game.players)
@@ -185,14 +194,11 @@ export const takePlayerTurn = async (req, res) => {
           player.bid = null
         })
         game.currentRound = game.currentRound + 1
-        if (game.currentRound > game.rounds) {
-          /**
-           * this means that game is over
-           * 
-           * ? do i make a winner here ?
-           * ? end game from here ?
-           */
-        }
+        game.cardsPerHand = useDeck().getCardsPerHand(game.currentRound, game.rounds, game.cardsPerHand)
+        const roundStarterDeckAndPlayers: StarterPack = useDeck().deal(useDeck().shuffle(useDeck().getDeck()), game.cardsPerHand, game.players, true)
+        game.players = roundStarterDeckAndPlayers.players
+        game.deck = roundStarterDeckAndPlayers.deck
+        game.trumpSuit = roundStarterDeckAndPlayers.trumpSuit
         const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
         updatedGame.id = updatedGame._id
         delete updatedGame._id
