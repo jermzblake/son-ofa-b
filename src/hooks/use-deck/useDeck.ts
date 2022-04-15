@@ -32,18 +32,18 @@ export const useDeck = () => {
     return deck
   }
 
-  const deal = (deck: PlayingCard[], cardsPerHand: number, players: Player[], dealer?: number): StarterPack => {
+  const deal = (deck: PlayingCard[], cardsPerHand: number, players: Player[], dealerExists?: boolean): StarterPack => {
     // make dealer an optional parameter that is passed when advancing rounds of a game
-    const randomDealerNumber: number = dealer ? undefined : Math.floor(Math.random() * (players.length - 1))   
+    const randomDealerNumber: number = Math.floor(Math.random() * (players.length - 1))   
     const currentDeck = deck
     const dealtPlayers = players.map((player, idx) => {
       player.hand = currentDeck.splice(0, cardsPerHand)
-      if (idx === dealer || idx === randomDealerNumber) {
+      if (dealerExists) return player 
+      if (idx === randomDealerNumber) {
         player.dealer = true
-      } else if (idx === (dealer + 1) || idx === (randomDealerNumber + 1)) {
+      } else if (idx === (randomDealerNumber + 1)) {
         player.turn = true
       }
-
       return player
     })
     const trumpSuit = dealOne(currentDeck)
