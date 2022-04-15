@@ -35,6 +35,7 @@ export interface Player {
   dealer: boolean
   turn: boolean
   playedCard?: PlayingCard | undefined
+  roundHistory?: roundScore[]
 }
 
 export interface StarterPack {
@@ -46,4 +47,9 @@ export interface StarterPack {
 export interface Leader {
   player: string
   card: PlayingCard
+}
+
+export interface roundScore {
+  round: number
+  score: number
 }
