@@ -29,7 +29,7 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
   const [playerBid, setPlayerBid] = useState<number>()
 
   const possibleBids = (): number[] => {
-    let bidArray = [...Array(player?.hand?.length).keys()]
+    let bidArray = [...Array(player?.hand?.length + 1).keys()]
 
     if (player && player.dealer) {
       let count = 0
@@ -99,7 +99,7 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
             player.hand?.map((card, idx) => {
               return (
                 <Box key={idx}>
-                  <GameCard playingCard={card} selectable={player?.turn} handleSelect={handleCardSelect} selectedCard={card.suit == selectedCard?.suit && card.value == selectedCard?.value} />
+                  <GameCard playingCard={card} selectable={player?.turn && (player.bid != null)} handleSelect={handleCardSelect} selectedCard={card.suit == selectedCard?.suit && card.value == selectedCard?.value} />
                 </Box>
               )
             })}
