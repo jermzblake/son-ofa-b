@@ -81,7 +81,7 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
                       </Select>
                     </Box>
                   <Box>
-                    <Button variant="outlined" onClick={() => submitPlayerBid(playerBid)} disabled={!player.turn}>Submit Bid</Button>
+                    <Button variant="outlined" onClick={() => {submitPlayerBid(playerBid); setPlayerBid(null)}} disabled={!player.turn && !playerBid}>Submit Bid</Button>
                   </Box>
                   </Box>
                   }              
