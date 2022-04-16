@@ -171,15 +171,17 @@ export const takePlayerTurn = async (req, res) => {
        game.leadSuit = null
       // handle end of round 
       if (game.players[playerIndex].hand.length < 1) {
-        game.players = useTurn().tallyPoints(game.players)
-        if (game.currentRound > game.rounds) {
-          /**
-           * this means that game is over
-           * 
-           * ? do i make a winner here ?
-           * ? end game from here ?
-           * add winner to game.winner by getting max value from player.totalPoints
-           */
+        game.players = useTurn().tallyPoints(game.players, game.currentRound)
+        if (game.currentRound === game.rounds) {
+          // Game Over
+          game.winner = game.players[useTurn().whoWon(game.players)].gamertag
+          game.players.map(player => {
+            return player.roundHistory.push({round: game.currentRound, score: player.tricks})  // this is wrong not tricks
+          })
+          const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
+          updatedGame.id = updatedGame._id
+          delete updatedGame._id
+          return res.json(updatedGame)
         }
         game.leader = null
         game.pile = []
@@ -199,6 +201,15 @@ export const takePlayerTurn = async (req, res) => {
         game.players = roundStarterDeckAndPlayers.players
         game.deck = roundStarterDeckAndPlayers.deck
         game.trumpSuit = roundStarterDeckAndPlayers.trumpSuit
+        game.players.map(player => {
+          if (!player.roundHistory || player.roundHistory.length < 1) {
+            player.roundHistory = [{round: game.currentRound, score: player.tricks}]
+            return 
+          } else {
+          player.roundHistory.push({round: game.currentRound, score: player.tricks})
+          return 
+          }
+        })
         const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
         updatedGame.id = updatedGame._id
         delete updatedGame._id
