@@ -11,10 +11,12 @@ export interface Game {
   dateCreated?: Date
   trumpSuit?: PlayingCard
   deck?: PlayingCard[]
-  leader?: string
+  leader?: Leader
   pile?: PlayingCard[]
   winner?: string
   enabled?: boolean
+  leadSuit?: PlayingCard
+  cardsPerHand?: number
 }
 
 export interface MessageBoard {
@@ -33,10 +35,21 @@ export interface Player {
   dealer: boolean
   turn: boolean
   playedCard?: PlayingCard | undefined
+  roundHistory?: roundScore[]
 }
 
 export interface StarterPack {
   players: Player[]
   deck: PlayingCard[]
   trumpSuit: PlayingCard
+}
+
+export interface Leader {
+  player: string
+  card: PlayingCard
+}
+
+export interface roundScore {
+  round: number
+  score: number
 }

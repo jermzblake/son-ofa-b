@@ -19,11 +19,16 @@ export const Opponent: FunctionComponent<OpponentProps> = ({ player, leader }) =
       justifyContent="space-between"
       bgcolor={theme.colors.backgroundComplementII}
       padding="0 0.5em"
-      width='15em'
+      width="15em"
     >
       <Box>
         <Typography variant="body1">{player.gamertag}</Typography>
       </Box>
+      {player.bid && (
+        <Box color={player.bid === player.tricks ? '#86bb71' : '#e38968'}>
+          <Typography variant="body2">{player.tricks}</Typography>
+        </Box>
+      )}
       <Box>
         <Box>
           <Typography variant="body2">{player.bid}</Typography>

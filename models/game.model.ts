@@ -11,10 +11,12 @@ export const gameSchema = new Schema<Game>({
   name: String,
   trumpSuit: Object,
   deck: [Object],
-  leader: String,
+  leader: Object,
   pile: [Object],
   winner: String,
   enabled: Boolean,
+  leadSuit: Object,
+  cardsPerHand: Number,
   dateCreated: { type: Date, default: Date.now },
 })
 

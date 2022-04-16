@@ -2,6 +2,7 @@ import { GameModel } from '../models/game.model'
 import mongoose from 'mongoose'
 import { Game, Player, StarterPack} from  '../src/common/types'
 import { useDeck } from '../src/hooks/use-deck/useDeck'
+import { useTurn } from '../src/hooks/use-turn/useTurn'
 
 export const create = async (req, res) => {
   const game = await new GameModel(req.body)
@@ -66,6 +67,7 @@ export const addPlayerToGame = async (req, res) => {
       return res.status(400).json({ msg: 'Game not found' })
     }
     if (game.players?.length >= game.playerCount) {
+      // TODO check if player is already in game and act accordingly if not throw game is full error
       throw new Error(`Game is full`)
     }
     game.players.push(req.body)
@@ -104,7 +106,7 @@ export const startGame =  async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).json({ msg: 'Game not found' })
     const starterDeckAndPlayers: StarterPack = useDeck().deal(req.body.deck, (req.body.rounds / 2), req.body.players)
-    let game: Game = {...req.body, players: starterDeckAndPlayers.players, deck: starterDeckAndPlayers.deck, trumpSuit: starterDeckAndPlayers.trumpSuit, currentRound: 1, enabled: true} 
+    let game: Game = {...req.body, players: starterDeckAndPlayers.players, deck: starterDeckAndPlayers.deck, trumpSuit: starterDeckAndPlayers.trumpSuit, currentRound: 1, enabled: true, cardsPerHand: req.body.rounds / 2} 
     const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true }).exec()
     if (!updatedGame) {
       return res.status(400).json({ msg: 'Game not found' })
@@ -138,6 +140,109 @@ export const submitPlayerBid = async (req, res) => {
     updatedGame.id = updatedGame._id
     delete updatedGame._id
     return res.json(updatedGame)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+}
+
+export const takePlayerTurn = async (req, res) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).json({ msg: 'Game not found' })
+
+    const game: Game = await GameModel.findById(req.params.id).exec() // find one with matching gameId, otherwise 'null'
+    if (!game) {
+      return res.status(400).json({ msg: 'Game not found' })
+    }
+    game.pile.push(req.body.card)
+    const playerIndex = game.players.findIndex(player => player.id === req.body.player.id)
+    game.players[playerIndex] = {...req.body.player, turn: false}
+    if(game.leader) {
+      if (useTurn().checkNewLeader(game.leader.card, req.body.card, game.trumpSuit)) {
+        game.leader = {player: game.players[playerIndex].id, card: req.body.card}
+      }
+    } else {
+      game.leader = {player: game.players[playerIndex].id, card: req.body.card}
+      game.leadSuit = req.body.card
+    } 
+    if (game.players[playerIndex].dealer) {
+       game.players[playerIndex].dealer = false
+       game.players = useTurn().tallyTrick(game.players, game.leader.player)
+       game.leadSuit = null
+      // handle end of round 
+      if (game.players[playerIndex].hand.length < 1) {
+        game.players = useTurn().tallyPoints(game.players, game.currentRound)
+        if (game.currentRound === game.rounds) {
+          // Game Over
+          game.winner = game.players[useTurn().whoWon(game.players)].gamertag
+          game.players.map(player => {
+            return player.roundHistory.push({round: game.currentRound, score: player.tricks})  // this is wrong not tricks
+          })
+          const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
+          updatedGame.id = updatedGame._id
+          delete updatedGame._id
+          return res.json(updatedGame)
+        }
+        game.leader = null
+        game.pile = []
+        const lastPlace = useTurn().whoIsLast(game.players)
+        game.players[lastPlace].dealer = true
+        if (!game.players[lastPlace + 1]) {
+          game.players[0] = {...game.players[0], turn: true}
+        } else {
+          game.players[lastPlace + 1] = {...game.players[lastPlace + 1], turn: true}
+        }
+        game.players.forEach(player => {
+          player.bid = null
+        })
+        game.currentRound = game.currentRound + 1
+        game.cardsPerHand = useDeck().getCardsPerHand(game.currentRound, game.rounds, game.cardsPerHand)
+        const roundStarterDeckAndPlayers: StarterPack = useDeck().deal(useDeck().shuffle(useDeck().getDeck()), game.cardsPerHand, game.players, true)
+        game.players = roundStarterDeckAndPlayers.players
+        game.deck = roundStarterDeckAndPlayers.deck
+        game.trumpSuit = roundStarterDeckAndPlayers.trumpSuit
+        game.players.map(player => {
+          if (!player.roundHistory || player.roundHistory.length < 1) {
+            player.roundHistory = [{round: game.currentRound, score: player.tricks}]
+            return 
+          } else {
+          player.roundHistory.push({round: game.currentRound, score: player.tricks})
+          return 
+          }
+        })
+        const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
+        updatedGame.id = updatedGame._id
+        delete updatedGame._id
+        return res.json(updatedGame)
+      }
+      
+      const leaderIndex = game.players.findIndex(player => player.id === game.leader.player)
+      // change turn to leader
+      game.players[leaderIndex].turn = true
+      if (!game.players[leaderIndex - 1]) {
+        game.players[game.players.length - 1] = {...game.players[game.players.length - 1], dealer: true}
+      } else {
+        game.players[leaderIndex - 1] = {...game.players[leaderIndex - 1], dealer: true}
+      }
+      game.leader = null
+      game.pile = []
+      const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
+      updatedGame.id = updatedGame._id
+      delete updatedGame._id
+      return res.json(updatedGame)
+
+    } else {
+      // change turns
+      if (!game.players[playerIndex + 1]) {
+        game.players[0] = {...game.players[0], turn: true}
+      } else {
+        game.players[playerIndex + 1] = {...game.players[playerIndex + 1], turn: true}
+      }
+    }
+     const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
+     updatedGame.id = updatedGame._id
+     delete updatedGame._id
+     return res.json(updatedGame)
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server Error')
