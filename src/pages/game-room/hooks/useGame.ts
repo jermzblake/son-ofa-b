@@ -108,6 +108,7 @@ export const useGame = () => {
     socket.on("game updated", (game) => {
       if (game.winner){
         // do winner work
+        alert(`${game.winner} has won!!`)
       }
       if (game.enabled) {
         setShowPreGame(false)
