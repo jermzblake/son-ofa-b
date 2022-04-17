@@ -23,12 +23,12 @@ const StyledMenuContainerBox = styled(Box)`
 
 interface GameMenuProps {
   game: Game
-} 
+}
 
 export const GameMenu: FunctionComponent<GameMenuProps> = ({ game }) => {
   const theme = useTheme()
   const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
-  
+
   return (
     <>
       <StyledMenuContainerBox>
