@@ -25,7 +25,7 @@ export const PreGameModal: FunctionComponent<PreGameModalProps> = ({
   const [confirmDiscard, setConfirmDiscard] = useState(false)
 
   return (
-    <Modal show={showPreGame} onClose={()=>{}} title="Game Menu" dialogWidth="lg">
+    <Modal show={showPreGame} title="Game Menu" dialogWidth="lg">
       <PreGameMenu
         readyPlayer={readyPlayer}
         players={players}
