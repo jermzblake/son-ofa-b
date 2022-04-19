@@ -56,24 +56,17 @@ export const useTurn = () => {
     return players
   }
 
+  // TODO set values to roundHistory based on new array construction
   const tallyPoints = (players: Player[], currentRound: number): Player[] => {
     players.forEach(player => {
       if (player.bid === player.tricks) {
         const roundScore = player.tricks * player.tricks + 10
         player.totalPoints = player.totalPoints + roundScore
-        if (!player.roundHistory || player.roundHistory.length < 1) {
-          player.roundHistory = [{round: currentRound, score: roundScore}]
-        } else {
-        player.roundHistory.push({round: currentRound, score: roundScore})
-        }
+        player.roundHistory[currentRound - 1] = {round: currentRound, score: roundScore}
       } else {
         const roundScore = Math.abs(player.bid - player.tricks) * -5
         player.totalPoints = player.totalPoints + roundScore
-        if (!player.roundHistory || player.roundHistory.length < 1) {
-          player.roundHistory = [{round: currentRound, score: roundScore}]
-        } else {
-        player.roundHistory.push({round: currentRound, score: roundScore})
-        }
+        player.roundHistory[currentRound - 1] = {round: currentRound, score: roundScore}
       }
       player.tricks = 0
     })

@@ -40,7 +40,7 @@ const ModalContent = styled(Box)`
 
 interface ModalProps {
   show: boolean
-  onClose: Function
+  onClose?: Function
   title: string
   showCancel?: boolean
   dialogWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false

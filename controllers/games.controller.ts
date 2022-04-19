@@ -175,9 +175,6 @@ export const takePlayerTurn = async (req, res) => {
         if (game.currentRound === game.rounds) {
           // Game Over
           game.winner = game.players[useTurn().whoWon(game.players)].gamertag
-          game.players.map(player => {
-            return player.roundHistory.push({round: game.currentRound, score: player.tricks})  // this is wrong not tricks
-          })
           const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
           updatedGame.id = updatedGame._id
           delete updatedGame._id
@@ -201,15 +198,6 @@ export const takePlayerTurn = async (req, res) => {
         game.players = roundStarterDeckAndPlayers.players
         game.deck = roundStarterDeckAndPlayers.deck
         game.trumpSuit = roundStarterDeckAndPlayers.trumpSuit
-        game.players.map(player => {
-          if (!player.roundHistory || player.roundHistory.length < 1) {
-            player.roundHistory = [{round: game.currentRound, score: player.tricks}]
-            return 
-          } else {
-          player.roundHistory.push({round: game.currentRound, score: player.tricks})
-          return 
-          }
-        })
         const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
         updatedGame.id = updatedGame._id
         delete updatedGame._id

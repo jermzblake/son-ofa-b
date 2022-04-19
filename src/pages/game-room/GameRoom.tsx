@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react'
 import { Box, Button, Typography } from '@material-ui/core'
-import styled from 'styled-components'
 import { MainContainer } from 'components/page/containers/MainContainer'
 import { useGame } from './hooks/useGame'
 import { PreGameModal } from './components/PreGameModal'
 import { GameBoard } from './components/GameBoard'
+import { GameMenu } from './components/GameMenu'
 
 const GameRoom: FunctionComponent = () => {
   const {
@@ -25,6 +25,8 @@ const GameRoom: FunctionComponent = () => {
 
   return (
     <MainContainer title="Game Room">
+      <Box position="relative" width='100%'>
+        <GameMenu game={currentGame} />
       <GameBoard game={currentGame} backendPlayer={backendPlayer} bidsIn={bidsIn} submitPlayerBid={submitPlayerBid} handleCardSelect={handleCardSelect} selectedCard={selectedCard} />
 
       <PreGameModal
@@ -36,6 +38,7 @@ const GameRoom: FunctionComponent = () => {
         startGame={startGame}
         checkPlayersAreReady={checkPlayersAreReady}
       />
+      </Box>
     </MainContainer>
   )
 }

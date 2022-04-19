@@ -87,7 +87,8 @@ export const useGame = () => {
         totalPoints: 0,
         ready: false,
         dealer: false,
-        turn: false
+        turn: false,
+        roundHistory: new Array(game.rounds)
       })
       if (updatedGame) {
         setCurrentGame(updatedGame)
@@ -100,7 +101,8 @@ export const useGame = () => {
           totalPoints: 0,
           ready: false,
           dealer: false,
-          turn: false
+          turn: false,
+          roundHistory: new Array(game.rounds)
         })
       }
     })
@@ -151,7 +153,7 @@ export const useGame = () => {
   }, [])
 
   const startGame = async () => {
-    const newDeck = (shuffle(getDeck()))
+    const newDeck = shuffle(getDeck())
     await startBackendGame(currentGame?.id, {...currentGame, deck: newDeck, enabled: true})
   }
 
