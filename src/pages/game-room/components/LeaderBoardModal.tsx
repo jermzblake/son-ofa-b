@@ -23,7 +23,7 @@ export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
   game
 }) => {
   const theme = useTheme()
-  const roundArray = Array.from(Array(game.rounds).keys())
+  const roundArray = Array.from(Array(game?.rounds).keys())
 
   return (
     <Modal
@@ -37,11 +37,26 @@ export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
         <TableContainer style={{ maxHeight: '20em' }}>
           <Table stickyHeader aria-label="Leader Table">
             <TableHead>
+            <TableRow>
+              <TableCell align="center" colSpan={2}>
+                {}
+              </TableCell>
+              <TableCell align="center" colSpan={20}>
+                Rounds
+              </TableCell>
+            </TableRow>
               <TableRow>
                 <TableCell>
                   <Typography variant="body1">
                     <Box fontWeight="bold" textAlign="left">
                       Players
+                    </Box>
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="body1">
+                    <Box fontWeight="bold" textAlign="left">
+                      Total
                     </Box>
                   </Typography>
                 </TableCell>
@@ -58,13 +73,6 @@ export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
                       </TableCell>
                     )
                   })}
-                <TableCell>
-                  <Typography variant="body1">
-                    <Box fontWeight="bold" textAlign="left">
-                      Total
-                    </Box>
-                  </Typography>
-                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -80,20 +88,20 @@ export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
                           </Box>
                         </Typography>
                       </TableCell>
-                      {player.roundHistory?.map((round, idx) => {
-                        return (
-                          <TableCell key={idx}>
-                            <Typography variant="body1">
-                              <Box textAlign="center">{round.score}</Box>
-                            </Typography>
-                          </TableCell>
-                        )
-                      })}
                       <TableCell>
                         <Typography variant="body1">
                           <Box textAlign="center">{player.totalPoints}</Box>
                         </Typography>
                       </TableCell>
+                      {player.roundHistory?.map((round, idx) => {
+                        return (
+                          <TableCell key={idx}>
+                            <Typography variant="body1">
+                              <Box textAlign="center">{round?.score ?? '-'}</Box>
+                            </Typography>
+                          </TableCell>
+                        )
+                      })}
                     </TableRow>
                   )
                 })}
