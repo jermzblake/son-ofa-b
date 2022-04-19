@@ -6,6 +6,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import { useLocalStorage } from 'hooks/use-local-storage/useLocalStorage'
 import { useDeck } from 'hooks/use-deck/useDeck'
 import { useTurn } from 'hooks/use-turn/useTurn'
+import toast from 'react-hot-toast'
 
 export const useGame = () => {
   const { getGame, addPlayerToGame, startBackendGame, readyPlayer, submitBid, takeTurn } = gameService()
@@ -110,7 +111,7 @@ export const useGame = () => {
     socket.on("game updated", (game) => {
       if (game.winner){
         // do winner work
-        alert(`${game.winner} has won!!`)
+        toast(`${game.winner} has won!!`, { duration: 8000, icon: '🔥' })
       }
       if (game.enabled) {
         setShowPreGame(false)
@@ -178,7 +179,7 @@ export const useGame = () => {
       // send notification if card is wrong suit
     if (currentGame?.pile?.length > 0 && !checkCardIsPlayable(backendPlayer?.hand, card, currentGame?.leadSuit)) {
       setSelectedCard(null)
-      return alert('Player must play card with suit matching leading suit')
+      return toast.error('Player must play card with suit matching leading suit')
     }
     if (card.suit === selectedCard?.suit && card.value === selectedCard?.value){
       const removedCardHand = backendPlayer?.hand.filter(playerCard => playerCard.suit !== card.suit ||  playerCard.value !== card.value)
