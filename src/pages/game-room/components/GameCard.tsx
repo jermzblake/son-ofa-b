@@ -8,6 +8,9 @@ import { useTheme } from 'styled-components'
 
 const StyledCardBox = styled(Box)`
   && {
+    transition: all 250ms ease-out;
+    will-change: scale3d;
+    transform: translateZ(0);
     :hover {
       transform: scale3d(1.25, 1.25, 1);
       z-index: 1000;
