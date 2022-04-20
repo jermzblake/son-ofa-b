@@ -3,6 +3,7 @@ import { Box, Button, MenuItem, Select, makeStyles, Typography } from '@material
 import { Game, Player, PlayingCard } from 'common/types'
 import { GameCard } from './GameCard'
 import { useTheme } from 'styled-components'
+import { PlayerInfoBar } from './PlayerInfoBar'
 
 interface PlayerHUDProps {
   player: Player
@@ -94,7 +95,7 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
             </Box>
           }
         </Box>
-        <Box display='flex' width='min-content' border={player?.turn ? `2px solid ${theme.colors.secondary}` : 'unset'}>
+        <Box display='grid' gridTemplateColumns='repeat(10, 90px)'>
           {player &&
             player.hand?.map((card, idx) => {
               return (
@@ -104,6 +105,7 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
               )
             })}
         </Box>
+        {player && <PlayerInfoBar player={player} />}
       </Box>
     </>
   )
