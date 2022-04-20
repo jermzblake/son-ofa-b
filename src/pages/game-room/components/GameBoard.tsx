@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Game, Player, PlayingCard } from 'common/types'
 import { GameCard } from './GameCard'
 import { PlayerHUD } from './PlayerHUD'
-import { Opponent } from './Opponent'
+import { PlayerInfoBar } from './PlayerInfoBar'
 
 interface GameBoardProps {
   game: Game
@@ -34,7 +34,7 @@ export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlay
               // idx 2 and 3 can both be middle
               // Use grid
               return (
-                <Opponent player={player} key={idx + player.id} />
+                <PlayerInfoBar player={player} key={idx + player.id} />
               )
             }
           })
