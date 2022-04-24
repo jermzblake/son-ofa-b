@@ -89,6 +89,7 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
             </Box>
           }
         </Box>
+        {player && <PlayerInfoBar player={player} />}
         <Box display='grid' gridTemplateColumns='repeat(10, 90px)'>
           {player &&
             player.hand?.map((card, idx) => {
@@ -99,7 +100,6 @@ export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bid
               )
             })}
         </Box>
-        {player && <PlayerInfoBar player={player} />}
       </Box>
     </>
   )
