@@ -5,6 +5,7 @@ import { Game, Player, PlayingCard } from 'common/types'
 import { GameCard } from './GameCard'
 import { PlayerHUD } from './PlayerHUD'
 import { PlayerInfoBar } from './PlayerInfoBar'
+import { BidSelectorModal } from './BidSelectorModal'
 
 interface GameBoardProps {
   game: Game
@@ -113,7 +114,7 @@ export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlay
       <Box gridArea='g' justifySelf='center'>
       <PlayerHUD player={backendPlayer} game={game} bidsIn={bidsIn} submitPlayerBid={submitPlayerBid} selectedCard={selectedCard} handleCardSelect={handleCardSelect} />
       </Box>
-
+      <BidSelectorModal game={game} player={backendPlayer} bidsIn={bidsIn} submitPlayerBid={submitPlayerBid} />
     </StyledGameBoardWrapper>
   )
 }
