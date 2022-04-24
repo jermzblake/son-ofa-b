@@ -64,10 +64,12 @@ const StyledPileWrapper = styled(Box)`
 export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlayer, bidsIn, submitPlayerBid, handleCardSelect, selectedCard }) => {
   const theme = useTheme()
   
+  const filteredPlayers = game?.players?.filter(player => player.id !== backendPlayer?.id)
   let pileObject: Object = {}
-  game?.players?.forEach((player, idx) => {
-    pileObject[player.id] = player.id === backendPlayer?.id ? -1 : idx
+  filteredPlayers?.forEach((player, idx) => {
+    pileObject[player.id] = idx
   })
+  pileObject[backendPlayer?.id] = -1
 
   const assignCardSpot = (indexNo: number) => {
     switch (indexNo) {
@@ -85,7 +87,7 @@ export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlay
   return (
     <StyledGameBoardWrapper>
         {game?.enabled && backendPlayer && (
-          game?.players?.map((player, idx) => {
+          filteredPlayers?.map((player, idx) => {
             if (player.id !== backendPlayer.id) {
               // TODO depending on players length render the items differently.
               return (
