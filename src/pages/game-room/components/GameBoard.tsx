@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from 'react'
-import { Box } from '@material-ui/core'
+import { Box, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 import { Game, Player, PlayingCard } from 'common/types'
 import { GameCard } from './GameCard'
 import { PlayerHand } from './PlayerHand'
 import { PlayerInfoBar } from './PlayerInfoBar'
 import { BidSelectorModal } from './BidSelectorModal'
+import { useTheme } from 'styled-components'
 
 interface GameBoardProps {
   game: Game
@@ -32,10 +33,11 @@ const StyledGameBoardWrapper = styled(Box)`
   
 `
 
-const StyledGameCardWrapper = styled(Box)`
+const StyledTrumpCardWrapper = styled(Box)`
   width: 5.2em;
   border: 1px solid ${props => props.theme.colors.third};
   background-color: ${props => props.theme.colors.third};
+  border-radius: 6px;
 `
 
 const StyledPileWrapper = styled(Box)`
@@ -60,6 +62,8 @@ const StyledPileWrapper = styled(Box)`
  }
 
 export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlayer, bidsIn, submitPlayerBid, handleCardSelect, selectedCard }) => {
+  const theme = useTheme()
+  
   let pileObject: Object = {}
   game?.players?.forEach((player, idx) => {
     pileObject[player.id] = player.id === backendPlayer?.id ? -1 : idx
@@ -105,10 +109,10 @@ export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlay
         </StyledPileWrapper>
       <Box gridArea='g' justifySelf='start'>
       {game?.trumpSuit && (
-        <StyledGameCardWrapper>
+        <StyledTrumpCardWrapper>
           <GameCard playingCard={game?.trumpSuit} trump />
-          <Box>Trump</Box>
-        </StyledGameCardWrapper>
+          <Typography variant='h5'><Box color={theme.colors.secondary}>TRUMP</Box></Typography>
+        </StyledTrumpCardWrapper>
       )}
       </Box>
       <Box gridArea='g' justifySelf='center'>
