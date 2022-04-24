@@ -4,12 +4,12 @@ import { Player } from 'common/types'
 import { useTheme } from 'styled-components'
 import StarsIcon from '@material-ui/icons/Stars';
 
-interface OpponentProps {
+interface PlayerInfoBarProps {
   player: Player
   leader?: boolean
 }
 
-export const Opponent: FunctionComponent<OpponentProps> = ({ player, leader }) => {
+export const PlayerInfoBar: FunctionComponent<PlayerInfoBarProps> = ({ player, leader }) => {
   const theme = useTheme()
 
   return (
