@@ -2,8 +2,9 @@ import React, { FunctionComponent } from 'react'
 import { Modal } from 'components/core/modal'
 import { Game } from 'common/types'
 import styled from 'styled-components'
-import { Box, Typography, Table, TableContainer, TableCell, TableRow, TableHead, TableBody } from '@material-ui/core'
+import { Box, Typography, Table, TableContainer, TableCell, TableRow, TableHead, TableBody, Button } from '@material-ui/core'
 import { useTheme } from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 const LeaderBoardContainer = styled(Box)`
   width: 100%;
@@ -24,6 +25,7 @@ export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
 }) => {
   const theme = useTheme()
   const roundArray = Array.from(Array(game?.rounds).keys())
+  const navigate = useNavigate()
 
   return (
     <Modal
@@ -108,6 +110,11 @@ export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
             </TableBody>
           </Table>
         </TableContainer>
+        {game?.winner &&
+          <Box mt='2em'>
+            <Button variant='outlined' onClick={() => navigate('/lobby')}>Leave Game</Button>
+          </Box>
+        }
       </LeaderBoardContainer>
     </Modal>
   )
