@@ -1,21 +1,17 @@
-import React, { FunctionComponent, useState } from 'react'
-import { Box, Button, MenuItem, Select, makeStyles, Typography } from '@material-ui/core'
+import React, { FunctionComponent } from 'react'
+import { Box } from '@material-ui/core'
 import { Game, Player, PlayingCard } from 'common/types'
 import { GameCard } from './GameCard'
-import { useTheme } from 'styled-components'
 import { PlayerInfoBar } from './PlayerInfoBar'
 
-interface PlayerHUDProps {
+interface PlayerHandProps {
   player: Player
   game: Game
-  bidsIn: boolean
-  submitPlayerBid: Function
   handleCardSelect: Function
   selectedCard: PlayingCard
 }
 
-export const PlayerHUD: FunctionComponent<PlayerHUDProps> = ({ player, game, bidsIn, submitPlayerBid, selectedCard, handleCardSelect }) => {
-  const theme = useTheme()
+export const PlayerHand: FunctionComponent<PlayerHandProps> = ({ player, game, selectedCard, handleCardSelect }) => {
 
   return (
     <>

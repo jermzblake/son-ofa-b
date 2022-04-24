@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react'
-import { Box, Button, Typography } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 import styled from 'styled-components'
 import { Game, Player, PlayingCard } from 'common/types'
 import { GameCard } from './GameCard'
-import { PlayerHUD } from './PlayerHUD'
+import { PlayerHand } from './PlayerHand'
 import { PlayerInfoBar } from './PlayerInfoBar'
 import { BidSelectorModal } from './BidSelectorModal'
 
@@ -112,7 +112,7 @@ export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlay
       )}
       </Box>
       <Box gridArea='g' justifySelf='center'>
-      <PlayerHUD player={backendPlayer} game={game} bidsIn={bidsIn} submitPlayerBid={submitPlayerBid} selectedCard={selectedCard} handleCardSelect={handleCardSelect} />
+      <PlayerHand player={backendPlayer} game={game} selectedCard={selectedCard} handleCardSelect={handleCardSelect} />
       </Box>
       <BidSelectorModal game={game} player={backendPlayer} bidsIn={bidsIn} submitPlayerBid={submitPlayerBid} />
     </StyledGameBoardWrapper>
