@@ -12,7 +12,7 @@ export interface Game {
   trumpSuit?: PlayingCard
   deck?: PlayingCard[]
   leader?: Leader
-  pile?: PlayingCard[]
+  pile?: PileCard[]
   winner?: string
   enabled?: boolean
   leadSuit?: PlayingCard
@@ -35,7 +35,7 @@ export interface Player {
   dealer: boolean
   turn: boolean
   playedCard?: PlayingCard | undefined
-  roundHistory?: roundScore[]
+  roundHistory?: RoundScore[]
 }
 
 export interface StarterPack {
@@ -49,7 +49,12 @@ export interface Leader {
   card: PlayingCard
 }
 
-export interface roundScore {
+export interface RoundScore {
   round: number
   score: number
+}
+
+export interface PileCard {
+  card: PlayingCard
+  player: string | number
 }
