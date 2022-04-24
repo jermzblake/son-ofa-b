@@ -154,7 +154,7 @@ export const takePlayerTurn = async (req, res) => {
     if (!game) {
       return res.status(400).json({ msg: 'Game not found' })
     }
-    game.pile.push(req.body.card)
+    game.pile.push({ card: req.body.card, player: req.body.player.id })
     const playerIndex = game.players.findIndex(player => player.id === req.body.player.id)
     game.players[playerIndex] = {...req.body.player, turn: false}
     if(game.leader) {
