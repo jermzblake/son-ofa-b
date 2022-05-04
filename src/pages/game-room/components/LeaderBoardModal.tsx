@@ -82,8 +82,8 @@ export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
                 game.players?.length > 0 &&
                 game.players.map((player, idx) => {
                   return (
-                    <TableRow>
-                      <TableCell key={idx + player.id}>
+                    <TableRow key={idx + player.id}>
+                      <TableCell>
                         <Typography variant="body1">
                           <Box fontWeight="bold" textAlign="left">
                             {player.gamertag}
