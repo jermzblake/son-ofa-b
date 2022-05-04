@@ -91,8 +91,8 @@ export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlay
             if (player.id !== backendPlayer.id) {
               // TODO depending on players length render the items differently.
               return (
-                <Box gridArea={gameBoardGridMap[idx]} alignSelf='center' justifySelf='center'>
-                <PlayerInfoBar player={player} key={idx + player.id} />
+                <Box gridArea={gameBoardGridMap[idx]} alignSelf='center' justifySelf='center' key={idx + player.id}>
+                <PlayerInfoBar player={player} />
                 </Box>
               )
             }
@@ -102,8 +102,8 @@ export const GameBoard: FunctionComponent<GameBoardProps> = ({ game, backendPlay
         {bidsIn && (
           game?.pile?.map((p, idx) => {
             return (
-              <Box gridArea={assignCardSpot(pileObject[p.player])}>
-              <GameCard playingCard={p.card} key={idx} />
+              <Box gridArea={assignCardSpot(pileObject[p.player])} key={idx}>
+              <GameCard playingCard={p.card} />
               </Box>
             )
           })
