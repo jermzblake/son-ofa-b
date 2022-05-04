@@ -29,7 +29,21 @@ export const useGame = () => {
     const game: Game = await getGame(gameId)
     if (game) {
       setCurrentGame(game)
+      if (game.enabled) {
+        setShowPreGame(false)
+        const playerIndex = game.players?.findIndex(player => player.id === (socket as any).userId)
+        if (playerIndex > -1) {
+        setBackendPlayer(game.players[playerIndex])
+        socket.emit('player reconnected', {game , playerIndex})
+        }
+        if (game.players.findIndex(player => player.bid === null || undefined) < 0) {
+          setBidsIn(true)
+        } else {
+          setBidsIn(false)
+        }
+      } else {
       socket.emit('player connected', {game})
+      }
     }
   }
 
@@ -108,6 +122,11 @@ export const useGame = () => {
       }
     })
 
+    socket.on("player rejoined", (player) => {
+      setBackendPlayer(player)
+      forceUpdate()
+    })
+
     socket.on("game updated", (game) => {
       if (game.winner){
         // do winner work
@@ -150,6 +169,7 @@ export const useGame = () => {
       socket.off("private message")
       socket.off("player joined")
       socket.off("game updated")
+      socket.off("player rejoined")
     }
   }, [])
 
