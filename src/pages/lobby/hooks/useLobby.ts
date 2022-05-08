@@ -3,7 +3,7 @@ import socket from '../../../socket'
 import { User, Game } from 'common/types'
 import { useNavigate } from 'react-router-dom'
 import { useLocalStorage } from 'hooks/use-local-storage/useLocalStorage'
-import { ExtendedSocket } from 'common/types/socket.types'
+import { gameService } from 'utils/gameService'
 
 export const useLobby = () => {
   const navigate = useNavigate()
@@ -16,9 +16,19 @@ export const useLobby = () => {
   const [currentGames, setCurrentGames] = useState<Game[]>([])
   const [showCreateGame, setShowCreateGame] = useState<boolean>(false)
   const [backendUser, setBackendUser] = useState<User>()
+  const { getNewGames } = gameService()
 
   const getUser = () => {
     socket.emit("get user")
+  }
+
+  const getOpenGames = async () => {
+    const games: Game[] = await getNewGames()
+    console.log('games', games)
+    if (games && games.length > 0) {
+      console.log('games exist')
+      setCurrentGames(games)
+    }
   }
 
   useEffect(() => {
@@ -61,6 +71,8 @@ export const useLobby = () => {
       user.messages = [];
       user.hasNewMessages = false;
     }
+
+    getOpenGames()
 
     socket.on("users", (users) => {
       users.forEach((user) => {
