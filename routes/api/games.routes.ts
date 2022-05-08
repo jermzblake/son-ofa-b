@@ -4,6 +4,7 @@ import * as gameCtrl from '../../controllers/games.controller'
 
 router.get('/', gameCtrl.index)
 router.get('/:id', gameCtrl.show)
+router.get('/unplayed/index', gameCtrl.getNewGames)
 router.post('/', gameCtrl.create)
 router.put('/:id', gameCtrl.update)
 router.put('/:id/user/:userId', gameCtrl.addPlayerToGame)
