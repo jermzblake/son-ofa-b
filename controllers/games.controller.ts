@@ -5,7 +5,7 @@ import { useDeck } from '../src/hooks/use-deck/useDeck'
 import { useTurn } from '../src/hooks/use-turn/useTurn'
 
 export const create = async (req, res) => {
-  const game = await new GameModel(req.body)
+  const game = await new GameModel({...req.body, enabled: false})
   game.save(err => {
     if (err) {
       console.log(err)
@@ -37,7 +37,16 @@ export const show = async (req, res) => {
 
 export const index = async (req, res) => {
   const games = await GameModel.find()
-  // I need to map through games and change _id to id
+  // TODO need to map through games and change _id to id
+  return res.json(games)
+}
+
+export const getNewGames = async (req, res) => {
+  const games = await GameModel.find({ enabled: false, }).sort({dateCreated: 'desc'})
+  games.forEach(game => {
+    game.id = game._id
+    delete game._id
+  })
   return res.json(games)
 }
 

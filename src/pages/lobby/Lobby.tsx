@@ -5,16 +5,13 @@ import styled from 'styled-components'
 import { useLobby } from './hooks/useLobby'
 import { PlayerList } from 'components/page/players/PlayerList'
 import { MessagePane } from 'components/page/messages/MessagePane'
-import { GameSelector} from 'components/page/game-manager/GameSelector'
+import { GameSelector } from 'components/page/game-manager/GameSelector'
 import { CreateGameModal } from 'components/page/game-manager/CreateGameModal'
 import { useCreateGame } from 'components/page/game-manager/hooks/useCreateGame'
 
 const LeftPanel = styled(Box)`
   && {
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    height: 100%;
     width: 20%;
     max-width: 16.5em;
     align-self: flex-start;
@@ -25,32 +22,36 @@ const LeftPanel = styled(Box)`
   }
 `
 
-
 const Lobby: FunctionComponent = () => {
-  const { users, selectUser, sendMessage, selectedUser, currentGames, setCurrentGames, backendUser  } = useLobby()
+  const { users, selectUser, sendMessage, selectedUser, currentGames, setCurrentGames, backendUser } = useLobby()
   const { showCreateGame, setShowCreateGame } = useCreateGame()
 
-   return (
-    <MainContainer title='Lobby'>
-      <Box width='100%' display='flex' justifyContent='center' alignItems='center'>
-        <Typography variant='h3'>Lobby</Typography>
-      </Box>
+  return (
+    <MainContainer title="Lobby">
       <LeftPanel>
-      {users && (
-        users?.map((user, index) => {
-          return (
-            <Box onClick={() => selectUser(user)} style={{ cursor: 'pointer'}} key={index + user.userId} >
-            <PlayerList user={user} selected={selectedUser} />
-            </Box>
-          )
-        })
-      )}
+        {users &&
+          users?.map((user, index) => {
+            return (
+              <Box onClick={() => selectUser(user)} style={{ cursor: 'pointer' }} key={index + user.userId}>
+                <PlayerList user={user} selected={selectedUser} />
+              </Box>
+            )
+          })}
       </LeftPanel>
-      <GameSelector currentGames={currentGames} setShowCreateGame={setShowCreateGame} />
-      {selectedUser && (
-      <MessagePane user={selectedUser} sendMessage={sendMessage} />
-      )}
-      <CreateGameModal showCreateGame={showCreateGame} setShowCreateGame={setShowCreateGame} backendUser={backendUser} />
+      <Box width="100%">
+        <Typography variant="h3">
+          <Box ml="0.5em">Lobby</Box>
+        </Typography>
+        <Box>
+          <GameSelector currentGames={currentGames} setShowCreateGame={setShowCreateGame} />
+          {selectedUser && <MessagePane user={selectedUser} sendMessage={sendMessage} />}
+        </Box>
+      </Box>
+      <CreateGameModal
+        showCreateGame={showCreateGame}
+        setShowCreateGame={setShowCreateGame}
+        backendUser={backendUser}
+      />
     </MainContainer>
   )
 }

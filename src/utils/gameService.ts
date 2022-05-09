@@ -26,6 +26,13 @@ export const gameService = () => {
     return data
   }
 
+  const getNewGames = async () => {
+    const data = await api.get('/unplayed/index').then(res => {
+      return res.data
+    })
+    return data
+  }
+
   const updateGame = async (gameId: string, game: Game) => {
     const data = await api.put(`/${gameId}`).then(res => {
       return res.data
@@ -68,6 +75,7 @@ export const gameService = () => {
     startBackendGame, 
     readyPlayer,
     submitBid,
-    takeTurn
+    takeTurn,
+    getNewGames
   } as const
 }

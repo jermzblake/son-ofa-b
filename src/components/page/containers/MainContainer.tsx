@@ -7,6 +7,7 @@ const StyledWrapper = styled(Box)`
   && {
     display: flex;
     padding: 1em;
+    height: 100vh;
   }
 `
 
