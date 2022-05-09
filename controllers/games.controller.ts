@@ -42,8 +42,7 @@ export const index = async (req, res) => {
 }
 
 export const getNewGames = async (req, res) => {
-  const games = await GameModel.find({ enabled: false, })
-  console.log(games)
+  const games = await GameModel.find({ enabled: false, }).sort({dateCreated: 'desc'})
   games.forEach(game => {
     game.id = game._id
     delete game._id

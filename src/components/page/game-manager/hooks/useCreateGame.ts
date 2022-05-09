@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Game, User} from 'common/types'
 import socket from 'socket'
 import { gameService } from 'utils/gameService'
+import toast from 'react-hot-toast'
 
 const newDefaultGame: Game = {
   playerCount: 3,
@@ -14,6 +15,10 @@ export const useCreateGame = () => {
   const { createGame } = gameService()
 
   const createNewGame = async (currentUser) => {
+    if(!currentUser) {
+      toast.error(`Looks like we can't find your name please return to the home page. (you may need to clear your local storage)`)
+      return
+    }
     // handle creating new game
     newGame.creator = (currentUser?.userId)
     newGame.name = currentUser?.username + "'s"
