@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import socket from '../../../socket'
 import { User, Game } from 'common/types'
-import { useNavigate } from 'react-router-dom'
 import { useLocalStorage } from 'hooks/use-local-storage/useLocalStorage'
 import { gameService } from 'utils/gameService'
 
 export const useLobby = () => {
-  const navigate = useNavigate()
   const [users, setUsers] = useState<User[]>([])
   const [selectedUser, setSelectedUser] = useState<User>()
   const [, updateState] = useState();
@@ -24,9 +22,7 @@ export const useLobby = () => {
 
   const getOpenGames = async () => {
     const games: Game[] = await getNewGames()
-    console.log('games', games)
     if (games && games.length > 0) {
-      console.log('games exist')
       setCurrentGames(games)
     }
   }
@@ -144,7 +140,7 @@ export const useLobby = () => {
     })
 
     socket.on("new game created", (newlyCreatedGame: Game) => {
-      setCurrentGames(currentGames => [...currentGames, newlyCreatedGame])
+      setCurrentGames(currentGames => [newlyCreatedGame, ...currentGames ])
     })
 
     return () => {
