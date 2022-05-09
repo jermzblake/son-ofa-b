@@ -136,8 +136,6 @@ io.on("connection", (socket: ExtendedSocket) => {
     io.emit("new game created", {
       ...db_response
     })
-    socket.join(db_response.id)
-
   })
 
   socket.on("get user", () => {
