@@ -75,21 +75,21 @@ export const GameSelector: FunctionComponent<GameSelectorProps> = ({ currentGame
               {currentGames.map((game, index) => {
                 return (
                   <TableRow key={game.id + index}>
-                    <TableCell>
+                    <TableCell align="center">
                       <Typography variant="body1">
                         <Box fontWeight="bold" color={theme.colors.baseText}>
                           {game.name}
                         </Box>
                       </Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell align="center">
                       <Typography variant="body1">
                         <Box fontWeight="bold" color={theme.colors.baseText}>
                           {game.playerCount}
                         </Box>
                       </Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell align="center">
                       <Typography variant="body1">
                         <Box fontWeight="bold" color={theme.colors.baseText}>
                           {game.rounds}

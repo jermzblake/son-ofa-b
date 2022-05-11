@@ -50,7 +50,7 @@ export const Modal: FunctionComponent<ModalProps> = ({ show, onClose, title, sho
   const theme = useTheme()
 
   return (
-    <StyledDialog open={show} onClose={() => onClose()} maxWidth={dialogWidth}>
+    <StyledDialog open={show} onClose={() => onClose ? onClose() : null} maxWidth={dialogWidth}>
       <Box bgcolor={theme.colors.backgroundComplement} color={theme.colors.darkText}>
         <TitleBox>
           <Box display="flex" marginLeft="auto">

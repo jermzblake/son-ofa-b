@@ -64,7 +64,7 @@ export const BidSelectorModal: FunctionComponent<BidSelectorModalProps> = ({
               return (
                 <Box display="flex" justifyContent="space-between" padding="1em" key={idx}>
                   <Box>{gamer.gamertag}</Box>
-                  <Box>{gamer.bid || '-'}</Box>
+                  <Box>{gamer.bid ?? '-'}</Box>
                 </Box>
               )
             })}

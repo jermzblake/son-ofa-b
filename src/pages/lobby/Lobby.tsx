@@ -42,9 +42,13 @@ const Lobby: FunctionComponent = () => {
         <Typography variant="h3">
           <Box ml="0.5em">Lobby</Box>
         </Typography>
-        <Box>
+        <Box pt="5em" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
           <GameSelector currentGames={currentGames} setShowCreateGame={setShowCreateGame} />
-          {selectedUser && <MessagePane user={selectedUser} sendMessage={sendMessage} />}
+          {selectedUser && (
+            <Box maxWidth="30em" mt="2em">
+              <MessagePane user={selectedUser} sendMessage={sendMessage} />
+            </Box>
+          )}
         </Box>
       </Box>
       <CreateGameModal
