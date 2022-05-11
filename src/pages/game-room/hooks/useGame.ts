@@ -9,7 +9,7 @@ import { useTurn } from 'hooks/use-turn/useTurn'
 import toast from 'react-hot-toast'
 
 export const useGame = () => {
-  const { getGame, addPlayerToGame, startBackendGame, readyPlayer, submitBid, takeTurn } = gameService()
+  const { getGame, addPlayerToGame, startBackendGame, readyPlayer, submitBid, takeTurn, takeDealerTurn } = gameService()
   const { gameId } = useParams<{ gameId: string }>()
   const { getItem, setItem } = useLocalStorage()
   const [currentGame, setCurrentGame] = useState<Game>(undefined)
@@ -142,6 +142,17 @@ export const useGame = () => {
         } else {
           setBidsIn(false)
         }
+        if (game.pile.length === game.playerCount) {
+          setCurrentGame(game)
+          forceUpdate()
+          console.log('pre-timeout', game.players[playerIndex])
+          if (game.players[playerIndex].dealer) {
+            setTimeout(async () => {
+              await takeTurn(game.id, game.players[playerIndex], game.pile.pop().card)
+            }, 2000)
+          }
+          return
+        }
       }
       setCurrentGame(game)
       forceUpdate()
@@ -195,7 +206,7 @@ export const useGame = () => {
   }
 
   const handleCardSelect = async (card: PlayingCard) => {
-      //check that this card can be played (suit match player has card with trump suit)
+      // check that this card can be played (suit match player has card with trump suit)
       // send notification if card is wrong suit
     if (currentGame?.pile?.length > 0 && !checkCardIsPlayable(backendPlayer?.hand, card, currentGame?.leadSuit)) {
       setSelectedCard(null)
@@ -203,14 +214,13 @@ export const useGame = () => {
     }
     if (card.suit === selectedCard?.suit && card.value === selectedCard?.value){
       const removedCardHand = backendPlayer?.hand.filter(playerCard => playerCard.suit !== card.suit ||  playerCard.value !== card.value)
-      const response = await takeTurn(currentGame?.id, {...backendPlayer, hand: removedCardHand}, selectedCard)
+      const response = backendPlayer?.dealer ? await takeDealerTurn(currentGame?.id, {...backendPlayer, hand: removedCardHand}, selectedCard) : await takeTurn(currentGame?.id, {...backendPlayer, hand: removedCardHand}, selectedCard)
       if (response) {
         setSelectedCard(null)
       }
     } else {
       setSelectedCard(card)
     }
-
   }
 
   const sendMessage = (e, content) => {
