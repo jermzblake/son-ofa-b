@@ -67,6 +67,11 @@ export const gameService = () => {
     return data
   }
 
+  const takeDealerTurn = async (gameId: string, player: Player, card: PlayingCard) => {
+    const data = api.put(`/${gameId}/dealer/turn`, {player, card}).then(res => res.data)
+    return data
+  }
+
   return {
     createGame,
     getGame,
@@ -76,6 +81,7 @@ export const gameService = () => {
     readyPlayer,
     submitBid,
     takeTurn,
-    getNewGames
+    getNewGames,
+    takeDealerTurn
   } as const
 }
