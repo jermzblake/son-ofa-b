@@ -163,7 +163,9 @@ export const takePlayerTurn = async (req, res) => {
     if (!game) {
       return res.status(400).json({ msg: 'Game not found' })
     }
-    game.pile.push({ card: req.body.card, player: req.body.player.id })
+    if (game.pile.length !== game.playerCount) {
+      game.pile.push({ card: req.body.card, player: req.body.player.id })
+    }
     const playerIndex = game.players.findIndex(player => player.id === req.body.player.id)
     game.players[playerIndex] = {...req.body.player, turn: false}
     if(game.leader) {
@@ -240,6 +242,27 @@ export const takePlayerTurn = async (req, res) => {
      updatedGame.id = updatedGame._id
      delete updatedGame._id
      return res.json(updatedGame)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+}
+
+export const takeDealerTurn = async (req, res) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).json({ msg: 'Game not found' })
+
+    const game: Game = await GameModel.findById(req.params.id).exec() // find one with matching gameId, otherwise 'null'
+    if (!game) {
+      return res.status(400).json({ msg: 'Game not found' })
+    }
+    game.pile.push({ card: req.body.card, player: req.body.player.id })
+    const playerIndex = game.players.findIndex(player => player.id === req.body.player.id)
+    game.players[playerIndex] = {...req.body.player, turn: false}
+    const updatedGame = await GameModel.findByIdAndUpdate(req.params.id, game, { new: true })
+    updatedGame.id = updatedGame._id
+    delete updatedGame._id
+    return res.json(updatedGame)
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server Error')
