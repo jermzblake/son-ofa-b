@@ -145,7 +145,6 @@ export const useGame = () => {
         if (game.pile.length === game.playerCount) {
           setCurrentGame(game)
           forceUpdate()
-          console.log('pre-timeout', game.players[playerIndex])
           if (game.players[playerIndex].dealer) {
             setTimeout(async () => {
               await takeTurn(game.id, game.players[playerIndex], game.pile.pop().card)
