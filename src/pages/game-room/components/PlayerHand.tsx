@@ -16,7 +16,11 @@ export const PlayerHand: FunctionComponent<PlayerHandProps> = ({ player, game, s
   return (
     <>
       <Box maxWidth='100%' >
-        {player && game?.enabled && <PlayerInfoBar player={player} />}
+        {player && game?.enabled && (
+          <Box display='flex' justifyContent='center' alignItems='center'>
+        <PlayerInfoBar player={player} />
+        </Box>
+        )}
         <Box display='grid' gridTemplateColumns='repeat(10, 90px)'>
           {player &&
             player.hand?.map((card, idx) => {
