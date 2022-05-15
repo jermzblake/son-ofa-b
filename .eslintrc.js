@@ -1,10 +1,10 @@
 module.exports = {
   parser: '@typescript-eslint/parser', // Specifies the ESLint parser
   extends: [
-    // 'react-app',
+    'react-app',
     // 'plugin:@typescript-eslint/recommended',
     'prettier',
-    // 'prettier/@typescript-eslint',
+    'prettier/@typescript-eslint',
     'plugin:jsx-a11y/recommended'
   ],
   parserOptions: {

@@ -14,7 +14,7 @@ import gameRouter from './routes/api/games.routes'
 const app: Application = express()
 
 import './config/database'
-
+//@ts-ignore
 app.use(logger('dev'))
 // Body parsing Middleware
 app.use(express.json());
@@ -22,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configure both serve-favicon & static middlewares
 // to serve from the production 'build' folder but for now serving out of public
+//@ts-ignore
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
 
