@@ -4,7 +4,7 @@ module.exports = {
     // 'react-app',
     // 'plugin:@typescript-eslint/recommended',
     'prettier',
-    'prettier/@typescript-eslint',
+    // 'prettier/@typescript-eslint',
     'plugin:jsx-a11y/recommended'
   ],
   parserOptions: {
