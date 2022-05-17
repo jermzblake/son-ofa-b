@@ -46,7 +46,7 @@ const messageStore = new InMemoryMessageStore()
 const httpServer = createServer(app)
 export const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.REACT_APP_API_URL,
   },
 })
 
