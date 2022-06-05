@@ -6,7 +6,7 @@ const connectionOptions = {
   timeout: 10000,
   transports: ["websocket"],
 } // options could be used below on socket
-const URL = process.env.SERVER_URL || "http://localhost:3001"
+const URL = process.env.SERVER_URL || "http://localhost:5001"
 const socket = io(URL, { autoConnect: false }) //autoConnect is set to false so the connection is not established right away. We will manually call socket.connect() later, once the user has selected a username
 
 socket.onAny((event, ...args) => {
