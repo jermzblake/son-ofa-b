@@ -1,6 +1,6 @@
 # Son Ofa B
 
-This project was is a real-time multiplayer card game built with socket-io, NodeJs, and React.
+This project is a real-time multiplayer card game built with Socket.io, NodeJs, and React.
 
 ## Getting Started
 
@@ -11,5 +11,5 @@ Navigate to [Son-Ofa-B](https://son-ofa-b.herokuapp.com/). Enter a username (at 
 - Express
 - React
 - Node
-- socket-io
+- Socket.io
 - Material UI
