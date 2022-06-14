@@ -132,6 +132,15 @@ io.on("connection", (socket: ExtendedSocket) => {
     messageStore.saveMessage(message)
   })
 
+  // forward group message to game room
+  socket.on("group message", ({ content, sender, room }) => {
+    const message = {
+      content,
+      from: sender
+    }
+    io.to(room).to(socket.userId).emit("group message", message)
+  })
+
   socket.on("create new game", async ({ db_response }) => {
     io.emit("new game created", {
       ...db_response
