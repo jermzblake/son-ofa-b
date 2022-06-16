@@ -64,9 +64,9 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
 
   if (inGame) {
     return (
-      <MessagesWrapper>
+      <MessagesWrapper margin='unset'>
         <Box padding="0 2em 0">
-          <Typography variant="h4">Chat</Typography>
+          <Typography variant="h5">Chat</Typography>
         </Box>
         <Divider />
         <StyledMessageListBox display="flex" flexDirection="column">
@@ -91,6 +91,7 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
           <form autoComplete="off" onSubmit={sendMessage}>
             <Box display="flex" flexDirection="column">
               <textarea value={directMessage} onChange={e => handleChange(e)} placeholder="Type message..." />
+              <Box mt='0.5em'>
               <Button
                 onClick={e => {
                   sendMessage(e, directMessage)
@@ -100,9 +101,11 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
                 variant="contained"
                 color="secondary"
                 disabled={!isValid()}
+                fullWidth
               >
                 Send
               </Button>
+              </Box>
             </Box>
           </form>
         </Box>
