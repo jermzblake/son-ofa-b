@@ -24,6 +24,7 @@ export const useGame = () => {
   const [bidsIn, setBidsIn] = useState<boolean>(false)
   const [selectedCard, setSelectedCard] = useState<PlayingCard>()
   const { checkCardIsPlayable } = useTurn()
+  const [showChat, setShowChat] = useState(false)
 
   const getData = async() => {
     const game: Game = await getGame(gameId)
@@ -246,6 +247,8 @@ export const useGame = () => {
     submitPlayerBid,
     selectedCard,
     handleCardSelect,
-    sendMessage
+    sendMessage,
+    showChat,
+    setShowChat
   } as const
 }
