@@ -24,6 +24,7 @@ export const useGame = () => {
   const [bidsIn, setBidsIn] = useState<boolean>(false)
   const [selectedCard, setSelectedCard] = useState<PlayingCard>()
   const { checkCardIsPlayable } = useTurn()
+  const [showChat, setShowChat] = useState(false)
 
   const getData = async() => {
     const game: Game = await getGame(gameId)
@@ -156,6 +157,11 @@ export const useGame = () => {
       setCurrentGame(game)
       forceUpdate()
     })
+
+    socket.on("group message", (message) => {
+      messages.push({content: message.content, sender: message.from})
+      setMessages([...messages])
+    })
   
     socket.on("user disconnected", (id) => {
       for (let i = 0; i < users.length; i++) {
@@ -176,7 +182,7 @@ export const useGame = () => {
       socket.off("users")
       socket.off("user connected")
       socket.off("user disconnected")
-      socket.off("private message")
+      socket.off("group message")
       socket.off("player joined")
       socket.off("game updated")
       socket.off("player rejoined")
@@ -224,8 +230,7 @@ export const useGame = () => {
 
   const sendMessage = (e, content) => {
     e.preventDefault()
-    socket.emit('group message', {content, sender: 'need the current user id'})
-    setMessages([...messages, {content, sender: 'need the current user id'}])
+    socket.emit('group message', {content, sender: backendPlayer?.gamertag, room: currentGame?.id})
   }
 
   return {
@@ -241,6 +246,9 @@ export const useGame = () => {
     bidsIn,
     submitPlayerBid,
     selectedCard,
-    handleCardSelect
+    handleCardSelect,
+    sendMessage,
+    showChat,
+    setShowChat
   } as const
 }
