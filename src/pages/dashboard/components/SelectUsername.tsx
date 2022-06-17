@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react'
-import { TextField, Button } from '@material-ui/core'
+import { TextField, Button, Box } from '@material-ui/core'
 
 export interface SelectUsernameProps {
   usernameSelected: boolean
@@ -10,9 +10,15 @@ export interface SelectUsernameProps {
   isValid: Function
 }
 
-export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({ usernameSelected, setUsernameSelected, submitUsername, username, setUsername, isValid }) => {
-
-  const handleChange = async(e) => {
+export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({
+  usernameSelected,
+  setUsernameSelected,
+  submitUsername,
+  username,
+  setUsername,
+  isValid
+}) => {
+  const handleChange = async e => {
     e.preventDefault()
     setUsername(e.target.value)
     isValid()
@@ -21,27 +27,31 @@ export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({ usernam
   return (
     <>
       <form autoComplete="off" onSubmit={submitUsername}>
-        <TextField
-          label="username"
-          onChange={e => handleChange(e)}
-          placeholder="Your username..."
-          onKeyPress={e => {
-            if (e.key === 'Enter') {
-              submitUsername(e)
-            }
-          }}
-          inputRef={input => input && input.focus()}
-          InputProps={{disableUnderline: true}}
-        />
-        <Button
-          onClick={e => submitUsername(e)}
-          type="submit"
-          variant="contained"
-          color="secondary"
-          disabled={!isValid()}
-        >
-          Submit
-        </Button>
+        <Box display="flex" flexDirection="column" gridGap="1em">
+          <TextField
+            label="username"
+            onChange={e => handleChange(e)}
+            placeholder="Your username..."
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                submitUsername(e)
+              }
+            }}
+            inputRef={input => input && input.focus()}
+            InputProps={{ disableUnderline: true }}
+          />
+          <Box alignSelf="end">
+            <Button
+              onClick={e => submitUsername(e)}
+              type="submit"
+              variant="contained"
+              color="secondary"
+              disabled={!isValid()}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Box>
       </form>
     </>
   )
