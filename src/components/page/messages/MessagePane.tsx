@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, useCallback } from 'react'
 import { Box, Typography, Divider, TextField, Button } from '@material-ui/core'
 import styled from 'styled-components'
 import { User, MessageBoard } from 'common/types'
@@ -35,6 +35,8 @@ const StyledMessageListBox = styled(Box)`
   scrollbar-width: none; /* Firefox */
 `
 
+const StyledBox = styled(Box)``
+
 interface MessagePanelProps {
   user?: User
   sendMessage
@@ -52,6 +54,11 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
 }) => {
   const theme = useTheme()
   const [directMessage, setDirectMessage] = useState<string>()
+  const setRef = useCallback(node => {
+    if (node) {
+      node.scrollIntoView({ smooth: true })
+    }
+  }, [])
 
   const handleChange = async e => {
     e.preventDefault()
@@ -64,7 +71,7 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
 
   if (inGame) {
     return (
-      <MessagesWrapper margin='unset'>
+      <MessagesWrapper margin="unset">
         <Box padding="0 2em 0">
           <Typography variant="h5">Chat</Typography>
         </Box>
@@ -72,8 +79,16 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
         <StyledMessageListBox display="flex" flexDirection="column">
           {messages &&
             messages.map((message, idx) => {
+              const lastMessage = messages.length - 1 === idx
               return (
-                <Box key={`${idx}-${Math.floor(Math.random() * 10000000)}`}>
+                <StyledBox
+                  key={`${idx}-${Math.floor(Math.random() * 10000000)}`}
+                  ref={lastMessage ? setRef : null}
+                  display="flex"
+                  flexDirection="column"
+                  alignSelf={message.sender === backendUser ? 'end' : 'unset'}
+                  alignItems={message.sender === backendUser ? 'end' : 'start'}
+                >
                   <Box color={theme.colors.lightText}>
                     <Typography variant="caption">
                       {message.sender === backendUser ? 'yourself' : message.sender}
@@ -82,7 +97,7 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
                   <Box>
                     <Typography>{message.content}</Typography>
                   </Box>
-                </Box>
+                </StyledBox>
               )
             })}
         </StyledMessageListBox>
@@ -91,20 +106,20 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
           <form autoComplete="off" onSubmit={sendMessage}>
             <Box display="flex" flexDirection="column">
               <textarea value={directMessage} onChange={e => handleChange(e)} placeholder="Type message..." />
-              <Box mt='0.5em'>
-              <Button
-                onClick={e => {
-                  sendMessage(e, directMessage)
-                  setDirectMessage('')
-                }}
-                type="submit"
-                variant="contained"
-                color="secondary"
-                disabled={!isValid()}
-                fullWidth
-              >
-                Send
-              </Button>
+              <Box mt="0.5em">
+                <Button
+                  onClick={e => {
+                    sendMessage(e, directMessage)
+                    setDirectMessage('')
+                  }}
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                  disabled={!isValid()}
+                  fullWidth
+                >
+                  Send
+                </Button>
               </Box>
             </Box>
           </form>
@@ -124,15 +139,23 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
       <StyledMessageListBox display="flex" flexDirection="column">
         {user?.messages &&
           user?.messages.map((message, idx) => {
+            const lastMessage = user?.messages.length - 1 === idx
             return (
-              <Box key={`${idx}-${Math.floor(Math.random() * 10000000)}`}>
+              <StyledBox
+                key={`${idx}-${Math.floor(Math.random() * 10000000)}`}
+                ref={lastMessage ? setRef : null}
+                display="flex"
+                flexDirection="column"
+                alignSelf={message.fromSelf ? 'end' : 'unset'}
+                alignItems={message.fromSelf ? 'end' : 'start'}
+              >
                 <Box color={theme.colors.lightText}>
                   <Typography variant="caption">{message.fromSelf ? 'yourself' : user.username}</Typography>
                 </Box>
                 <Box>
                   <Typography>{message.content}</Typography>
                 </Box>
-              </Box>
+              </StyledBox>
             )
           })}
       </StyledMessageListBox>
