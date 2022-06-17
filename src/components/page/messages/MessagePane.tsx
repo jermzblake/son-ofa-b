@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useCallback } from 'react'
-import { Box, Typography, Divider, TextField, Button } from '@material-ui/core'
+import { Box, Typography, Divider, Button } from '@material-ui/core'
 import styled from 'styled-components'
 import { User, MessageBoard } from 'common/types'
 import { useTheme } from 'styled-components'
