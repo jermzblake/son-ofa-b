@@ -2,19 +2,13 @@ import React, { FunctionComponent, useState } from 'react'
 import { TextField, Button, Box } from '@material-ui/core'
 
 export interface SelectUsernameProps {
-  usernameSelected: boolean
-  setUsernameSelected: Function
   submitUsername: (e: any) => void
-  username: string
   setUsername: Function
   isValid: Function
 }
 
 export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({
-  usernameSelected,
-  setUsernameSelected,
   submitUsername,
-  username,
   setUsername,
   isValid
 }) => {
