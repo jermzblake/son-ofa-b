@@ -18,16 +18,16 @@ const StyledCardBox = styled(Box)`
   }
 `
 
-const StyledImage = styled.img<{ trump?: boolean, selectedCard?: boolean}>`
-  width: ${props => props.trump ? '5em' : '8em'};
+const StyledImage = styled.img<{ trump?: boolean; selectedCard?: boolean }>`
+  width: ${props => (props.trump ? '5em' : '8em')};
   box-shadow: 2px 2px 2px 2px #00000077;
   border-radius: 6px;
-  border: ${props => props.selectedCard ? `2px solid ${props.theme.colors.third}` : 'unset'};
+  border: ${props => (props.selectedCard ? `2px solid ${props.theme.colors.third}` : 'unset')};
   @media only screen and (max-width: ${props => props.theme.breakpoints.large}) {
-    width: ${props => props.trump ? '3.5em' : '6em'};
+    width: ${props => (props.trump ? '3.5em' : '6em')};
   }
   @media only screen and (max-width: ${props => props.theme.breakpoints.medium}) {
-    width: ${props => props.trump ? '2.5em' : '4em'};
+    width: ${props => (props.trump ? '2.5em' : '4em')};
   }
 `
 
@@ -54,17 +54,12 @@ export const GameCard: FunctionComponent<PlayingCardProps> = ({
       }}
       style={{ cursor: selectable ? 'grab' : 'auto' }}
     >
-      {/* <img
+      <StyledImage
+        trump={trump}
+        selectedCard={selectedCard}
         src={`/assets/cards-4colour/${playingCard?.value}${playingCard?.suit}.svg`}
         alt="playing card"
-        style={{
-          width: trump ? '5em' : '8em',
-          boxShadow: '2px 2px 2px 2px #00000077',
-          borderRadius: '6px',
-          border: selectedCard ? `2px solid ${theme.colors.third}` : 'unset'
-        }}
-      /> */}
-      <StyledImage trump={trump} selectedCard={selectedCard} src={`/assets/cards-4colour/${playingCard?.value}${playingCard?.suit}.svg`} alt="playing card" />
+      />
     </StyledCardBox>
   )
 }
