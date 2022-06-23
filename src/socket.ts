@@ -2,8 +2,8 @@ import { io } from "socket.io-client"
 const connectionOptions = {
   autoConnect: false,
   "force new connection": true,
-  reconnectionAttempts: "Infinity",
-  timeout: 10000,
+  reconnectionAttempts: 10000,
+  // timeout: 10000,
   transports: ["websocket"],
 } // options could be used below on socket
 const URL = process.env.REACT_APP_SERVER_URL || "http://localhost:3001"

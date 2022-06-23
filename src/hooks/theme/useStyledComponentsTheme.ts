@@ -20,9 +20,10 @@ export const theme = {
   vars: {},
   breakpoints: {
     small: '360px',
-    medium: '720px',
-    large: '1080px',
-    xlarge: '1440px'
+    medium: '768px',  // tablet
+    large: '1024px', // laptop
+    xlarge: '1440px', // large laptop
+    xxlarge: '2560px' //desktop
   }
 }
 
