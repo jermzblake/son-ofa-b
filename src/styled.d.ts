@@ -28,6 +28,7 @@ declare module 'styled-components' {
           medium: string
           large: string
           xlarge: string
+          xxlarge: string
       }
   }
 }
