@@ -4,8 +4,6 @@ import styled, { css } from 'styled-components'
 import { PlayingCard } from 'common/types'
 import { useTheme } from 'styled-components'
 
-// should I do a styled card box for animation purposes?
-
 const StyledCardBox = styled(Box)`
   && {
     transition: all 250ms ease-out;
@@ -17,6 +15,19 @@ const StyledCardBox = styled(Box)`
       box-shadow: 0 1px 32px rgba(0, 0, 0, 0.1);
       transition: all 125ms ease-in;
     }
+  }
+`
+
+const StyledImage = styled.img<{ trump?: boolean, selectedCard?: boolean}>`
+  width: ${props => props.trump ? '5em' : '8em'};
+  box-shadow: 2px 2px 2px 2px #00000077;
+  border-radius: 6px;
+  border: ${props => props.selectedCard ? `2px solid ${props.theme.colors.third}` : 'unset'};
+  @media only screen and (max-width: ${props => props.theme.breakpoints.large}) {
+    width: ${props => props.trump ? '3.5em' : '6em'};
+  }
+  @media only screen and (max-width: ${props => props.theme.breakpoints.medium}) {
+    width: ${props => props.trump ? '2.5em' : '4em'};
   }
 `
 
@@ -43,7 +54,7 @@ export const GameCard: FunctionComponent<PlayingCardProps> = ({
       }}
       style={{ cursor: selectable ? 'grab' : 'auto' }}
     >
-      <img
+      {/* <img
         src={`/assets/cards-4colour/${playingCard?.value}${playingCard?.suit}.svg`}
         alt="playing card"
         style={{
@@ -52,7 +63,8 @@ export const GameCard: FunctionComponent<PlayingCardProps> = ({
           borderRadius: '6px',
           border: selectedCard ? `2px solid ${theme.colors.third}` : 'unset'
         }}
-      />
+      /> */}
+      <StyledImage trump={trump} selectedCard={selectedCard} src={`/assets/cards-4colour/${playingCard?.value}${playingCard?.suit}.svg`} alt="playing card" />
     </StyledCardBox>
   )
 }

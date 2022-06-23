@@ -18,12 +18,17 @@ interface GameBoardProps {
 }
 
 const StyledGameBoardWrapper = styled(Box)`
-  width: '100%';
-  height: '97vh';
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   gap: 1em;
-  grid-template-rows: auto, 12em, 12em, 12em, 12em;
+  grid-template-rows: 3em 12em 12em 12em 12em;
+  @media only screen and (max-width: ${props => props.theme.breakpoints.large}) {
+    grid-template-rows: 3em 9em 9em 9em 9em;
+  }
+  @media only screen and (max-width: ${props => props.theme.breakpoints.medium}) {
+    grid-template-rows: 3em 5em 5em 5em 5em;
+  }
   grid-template-areas:
     'a a a b b b c c c'
     'd d d e e e f f f'
@@ -37,6 +42,12 @@ const StyledTrumpCardWrapper = styled(Box)`
   border: 1px solid ${props => props.theme.colors.third};
   background-color: ${props => props.theme.colors.third};
   border-radius: 6px;
+  @media only screen and (max-width: ${props => props.theme.breakpoints.large}) {
+    width: 4em;
+  }
+  @media only screen and (max-width: ${props => props.theme.breakpoints.medium}) {
+    width: 3em;
+  }
 `
 
 const StyledPileWrapper = styled(Box)`
@@ -46,6 +57,12 @@ const StyledPileWrapper = styled(Box)`
   grid-template-columns: repeat(3, 1fr);
   gap: 1em;
   grid-auto-rows: 12em;
+  @media only screen and (max-width: ${props => props.theme.breakpoints.large}) {
+    grid-template-rows: 9em;
+  }
+  @media only screen and (max-width: ${props => props.theme.breakpoints.medium}) {
+    grid-template-rows: 5em;
+  }
   grid-template-areas:
     'h i j'
     'k . l'
