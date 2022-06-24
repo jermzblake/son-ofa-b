@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import socket from '../../../socket'
 import { User, Game, MessageBoard, Player, PlayingCard } from 'common/types'
 import { gameService } from 'utils/gameService'
-import { useLocation, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useLocalStorage } from 'hooks/use-local-storage/useLocalStorage'
 import { useDeck } from 'hooks/use-deck/useDeck'
 import { useTurn } from 'hooks/use-turn/useTurn'
@@ -25,8 +25,11 @@ export const useGame = () => {
   const [selectedCard, setSelectedCard] = useState<PlayingCard>()
   const { checkCardIsPlayable } = useTurn()
   const [showChat, setShowChat] = useState(false)
+  const navigate = useNavigate()
+
 
   const getData = async() => {
+    try {
     const game: Game = await getGame(gameId)
     if (game) {
       setCurrentGame(game)
@@ -46,6 +49,13 @@ export const useGame = () => {
       socket.emit('player connected', {game})
       }
     }
+    else {
+      navigate('*')
+    }
+  } catch (error) {
+    
+    if (error.message.includes('40')) navigate('*')
+  }
   }
 
   useEffect(() => {
