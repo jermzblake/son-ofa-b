@@ -32,13 +32,13 @@ export const useTurn = () => {
   }
 
   const checkNewLeader = (leaderCard: PlayingCard, cardInQuestion: PlayingCard, trumpCard: PlayingCard): Boolean => {
-    if (leaderCard.suit === trumpCard.suit) {
+    if (leaderCard.suit === trumpCard.suit && trumpCard.value !== 'ace') {
       if (cardInQuestion.suit === leaderCard.suit) {
         return numberMap[cardInQuestion.value] > numberMap[leaderCard.value]
       } else {
         return false
       }
-    } else if (cardInQuestion.suit === trumpCard.suit) {
+    } else if (cardInQuestion.suit === trumpCard.suit && trumpCard.value !== 'ace') {
       return true
     } else {
       if (cardInQuestion.suit === leaderCard.suit) {
