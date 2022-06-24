@@ -7,6 +7,8 @@ import Home from './pages/dashboard/Home'
 import Lobby from './pages/lobby/Lobby'
 import GameRoom from './pages/game-room/GameRoom'
 import { Toaster } from 'react-hot-toast'
+import { NotFound } from 'pages/not-found/NotFound'
+
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
       <ThemeManager>
         <Toaster />
         <Routes>
+          <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="/lobby" element={<Lobby />} />
           <Route path="/game/:gameId" element={<GameRoom />} />
