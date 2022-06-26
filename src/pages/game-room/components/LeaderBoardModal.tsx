@@ -46,7 +46,9 @@ export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
                 {}
               </TableCell>
               <TableCell align="center" colSpan={20}>
-                Rounds
+                <Typography variant="h5">
+                  Rounds
+                </Typography>
               </TableCell>
             </TableRow>
               <TableRow>
