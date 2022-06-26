@@ -25,6 +25,7 @@ interface ChatBoxProps {
   backendUser?: string
   showChat: boolean
   setShowChat: Function
+  setNewMessage?: Function
 }
 
 export const ChatBox: FunctionComponent<ChatBoxProps> = ({
@@ -33,15 +34,24 @@ export const ChatBox: FunctionComponent<ChatBoxProps> = ({
   messages,
   backendUser,
   showChat,
-  setShowChat
+  setShowChat,
+  setNewMessage
 }) => {
   const theme = useTheme()
 
   return (
     <StyledChatBox display={showChat ? 'block' : 'none'}>
       <MessagePane inGame={true} sendMessage={sendMessage} messages={messages} backendUser={backendUser} />
-      <Box style={{ margin: "0.5em" }}>
-        <Button variant="contained" color="secondary" fullWidth onClick={() => setShowChat(false)}>
+      <Box style={{ margin: '0.5em' }}>
+        <Button
+          variant="contained"
+          color="secondary"
+          fullWidth
+          onClick={() => {
+            setShowChat(false)
+            setNewMessage(false)
+          }}
+        >
           Close
         </Button>
       </Box>

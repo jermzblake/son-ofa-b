@@ -26,6 +26,7 @@ export const useGame = () => {
   const { checkCardIsPlayable } = useTurn()
   const [showChat, setShowChat] = useState(false)
   const navigate = useNavigate()
+  const [newMessage, setNewMessage] = useState<boolean>(false)
 
   const getData = async () => {
     try {
@@ -168,6 +169,7 @@ export const useGame = () => {
     socket.on('group message', message => {
       messages.push({ content: message.content, sender: message.from })
       setMessages([...messages])
+      setNewMessage(true)
     })
 
     socket.on('user disconnected', id => {
@@ -260,6 +262,8 @@ export const useGame = () => {
     handleCardSelect,
     sendMessage,
     showChat,
-    setShowChat
+    setShowChat,
+    newMessage,
+    setNewMessage
   } as const
 }

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Box, Fab } from '@material-ui/core'
+import { Box, Fab, Badge } from '@material-ui/core'
 import { MainContainer } from 'components/page/containers/MainContainer'
 import { useGame } from './hooks/useGame'
 import { PreGameModal } from './components/PreGameModal'
@@ -21,6 +21,14 @@ const StyledFab = styled(Fab)`
   }
 `
 
+const StyledBadge = styled(Badge)`
+  && {
+    position: fixed;
+    right: 1.25em;
+    bottom: 3em;
+  }
+`
+
 const GameRoom: FunctionComponent = () => {
   const {
     currentGame,
@@ -37,7 +45,9 @@ const GameRoom: FunctionComponent = () => {
     handleCardSelect,
     sendMessage,
     showChat,
-    setShowChat
+    setShowChat,
+    newMessage,
+    setNewMessage
   } = useGame()
 
   return (
@@ -52,22 +62,28 @@ const GameRoom: FunctionComponent = () => {
           handleCardSelect={handleCardSelect}
           selectedCard={selectedCard}
         />
-        <StyledFab
-          color="secondary"
-          variant="extended"
-          aria-label="chat"
-          onClick={() => setShowChat(true)}
-          style={{ display: showChat ? 'none' : 'flex' }}
-        >
-          <StyledChatIcon />
-          Chat
-        </StyledFab>
+        <StyledBadge badgeContent="" color="error" invisible={!newMessage || showChat}>
+          <StyledFab
+            color="secondary"
+            variant="extended"
+            aria-label="chat"
+            onClick={() => {
+              setShowChat(true)
+              setNewMessage(false)
+            }}
+            style={{ display: showChat ? 'none' : 'flex' }}
+          >
+            <StyledChatIcon />
+            Chat
+          </StyledFab>
+        </StyledBadge>
         <ChatBox
           sendMessage={sendMessage}
           messages={messages}
           backendUser={backendPlayer?.gamertag}
           showChat={showChat}
           setShowChat={setShowChat}
+          setNewMessage={setNewMessage}
         />
         <PreGameModal
           readyPlayer={readyUp}
