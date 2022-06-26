@@ -1,5 +1,13 @@
 import React, { FunctionComponent, useState } from 'react'
 import { TextField, Button, Box } from '@material-ui/core'
+import styled from 'styled-components/macro'
+import { useTheme } from 'styled-components'
+
+const StyledTextfield = styled(TextField)`
+  && .MuiInputBase-input {
+    color: ${props => props.theme.colors.lightPrimary};
+  }
+`
 
 export interface SelectUsernameProps {
   submitUsername: (e: any) => void
@@ -7,11 +15,9 @@ export interface SelectUsernameProps {
   isValid: Function
 }
 
-export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({
-  submitUsername,
-  setUsername,
-  isValid
-}) => {
+export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({ submitUsername, setUsername, isValid }) => {
+  const theme = useTheme()
+
   const handleChange = async e => {
     e.preventDefault()
     setUsername(e.target.value)
@@ -22,7 +28,8 @@ export const SelectUsername: FunctionComponent<SelectUsernameProps> = ({
     <>
       <form autoComplete="off" onSubmit={submitUsername}>
         <Box display="flex" flexDirection="column" gridGap="1em">
-          <TextField
+          <StyledTextfield
+            color="secondary"
             label="username"
             onChange={e => handleChange(e)}
             placeholder="Your username..."
