@@ -16,7 +16,6 @@ interface LeaderBoardModalProps {
   showLeaderBoard: boolean
   setShowLeaderBoard: Function
   game: Game
-  showInstructions?: boolean
   setShowInstructions?: Function
 }
 
@@ -24,7 +23,6 @@ export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
   showLeaderBoard,
   setShowLeaderBoard,
   game,
-  showInstructions, 
   setShowInstructions
 }) => {
   const theme = useTheme()

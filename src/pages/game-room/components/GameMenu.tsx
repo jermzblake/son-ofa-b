@@ -42,7 +42,6 @@ export const GameMenu: FunctionComponent<GameMenuProps> = ({ game }) => {
         showLeaderBoard={showLeaderBoard}
         setShowLeaderBoard={setShowLeaderBoard}
         game={game}
-        showInstructions={showInstructions}
         setShowInstructions={setShowInstructions}
       />
       <InstructionModal show={showInstructions} setShow={setShowInstructions} />
