@@ -10,7 +10,7 @@ export const Instructions: FunctionComponent = () => {
     <Box>
       <Typography>
         Son-ofa-B is a trick taking standard deck playing card game. The object is for each player to bid the number of
-        tricks they thinks they can take from each hand, then to take exactly that many; no more and no fewer. Points
+        tricks they think they can take from each hand, then to take exactly that many; no more and no fewer. Points
         are awarded only for making the bid exactly, and are deducted for missing the bid, either over or under.
       </Typography>
       <Typography>
@@ -42,8 +42,8 @@ export const Instructions: FunctionComponent = () => {
       <br />
       <Typography>
         An example: the trump suit is hearts; the first player plays a 9 of clubs. Then comes a queen of clubs. The next
-        player has no clubs, but bid 0, so he throws a king of diamonds. The next player also has no clubs, but bid 2,
-        so he plays a jack of hearts. The last player, seeing that the clubs have been trumped, saves his ace of clubs,
+        player has no clubs, but bid 0, so they throws a king of diamonds. The next player also has no clubs, but bid 2,
+        so they plays a jack of hearts. The last player, seeing that the clubs have been trumped, saves his ace of clubs,
         which would lose to the jack of hearts, and plays a 3 of clubs instead. The jack of hearts wins the trick.
       </Typography>
       <Typography>
