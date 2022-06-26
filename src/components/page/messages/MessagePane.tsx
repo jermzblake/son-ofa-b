@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useCallback } from 'react'
-import { Box, Typography, Divider, Button } from '@material-ui/core'
+import { Box, Typography, Divider, Button, TextField } from '@material-ui/core'
 import styled from 'styled-components'
 import { User, MessageBoard } from 'common/types'
 import { useTheme } from 'styled-components'
@@ -105,8 +105,8 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
         <Box>
           <form autoComplete="off" onSubmit={sendMessage}>
             <Box display="flex" flexDirection="column">
-              <textarea value={directMessage} onChange={e => handleChange(e)} placeholder="Type message..." />
-              <Box mt="0.5em">
+              <TextField multiline minRows={2} value={directMessage} onChange={e => handleChange(e)} placeholder="Type message..." />
+              <Box mt="0.5em" padding="0 0.5em">
                 <Button
                   onClick={e => {
                     sendMessage(e, directMessage)
@@ -114,7 +114,7 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
                   }}
                   type="submit"
                   variant="contained"
-                  color="secondary"
+                  color="primary"
                   disabled={!isValid()}
                   fullWidth
                 >
@@ -163,7 +163,8 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
       <Box>
         <form autoComplete="off" onSubmit={sendMessage}>
           <Box display="flex" flexDirection="column">
-            <textarea value={directMessage} onChange={e => handleChange(e)} placeholder="Type message..." />
+            <TextField multiline minRows={2} value={directMessage} onChange={e => handleChange(e)} placeholder="Type message..." />
+            <Box style={{ margin: "0.5em 0.5em 0.5em auto" }} >
             <Button
               onClick={e => {
                 sendMessage(e, directMessage)
@@ -171,11 +172,13 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
               }}
               type="submit"
               variant="contained"
-              color="secondary"
+              color="primary"
               disabled={!isValid()}
+              size='medium'
             >
               Send
             </Button>
+            </Box>
           </Box>
         </form>
       </Box>
