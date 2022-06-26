@@ -101,11 +101,11 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
               )
             })}
         </StyledMessageListBox>
-        <Divider />
+        <Divider style={{ backgroundColor: theme.colors.primary }} />
         <Box>
           <form autoComplete="off" onSubmit={sendMessage}>
             <Box display="flex" flexDirection="column">
-              <TextField multiline minRows={2} value={directMessage} onChange={e => handleChange(e)} placeholder="Type message..." />
+              <TextField multiline minRows={2} maxRows={4} value={directMessage} onChange={e => handleChange(e)} placeholder="Type message..." />
               <Box mt="0.5em" padding="0 0.5em">
                 <Button
                   onClick={e => {
@@ -159,7 +159,7 @@ export const MessagePane: FunctionComponent<MessagePanelProps> = ({
             )
           })}
       </StyledMessageListBox>
-      <Divider />
+      <Divider style={{ backgroundColor: theme.colors.primary }} />
       <Box>
         <form autoComplete="off" onSubmit={sendMessage}>
           <Box display="flex" flexDirection="column">
