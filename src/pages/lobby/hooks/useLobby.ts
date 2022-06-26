@@ -15,6 +15,7 @@ export const useLobby = () => {
   const [showCreateGame, setShowCreateGame] = useState<boolean>(false)
   const [backendUser, setBackendUser] = useState<User>()
   const { getNewGames } = gameService()
+  const [showInstructions, setShowInstructions] = useState<boolean>(false)
 
   const getUser = () => {
     socket.emit("get user")
@@ -185,6 +186,8 @@ export const useLobby = () => {
     setCurrentGames,
     showCreateGame,
     setShowCreateGame,
-    backendUser
+    backendUser,
+    showInstructions, 
+    setShowInstructions
   } as const
 }
