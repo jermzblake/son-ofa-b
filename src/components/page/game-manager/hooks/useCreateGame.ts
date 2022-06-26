@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Game, User} from 'common/types'
+import { Game } from 'common/types'
 import socket from 'socket'
 import { gameService } from 'utils/gameService'
 import toast from 'react-hot-toast'
@@ -29,8 +29,6 @@ export const useCreateGame = () => {
       db_response,
     })
     }
-    // add creating user to game? game owner?
-    // push player to new game room/page
     setNewGame(newDefaultGame)
   }
 

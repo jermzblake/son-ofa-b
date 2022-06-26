@@ -1,6 +1,6 @@
 import { GameModel } from '../models/game.model'
 import mongoose from 'mongoose'
-import { Game, Player, StarterPack} from  '../src/common/types'
+import { Game, StarterPack} from  '../src/common/types'
 import { useDeck } from '../src/hooks/use-deck/useDeck'
 import { useTurn } from '../src/hooks/use-turn/useTurn'
 

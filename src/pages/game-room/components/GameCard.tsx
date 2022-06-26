@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { Box } from '@material-ui/core'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { PlayingCard } from 'common/types'
 import { useTheme } from 'styled-components'
 
@@ -47,6 +47,7 @@ export const GameCard: FunctionComponent<PlayingCardProps> = ({
   selectedCard
 }) => {
   const theme = useTheme()
+  
   return (
     <StyledCardBox
       onClick={() => {
