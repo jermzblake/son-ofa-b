@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { MainContainer } from 'components/page/containers/MainContainer'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography, Tooltip } from '@material-ui/core'
 import styled from 'styled-components'
 import { useLobby } from './hooks/useLobby'
 import { PlayerList } from 'components/page/players/PlayerList'
@@ -9,6 +9,7 @@ import { GameSelector } from 'components/page/game-manager/GameSelector'
 import { CreateGameModal } from 'components/page/game-manager/CreateGameModal'
 import { useCreateGame } from 'components/page/game-manager/hooks/useCreateGame'
 import { InstructionModal } from 'components/page/instructions/InstructionModal'
+import InfoIcon from '@material-ui/icons/Info'
 
 const LeftPanel = styled(Box)`
   && {
@@ -40,6 +41,16 @@ const Lobby: FunctionComponent = () => {
   return (
     <MainContainer title="Lobby">
       <LeftPanel>
+        <Tooltip
+          title={
+            <React.Fragment>
+              <Typography color="inherit">Select a name to start private chat</Typography>
+              Don't see any names? Try refreshing the page.
+            </React.Fragment>
+          }
+        >
+          <InfoIcon />
+        </Tooltip>
         {users &&
           users?.map((user, index) => {
             return (
