@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent } from 'react'
 import { Modal } from 'components/core/modal'
 import { Player } from 'common/types'
 import { PreGameMenu } from './PreGameMenu'
@@ -22,7 +22,6 @@ export const PreGameModal: FunctionComponent<PreGameModalProps> = ({
   players,
   checkPlayersAreReady
 }) => {
-  const [confirmDiscard, setConfirmDiscard] = useState(false)
 
   return (
     <Modal show={showPreGame} title="Game Menu" dialogWidth="lg">
