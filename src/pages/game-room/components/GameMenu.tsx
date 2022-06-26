@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded'
 import { useTheme } from 'styled-components'
 import { LeaderBoardModal } from './LeaderBoardModal'
+import { InstructionModal } from 'components/page/instructions/InstructionModal'
 
 const StyledMenuIcon = styled(MenuRoundedIcon)`
   && {
@@ -28,6 +29,7 @@ interface GameMenuProps {
 export const GameMenu: FunctionComponent<GameMenuProps> = ({ game }) => {
   const theme = useTheme()
   const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
+  const [showInstructions, setShowInstructions] = useState<boolean>(false)
 
   return (
     <>
@@ -36,7 +38,14 @@ export const GameMenu: FunctionComponent<GameMenuProps> = ({ game }) => {
           <StyledMenuIcon />
         </IconButton>
       </StyledMenuContainerBox>
-      <LeaderBoardModal showLeaderBoard={showLeaderBoard} setShowLeaderBoard={setShowLeaderBoard} game={game} />
+      <LeaderBoardModal
+        showLeaderBoard={showLeaderBoard}
+        setShowLeaderBoard={setShowLeaderBoard}
+        game={game}
+        showInstructions={showInstructions}
+        setShowInstructions={setShowInstructions}
+      />
+      <InstructionModal show={showInstructions} setShow={setShowInstructions} />
     </>
   )
 }
