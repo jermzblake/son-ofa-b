@@ -8,6 +8,7 @@ import { MessagePane } from 'components/page/messages/MessagePane'
 import { GameSelector } from 'components/page/game-manager/GameSelector'
 import { CreateGameModal } from 'components/page/game-manager/CreateGameModal'
 import { useCreateGame } from 'components/page/game-manager/hooks/useCreateGame'
+import { InstructionModal } from 'components/page/instructions/InstructionModal'
 
 const LeftPanel = styled(Box)`
   && {
@@ -23,7 +24,16 @@ const LeftPanel = styled(Box)`
 `
 
 const Lobby: FunctionComponent = () => {
-  const { users, selectUser, sendMessage, selectedUser, currentGames, setCurrentGames, backendUser } = useLobby()
+  const {
+    users,
+    selectUser,
+    sendMessage,
+    selectedUser,
+    currentGames,
+    backendUser,
+    showInstructions,
+    setShowInstructions
+  } = useLobby()
   const { showCreateGame, setShowCreateGame } = useCreateGame()
 
   return (
@@ -43,7 +53,11 @@ const Lobby: FunctionComponent = () => {
           <Box ml="0.5em">Lobby</Box>
         </Typography>
         <Box pt="5em" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-          <GameSelector currentGames={currentGames} setShowCreateGame={setShowCreateGame} />
+          <GameSelector
+            currentGames={currentGames}
+            setShowCreateGame={setShowCreateGame}
+            setShowInstructions={setShowInstructions}
+          />
           {selectedUser && (
             <Box maxWidth="30em" mt="2em">
               <MessagePane user={selectedUser} sendMessage={sendMessage} />
@@ -56,6 +70,7 @@ const Lobby: FunctionComponent = () => {
         setShowCreateGame={setShowCreateGame}
         backendUser={backendUser}
       />
+      <InstructionModal show={showInstructions} setShow={setShowInstructions} />
     </MainContainer>
   )
 }
