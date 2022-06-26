@@ -105,7 +105,7 @@ export const BidSelectorModal: FunctionComponent<BidSelectorModalProps> = ({
                       submitPlayerBid(playerBid)
                       setPlayerBid(null)
                     }}
-                    disabled={!player.turn && !playerBid}
+                    disabled={!player.turn || !playerBid}
                   >
                     Submit Bid
                   </Button>
