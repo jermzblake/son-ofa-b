@@ -55,7 +55,7 @@ const Lobby: FunctionComponent = () => {
           users?.map((user, index) => {
             return (
               <Box onClick={() => selectUser(user)} style={{ cursor: 'pointer' }} key={index + user.userId}>
-                <PlayerList user={user} selected={selectedUser} />
+                <PlayerList user={user} />
               </Box>
             )
           })}

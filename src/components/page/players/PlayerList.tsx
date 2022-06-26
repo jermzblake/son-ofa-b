@@ -7,7 +7,6 @@ import { useTheme } from 'styled-components'
 
 interface PlayerListProps {
   user: User
-  selected: User
 }
 
 const NewMessages = styled(Box)`
@@ -22,7 +21,7 @@ const NewMessages = styled(Box)`
   }
 `
 
-export const PlayerList: FunctionComponent<PlayerListProps> = ({ user, selected }) => {
+export const PlayerList: FunctionComponent<PlayerListProps> = ({ user }) => {
   const theme = useTheme()
 
   return (
