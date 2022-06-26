@@ -91,7 +91,7 @@ export const CreateGame: FunctionComponent<CreateGameProps> = ({ onSubmit, newGa
           </Box>
         </Box>
         <Box>
-          <Button variant="contained" color="secondary" onClick={() => onSubmit()}>
+          <Button variant="contained" color="primary" onClick={() => onSubmit()}>
             Create Game
           </Button>
         </Box>

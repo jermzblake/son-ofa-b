@@ -29,7 +29,7 @@ export const PlayerList: FunctionComponent<PlayerListProps> = ({ user, selected 
     <>
       <Typography variant='h6'><Box fontWeight='bold'>{user.username}</Box></Typography>
       <Box display="flex">
-        <Box color={theme.colors.lightText}><StatusIcon connected={user.connected} /><Typography component='span' variant='body2'>{user.connected ? "online" : "offline"}</Typography></Box>
+        <Box color={theme.colors.darkText}><StatusIcon connected={user.connected} /><Typography component='span' variant='body2'>{user.connected ? "online" : "offline"}</Typography></Box>
         {user.hasNewMessages && <NewMessages>!</NewMessages>}
       </Box>
     </>

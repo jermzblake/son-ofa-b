@@ -29,8 +29,8 @@ export const materialUiTheme = () => {
           MuiInputBase: {
             root: {
               borderColor: theme.colors.lightPrimary,
-              color: theme.colors.lightPrimary,
-              border: `1px solid ${theme.colors.lightPrimary}`,
+              color: theme.colors.base,
+              border: `1px solid ${theme.colors.border}`,
               borderRadius: '6px'
             }
           },
@@ -81,12 +81,14 @@ export const materialUiTheme = () => {
             },
             containedSecondary: {
               color: theme.colors.secondary,
-              backgroundColor: theme.colors.darkText,
+              backgroundColor: theme.colors.base,
               border: `1px solid ${theme.colors.border}`
             },
             containedPrimary: {
-              color: theme.colors.darkText,
-              backgroundColor: theme.colors.primary
+              color: theme.colors.baseText,
+              backgroundColor: theme.colors.primary,
+              border: `1px solid ${theme.colors.border}`
+              
             }
           },
           MuiMenu: {
@@ -94,13 +96,13 @@ export const materialUiTheme = () => {
               borderRadius: '8px',
               width: '50%',
               backgroundColor: theme.colors.backgroundComplement,
-              color: theme.colors.lightPrimary
+              color: theme.colors.base
             }
           },
           MuiCard: {
             root: {
               backgroundColor: theme.colors.backgroundComplement,
-              color: 'white',
+              // color: 'black',
               marginTop: '1em',
               borderRadius: '0.7em',
               padding: '0.5em',

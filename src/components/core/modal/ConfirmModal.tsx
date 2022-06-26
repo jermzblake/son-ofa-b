@@ -77,14 +77,14 @@ export const ConfirmModal: FunctionComponent<ConfirmModalProps> = ({
           <Box>
             {title != '' && (
               <DialogTitle>
-                <Box color={theme.colors.lightPrimary} width="100%">
+                <Box color={theme.colors.base} width="100%">
                   <Typography variant="h6">{title}</Typography>
                 </Box>
               </DialogTitle>
             )}
             <DialogContent>
               <DialogContentText component="span">
-                <Box color={theme.colors.lightPrimary}>
+                <Box color={theme.colors.darkText}>
                   <Typography variant="body1" align="justify">
                     {message}
                   </Typography>
@@ -97,7 +97,7 @@ export const ConfirmModal: FunctionComponent<ConfirmModalProps> = ({
         <DialogActions>
           <Box display="flex" justifyContent="space-between" width="100%" padding="1em 2em">
             <Box padding="0 1em" width="50%">
-              <Button onClick={onClose} color="secondary" fullWidth variant="outlined">
+              <Button onClick={onClose} variant="contained" color="secondary" fullWidth>
                 CANCEL
               </Button>
             </Box>
