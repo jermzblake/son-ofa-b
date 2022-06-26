@@ -1,4 +1,4 @@
-import { Schema, model, connect } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import { Game } from '../src/common/types'
 
 export const gameSchema = new Schema<Game>({
