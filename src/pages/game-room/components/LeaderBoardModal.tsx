@@ -16,12 +16,16 @@ interface LeaderBoardModalProps {
   showLeaderBoard: boolean
   setShowLeaderBoard: Function
   game: Game
+  showInstructions?: boolean
+  setShowInstructions?: Function
 }
 
 export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
   showLeaderBoard,
   setShowLeaderBoard,
-  game
+  game,
+  showInstructions, 
+  setShowInstructions
 }) => {
   const theme = useTheme()
   const roundArray = Array.from(Array(game?.rounds).keys())
@@ -110,12 +114,15 @@ export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
             </TableBody>
           </Table>
         </TableContainer>
+      </LeaderBoardContainer>
+      <Box display='flex' justifyContent='space-between' mt='1em'>
+        <Button variant='contained' color='secondary' onClick={() => setShowInstructions(true)}>Instructions</Button>
         {game?.winner &&
           <Box mt='2em'>
-            <Button variant='outlined' onClick={() => navigate('/lobby')}>Leave Game</Button>
+            <Button variant='contained' color='secondary' onClick={() => navigate('/lobby')}>Leave Game</Button>
           </Box>
         }
-      </LeaderBoardContainer>
+      </Box>
     </Modal>
   )
 }
