@@ -115,11 +115,11 @@ export const GameSelector: FunctionComponent<GameSelectorProps> = ({
       )}
       <Box display="flex" justifyContent="flex-end" width="100%" mt="0.5em">
         <Box mr="1em">
-          <Button variant="contained" color="secondary" onClick={() => setShowInstructions(true)}>
+          <Button variant="contained" onClick={() => setShowInstructions(true)}>
             Instructions
           </Button>
         </Box>
-        <Button variant="contained" onClick={() => setShowCreateGame(true)}>
+        <Button variant="contained" color="primary" onClick={() => setShowCreateGame(true)}>
           Create Game
         </Button>
       </Box>

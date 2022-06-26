@@ -3,6 +3,17 @@ import { Modal } from 'components/core/modal'
 import { Box, Typography, Button, MenuItem, Select, makeStyles } from '@material-ui/core'
 import { useTheme } from 'styled-components'
 import { Game, Player } from 'common/types'
+import styled from 'styled-components/macro'
+
+const StyledSelect = styled(Select)`
+  && {
+    width: 4em;
+    padding-left: 0.5em;
+  }
+  && .MuiInputBase-input {
+    color: ${props => props.theme.colors.lightPrimary};
+}
+`
 
 interface BidSelectorModalProps {
   game: Game
@@ -71,7 +82,7 @@ export const BidSelectorModal: FunctionComponent<BidSelectorModalProps> = ({
             {player.turn && (
               <Box>
                 <Box mb="1em">
-                  <Select
+                  <StyledSelect
                     value={playerBid ?? ''}
                     onChange={e => handleBidSelect(e)}
                     MenuProps={{
@@ -85,16 +96,16 @@ export const BidSelectorModal: FunctionComponent<BidSelectorModalProps> = ({
                         </MenuItem>
                       )
                     })}
-                  </Select>
+                  </StyledSelect>
                 </Box>
                 <Box>
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     onClick={() => {
                       submitPlayerBid(playerBid)
                       setPlayerBid(null)
                     }}
-                    disabled={!player.turn && !playerBid}
+                    disabled={!player.turn || !playerBid}
                   >
                     Submit Bid
                   </Button>

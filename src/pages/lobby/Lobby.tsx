@@ -20,6 +20,7 @@ const LeftPanel = styled(Box)`
     background-color: ${props => props.theme.colors.third};
     padding: 1em;
     text-overflow: ellipsis;
+    border-radius: 6px;
   }
 `
 

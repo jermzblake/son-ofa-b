@@ -40,8 +40,8 @@ export const ChatBox: FunctionComponent<ChatBoxProps> = ({
   return (
     <StyledChatBox display={showChat ? 'block' : 'none'}>
       <MessagePane inGame={true} sendMessage={sendMessage} messages={messages} backendUser={backendUser} />
-      <Box mt="0.5em">
-        <Button variant="contained" fullWidth onClick={() => setShowChat(false)}>
+      <Box style={{ margin: "0.5em" }}>
+        <Button variant="contained" color="secondary" fullWidth onClick={() => setShowChat(false)}>
           Close
         </Button>
       </Box>

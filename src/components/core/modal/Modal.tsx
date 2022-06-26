@@ -55,7 +55,7 @@ export const Modal: FunctionComponent<ModalProps> = ({ show, onClose, title, sho
         <TitleBox>
           <Box display="flex" marginLeft="auto">
             <Typography component="span" variant="h6">
-              <Box color={theme.colors.lightPrimary} fontWeight="bold">
+              <Box fontWeight="bold">
                 {title}
               </Box>
             </Typography>
