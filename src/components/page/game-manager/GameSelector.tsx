@@ -28,21 +28,26 @@ const StyledTableContainer = styled(TableContainer)`
 export interface GameSelectorProps {
   currentGames: Game[]
   setShowCreateGame: Function
+  setShowInstructions?: Function
 }
 
-export const GameSelector: FunctionComponent<GameSelectorProps> = ({ currentGames, setShowCreateGame }) => {
+export const GameSelector: FunctionComponent<GameSelectorProps> = ({
+  currentGames,
+  setShowCreateGame,
+  setShowInstructions
+}) => {
   const navigate = useNavigate()
   const theme = useTheme()
 
   return (
-    <Box margin='0 1em'>
-      <Box display='flex' flexDirection='column' alignItems='flex-end'>
-      <Typography variant="h5">
-        <Box>Select Game</Box>
-      </Typography>
-      <Typography variant="caption">
-        <Box>Join an open game or create a new game</Box>
-      </Typography>
+    <Box margin="0 1em">
+      <Box display="flex" flexDirection="column" alignItems="flex-end">
+        <Typography variant="h5">
+          <Box>Select Game</Box>
+        </Typography>
+        <Typography variant="caption">
+          <Box>Join an open game or create a new game</Box>
+        </Typography>
       </Box>
       {currentGames && currentGames.length > 0 && (
         <StyledTableContainer>
@@ -109,6 +114,11 @@ export const GameSelector: FunctionComponent<GameSelectorProps> = ({ currentGame
         </StyledTableContainer>
       )}
       <Box display="flex" justifyContent="flex-end" width="100%" mt="0.5em">
+        <Box mr="1em">
+          <Button variant="contained" color="secondary" onClick={() => setShowInstructions(true)}>
+            Instructions
+          </Button>
+        </Box>
         <Button variant="contained" onClick={() => setShowCreateGame(true)}>
           Create Game
         </Button>
