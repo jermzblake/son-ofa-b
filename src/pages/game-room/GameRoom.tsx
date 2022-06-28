@@ -47,13 +47,14 @@ const GameRoom: FunctionComponent = () => {
     showChat,
     setShowChat,
     newMessage,
-    setNewMessage
+    setNewMessage,
+    leaveGame
   } = useGame()
 
   return (
     <MainContainer title="Game Room">
       <Box position="relative" width="100%">
-        <GameMenu game={currentGame} />
+        <GameMenu game={currentGame} leaveGame={leaveGame} />
         <GameBoard
           game={currentGame}
           backendPlayer={backendPlayer}
