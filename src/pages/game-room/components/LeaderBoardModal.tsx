@@ -17,17 +17,30 @@ interface LeaderBoardModalProps {
   setShowLeaderBoard: Function
   game: Game
   setShowInstructions?: Function
+  leaveGame: Function
+  setConfirmLeave: Function
 }
 
 export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
   showLeaderBoard,
   setShowLeaderBoard,
   game,
-  setShowInstructions
+  setShowInstructions,
+  leaveGame,
+  setConfirmLeave
 }) => {
   const theme = useTheme()
   const roundArray = Array.from(Array(game?.rounds).keys())
   const navigate = useNavigate()
+
+  const removePlayer = () => {
+    if (game?.winner) {
+      navigate('/lobby') 
+      leaveGame()
+    } else {
+      setConfirmLeave(true)
+    }
+  }
 
   return (
     <Modal
@@ -117,11 +130,9 @@ export const LeaderBoardModal: FunctionComponent<LeaderBoardModalProps> = ({
       </LeaderBoardContainer>
       <Box display='flex' justifyContent='space-between' mt='1em'>
         <Button variant='contained' color='secondary' onClick={() => setShowInstructions(true)}>Instructions</Button>
-        {game?.winner &&
-          <Box mt='2em'>
-            <Button variant='contained' color='secondary' onClick={() => navigate('/lobby')}>Leave Game</Button>
+          <Box>
+            <Button variant='contained' color='secondary' onClick={() => removePlayer()}>Leave Game</Button>
           </Box>
-        }
       </Box>
     </Modal>
   )
