@@ -6,6 +6,14 @@ import MenuRoundedIcon from '@material-ui/icons/MenuRounded'
 import { useTheme } from 'styled-components'
 import { LeaderBoardModal } from './LeaderBoardModal'
 import { InstructionModal } from 'components/page/instructions/InstructionModal'
+import { ConfirmModal } from 'components/core/modal/ConfirmModal'
+import { useNavigate } from 'react-router-dom'
+import WarningIcon from '@material-ui/icons/Warning'
+
+const YellowWarning = styled(WarningIcon)`
+  color: orange;
+  transform: scale(2);
+`
 
 const StyledMenuIcon = styled(MenuRoundedIcon)`
   && {
@@ -24,12 +32,15 @@ const StyledMenuContainerBox = styled(Box)`
 
 interface GameMenuProps {
   game: Game
+  leaveGame: Function
 }
 
-export const GameMenu: FunctionComponent<GameMenuProps> = ({ game }) => {
+export const GameMenu: FunctionComponent<GameMenuProps> = ({ game, leaveGame }) => {
   const theme = useTheme()
   const [showLeaderBoard, setShowLeaderBoard] = useState<boolean>(false)
   const [showInstructions, setShowInstructions] = useState<boolean>(false)
+  const [confirmLeave, setConfirmLeave] = useState<boolean>(false)
+  const navigate = useNavigate()
 
   return (
     <>
@@ -43,8 +54,21 @@ export const GameMenu: FunctionComponent<GameMenuProps> = ({ game }) => {
         setShowLeaderBoard={setShowLeaderBoard}
         game={game}
         setShowInstructions={setShowInstructions}
+        leaveGame={leaveGame}
+        setConfirmLeave={setConfirmLeave}
       />
       <InstructionModal show={showInstructions} setShow={setShowInstructions} />
+      <ConfirmModal  
+        title="Leave Game"
+        open={confirmLeave}
+        onClose={() => setConfirmLeave(false)}
+        onConfirm={() => {
+          navigate('/lobby') 
+          leaveGame()
+        }}
+        message="Are you sure you want to leave this game?"
+        icon={<YellowWarning />}
+      />
     </>
   )
 }

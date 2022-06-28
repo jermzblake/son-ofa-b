@@ -175,6 +175,12 @@ io.on("connection", (socket: ExtendedSocket) => {
     socket.join(game?.id)
   })
 
+  socket.on('player disconnect', ({ player, room }) => {
+    socket.leave(room)
+    io.to(room).emit('player disconnected', player)
+    console.log('game', room, 'player', player)
+  })
+
   // notify users upon disconnection
   socket.on("disconnect", async () => {
     const matchingSockets = await io.in(socket.userId).allSockets()

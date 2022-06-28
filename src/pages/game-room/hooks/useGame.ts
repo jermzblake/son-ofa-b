@@ -246,6 +246,10 @@ export const useGame = () => {
     socket.emit('group message', { content, sender: backendPlayer?.gamertag, room: currentGame?.id })
   }
 
+  const leaveGame = () => {
+    socket.emit('player disconnect', { player: backendPlayer?.id, room: currentGame?.id })
+  }
+
   return {
     currentGame,
     setCurrentGame,
@@ -264,6 +268,7 @@ export const useGame = () => {
     showChat,
     setShowChat,
     newMessage,
-    setNewMessage
+    setNewMessage,
+    leaveGame
   } as const
 }

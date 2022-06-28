@@ -39,7 +39,7 @@ export const BidSelectorModal: FunctionComponent<BidSelectorModalProps> = ({
 }) => {
   const theme = useTheme()
   const classes = useStyles()
-  const [playerBid, setPlayerBid] = useState<number>()
+  const [playerBid, setPlayerBid] = useState<number | null>(null)
 
   const possibleBids = (): number[] => {
     let bidArray = [...Array(player?.hand?.length + 1).keys()]
@@ -105,7 +105,7 @@ export const BidSelectorModal: FunctionComponent<BidSelectorModalProps> = ({
                       submitPlayerBid(playerBid)
                       setPlayerBid(null)
                     }}
-                    disabled={!player.turn || !playerBid}
+                    disabled={!player.turn || playerBid == null}
                   >
                     Submit Bid
                   </Button>
