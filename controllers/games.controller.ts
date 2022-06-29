@@ -50,6 +50,12 @@ export const getNewGames = async (req, res) => {
   return res.json(games)
 }
 
+export const getOldUnplayedGames = async (req, res) => {
+  const oneDayAgo = new Date(new Date().getTime() - (24 * 60 * 60 * 1000))
+  const games = await GameModel.find({ enabled: false, dateCreated: {$lt: oneDayAgo.toString()}})
+  return res.json(games)
+}
+
 export const update = async (req, res) => {
   try {
    // Parameter is checked for valid ObjectId before

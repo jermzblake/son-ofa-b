@@ -10,6 +10,8 @@ import logger from 'morgan'
 import path from 'path'
 import favicon from 'serve-favicon'
 import gameRouter from './routes/api/games.routes'
+import cron from 'node-cron'
+import { deleteOldGUnplayedGames } from './services/game.service'
 
 const app: Application = express()
 
@@ -36,6 +38,11 @@ app.use('/api/games', gameRouter)
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
+// run cron job every day at 00:01
+cron.schedule('1 0 * * *', async () => {
+  deleteOldGUnplayedGames()
+})
 
 const { InMemorySessionStore } = useSessionStore()
 const sessionStore = new InMemorySessionStore()
