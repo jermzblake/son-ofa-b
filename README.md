@@ -13,7 +13,7 @@ Son-ofa-B is a trick taking standard deck playing card game. The object is for e
 
 ### Screenshots
 
-![Landing Page](public/assets/static/screenshots/Landing_Page.png) ![Lobby](public/assets/static/screenshots/Lobby.png) ![Ready Up](public/assets/static/screenshots/Ready_Up.png) ![Make Bid](public/assets/static/screenshots/Bid.png) ![Take Turn](public/assets/static/screenshots/Take_Turn.png) ![Chat](public/assets/static/screenshots/Chat.png) ![Game Menu](public/assets/static/screenshots/Game_Menu.png)
+![Landing Page](public/assets/static/screenshots/Landing_Page_2.png) ![Lobby](public/assets/static/screenshots/Lobby.png) ![Ready Up](public/assets/static/screenshots/Ready_Up.png) ![Make Bid](public/assets/static/screenshots/Bid.png) ![Take Turn](public/assets/static/screenshots/Take_Turn.png) ![Chat](public/assets/static/screenshots/Chat.png) ![Game Menu](public/assets/static/screenshots/Game_Menu.png)
 
 ### Technologies Used:
 - MongoDB/Mongoose
